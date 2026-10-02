@@ -1,4 +1,4 @@
-# Broom Mount
+# Broomy
 
 A plugin for Crimson Desert that lets Kliff ride a flying broom.
 
@@ -38,7 +38,7 @@ MSVC Build Tools 2022, with the CMake and Ninja they bundle.
 
     mod\build.bat
 
-The plugin lands in `mod\dist\BroomMount.asi`. It needs Ultimate ASI Loader
+The plugin lands in `mod\dist\Broomy.asi`. It needs Ultimate ASI Loader
 in the game's `bin64`.
 
 ## License

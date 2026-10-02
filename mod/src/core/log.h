@@ -9,8 +9,8 @@ namespace bm::Log
     // memory either way.
     void Write(const char* level, const char* fmt, ...);
 
-    // `base` names the file and its archives: "BroomMount" gives
-    // BroomMount.log and BroomMount.01.log upwards.
+    // `base` names the file and its archives: "Broomy" gives
+    // Broomy.log and Broomy.01.log upwards.
     //
     // It is a parameter because two processes load this plugin. Session one
     // put both of them in one file: lines from each landed at the other's file

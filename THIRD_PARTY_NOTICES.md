@@ -1,6 +1,6 @@
 # Third party notices
 
-Broom Mount is MIT licensed (see LICENSE). It includes the code below.
+Broomy is MIT licensed (see LICENSE). It includes the code below.
 
 ## MinHook
 

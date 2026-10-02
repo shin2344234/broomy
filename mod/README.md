@@ -1,4 +1,4 @@
-# Broom Mount 0.12.32
+# Broomy 0.12.32
 
 For Crimson Desert 2.03.02, exe 1.0.0.2976.
 
@@ -9,13 +9,13 @@ radial. No other mount is changed.
 
 ## Installing
 
-Copy `BroomMount.asi` into the game's `bin64` folder, next to
+Copy `Broomy.asi` into the game's `bin64` folder, next to
 `CrimsonDesert.exe`, with the game closed. You need an ASI loader there
 already. Ultimate ASI Loader installed as `winmm.dll` is what most Crimson
 Desert setups use, and the Definitive Mod Manager installs one for you.
 
 No game file is modified. The first time it runs, the plugin writes
-`BroomMount.ini` beside itself with every setting at its default. An ini you
+`Broomy.ini` beside itself with every setting at its default. An ini you
 already have is left alone.
 
 ## Getting Broomy
@@ -40,7 +40,7 @@ boost and the keyboard always move at full speed.
 
 ## Settings
 
-All of them live in `BroomMount.ini` and are read when the game starts.
+All of them live in `Broomy.ini` and are read when the game starts.
 
     GiveBroomy=1       give Broomy to a save that does not have it
     GroundSpeed=250    speed on the ground, percent of the Wyvern's
@@ -57,7 +57,7 @@ with a label and range for each.
 
 ## Uninstalling
 
-Delete the `BroomMount` files from `bin64`. A save that has Broomy still
+Delete the `Broomy` files from `bin64`. A save that has Broomy still
 loads, and Broomy leaves the radial. If you save without the plugin, that
 save loses Broomy, and putting the plugin back gives you a new one.
 

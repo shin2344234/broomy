@@ -1,5 +1,5 @@
 @echo off
-rem Broom Mount build: MSVC Build Tools 2022 + the CMake and Ninja they bundle.
+rem Broomy build: MSVC Build Tools 2022 + the CMake and Ninja they bundle.
 rem   build.bat          configure (first run) and build Release into build\, stage dist\
 rem   build.bat clean    wipe build\ first
 rem   build.bat check IN OUT   build and run the offline check of Broomy's
