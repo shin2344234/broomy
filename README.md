@@ -32,6 +32,10 @@ on the game server's own thread. A hook on the call key's branch lets
 Broomy's wedge play Kliff's flying call. Another scales Broomy's speed by the
 left stick.
 
+The full account of how the mod was made, with the addresses, formats and
+everything that was tried and dropped, is in
+[docs/how-broomy-was-made.md](docs/how-broomy-was-made.md).
+
 ## Building
 
 MSVC Build Tools 2022, with the CMake and Ninja they bundle.
