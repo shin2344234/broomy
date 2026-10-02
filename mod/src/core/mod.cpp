@@ -118,9 +118,24 @@ namespace
         return &it->second;
     }
 
+    // Test builds: note each riding clip and blend the game asks for, once,
+    // to see which ones play while Kliff rides.
+    SRWLOCK g_seenLock = SRWLOCK_INIT;
+    std::unordered_map<std::string, int> g_seenPaths;
+
+    void NoteRidingPath(const char* path)
+    {
+        if (!strstr(path, "cd_phm_rd_") && !strstr(path, "4_riding/") && !strstr(path, ".motionblending")) return;
+        AcquireSRWLockExclusive(&g_seenLock);
+        const bool fresh = g_seenPaths.size() < 4000 && g_seenPaths.emplace(path, 0).second;
+        ReleaseSRWLockExclusive(&g_seenLock);
+        if (fresh) LOG("[seen] %s", path);
+    }
+
     // Called on every async load, Read, find and existence check.
     const std::string* Supply(const char* path, std::string*)
     {
+        NoteRidingPath(path);
         if (const std::string* mine = Override(path)) return mine;
         const size_t n = strlen(path);
         if (n >= sizeof kBlendLeaf - 1 && _stricmp(path + n - (sizeof kBlendLeaf - 1), kBlendLeaf) == 0)
