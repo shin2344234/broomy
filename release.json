@@ -1,0 +1,21 @@
+{
+  "name": "Broom Mount",
+  "fileBase": "BroomMount",
+  "version": { "header": "mod/src/version.h", "macro": "BM_VERSION" },
+  "scriptsDir": "mod/scripts",
+  "dist": "mod/dist",
+  "sources": ["mod/src", "mod/BroomMount.ini", "mod/CMakeLists.txt"],
+  "manualZip": ["mod/README.md", "LICENSE", "THIRD_PARTY_NOTICES.md"],
+  "gates": [],
+  "evergreen": ["private/nexus/nexus-description.bbcode", "README.md"],
+  "github": "shin2344234/broom-mount",
+  "nexus": {
+    "game": "crimsondesert",
+    "page": "",
+    "modId": "",
+    "dmmFileId": "",
+    "manualFileId": ""
+  },
+  "discord": { "channel": "1547305058922668072" },
+  "requires": []
+}
