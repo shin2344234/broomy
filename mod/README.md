@@ -1,4 +1,4 @@
-# Broomy 0.12.32
+# Broomy 1.0.0
 
 For Crimson Desert 2.03.02, exe 1.0.0.2976.
 
@@ -68,4 +68,5 @@ save loses Broomy, and putting the plugin back gives you a new one.
   because Broomy's wedge sits in its place. The radial holds eight wedges,
   and a ninth blanks it.
 - Some places refuse every summon, the Abyss Nexus among them. That is the
-  game's own rule.
+  game's own rule. Flight Freedom 1.1.8 lifts it with its BlockedSummon
+  setting.
