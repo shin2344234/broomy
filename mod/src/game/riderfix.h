@@ -8,7 +8,8 @@
 // Wyvern to the big dragon's stand idle, a full body crouch that hides the
 // broom idle his upper chart plays. While Broomy is ridden the two branches
 // point at Kliff's broom states instead, 588C2001 and AD3E621B, his broom
-// idle on broom_rider_move. Broomy counts as ridden while its RideOn chart
+// idle on broom_rider_move, with a 10 frame crossfade where the shipped
+// branches cut. Broomy counts as ridden while its RideOn chart
 // (the served armadillo chart) has been checked in the last 3 seconds; that
 // chart runs only while it is ridden. Otherwise the branches keep their
 // shipped targets, so riding the dragon is unchanged.

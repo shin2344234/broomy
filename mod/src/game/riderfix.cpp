@@ -31,12 +31,18 @@ namespace
     bool g_log = false;
 
     // The rider fix: the two default branches of Kliff's lower dispatchers,
-    // by their offset in ride_test3_lower.paac, with the shipped target and
-    // the broom state they take while Broomy is ridden.
+    // by their offset in ride_test3_lower.paac, with the shipped word and the
+    // one they hold while Broomy is ridden. +0x14 is the target, +0x08 the
+    // crossfade in frames (f32). Shipped, the branches cut (-1) between two
+    // dragon poses that play the same clip; between the broom's ground and
+    // air states they crossfade over 10 frames, as Kliff's upper chart does.
     struct Swap { uint32_t offset; uint32_t shipped; uint32_t broomy; };
+    constexpr uint32_t kCut = 0xBF800000, kTenFrames = 0x41200000;
     constexpr Swap kSwaps[] = {
         { 0x6F3F1 + 0x14, 0x07407E6A, 0x588C2001 },   // branch 397, ground states -> broom idle
+        { 0x6F3F1 + 0x08, kCut, kTenFrames },
         { 0x6F48D + 0x14, 0x90337E5C, 0xAD3E621B },   // branch 400, air states -> broom air idle
+        { 0x6F48D + 0x08, kCut, kTenFrames },
     };
     constexpr DWORD kRiddenMs = 3000;
     volatile uintptr_t g_lowerBase = 0;
