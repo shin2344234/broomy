@@ -6,7 +6,12 @@
   "dist": "mod/dist",
   "sources": ["mod/src", "mod/Broomy.ini", "mod/CMakeLists.txt"],
   "manualZip": ["mod/README.md", "LICENSE", "THIRD_PARTY_NOTICES.md"],
-  "gates": [],
+  "gates": [
+    {
+      "name": "the INI Master metadata matches mod.cpp",
+      "run": "py -3 scripts\\check_inimeta.py"
+    }
+  ],
   "evergreen": ["private/nexus/nexus-description.bbcode", "README.md"],
   "github": "shin2344234/broomy",
   "nexus": {
