@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cwchar>
 #include <string>
+#include <unordered_map>
 
 #include "core/log.h"
 #include "core/paths.h"
@@ -66,9 +67,61 @@ namespace
                               sizeof bm::broomchart::kBroomBlendBytes);
     constexpr char kBlendLeaf[] = "/broom_riding_move.motionblending";
 
+    // Test builds: files in BroomyAnims beside the plugin go to the game in
+    // place of the shipped file with the same name, so a clip made in CD
+    // Animator can be tried without a pack. The pack index names clips by
+    // file name alone, so that is the key. Loaded once, before the game's
+    // first read, and never changed after.
+    std::unordered_map<std::string, std::string> g_overrides;
+    volatile LONG g_overrideLogged = 0;
+
+    std::string LowerLeaf(const char* path)
+    {
+        const char* slash = strrchr(path, '/');
+        std::string leaf = slash ? slash + 1 : path;
+        for (char& c : leaf) c = static_cast<char>(tolower(static_cast<unsigned char>(c)));
+        return leaf;
+    }
+
+    void LoadOverrides()
+    {
+        const std::wstring dir = bm::Paths::Dir() + L"BroomyAnims\\";
+        WIN32_FIND_DATAW fd;
+        HANDLE h = FindFirstFileW((dir + L"*").c_str(), &fd);
+        if (h == INVALID_HANDLE_VALUE) return;
+        do
+        {
+            if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) continue;
+            FILE* f = nullptr;
+            if (_wfopen_s(&f, (dir + fd.cFileName).c_str(), L"rb") != 0 || !f) continue;
+            std::string bytes;
+            char buf[65536];
+            size_t got;
+            while ((got = fread(buf, 1, sizeof buf, f)) > 0) bytes.append(buf, got);
+            fclose(f);
+            char name[MAX_PATH];
+            WideCharToMultiByte(CP_UTF8, 0, fd.cFileName, -1, name, sizeof name, nullptr, nullptr);
+            LOG("[anims] %s (%zu bytes) will go in for the shipped file of that name.", name, bytes.size());
+            g_overrides[LowerLeaf(name)] = std::move(bytes);
+        } while (FindNextFileW(h, &fd));
+        FindClose(h);
+    }
+
+    const std::string* Override(const char* path)
+    {
+        if (g_overrides.empty()) return nullptr;
+        std::string target;
+        const std::string leaf = LowerLeaf(bm::broomy::AliasTarget(path, target) ? target.c_str() : path);
+        const auto it = g_overrides.find(leaf);
+        if (it == g_overrides.end()) return nullptr;
+        if (InterlockedIncrement(&g_overrideLogged) <= 32) LOG("[anims] %s gets BroomyAnims/%s.", path, leaf.c_str());
+        return &it->second;
+    }
+
     // Called on every async load, Read, find and existence check.
     const std::string* Supply(const char* path, std::string*)
     {
+        if (const std::string* mine = Override(path)) return mine;
         const size_t n = strlen(path);
         if (n >= sizeof kBlendLeaf - 1 && _stricmp(path + n - (sizeof kBlendLeaf - 1), kBlendLeaf) == 0)
         {
@@ -117,6 +170,7 @@ namespace bm::Mod
         speeds.boost = Clamp(ReadSetting(L"BoostSpeed", speeds.boost), 100, 500);
         speeds.climb = Clamp(ReadSetting(L"ClimbSpeed", speeds.climb), 10, 1000);
         bm::broomchart::SetSpeeds(speeds);
+        LoadOverrides();
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
     }

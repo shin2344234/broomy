@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <string>
 
 // Broomy's files, handed to the game as it reads them (gamefile), built from
 // the game's own bytes (broomrows). A table's header is read and parsed
@@ -18,6 +19,9 @@ namespace bm::broomy
 
     // From DllMain, before the game reads its first table.
     bool Install(int chartMode);
+
+    // The shipped file an alias path in Broomy's charts loads, if it is one.
+    bool AliasTarget(const char* path, std::string& to);
 
     // Broomy's characterinfo row once the game has read the table, else -1.
     int Row();

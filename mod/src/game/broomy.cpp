@@ -339,6 +339,8 @@ namespace
 
 namespace bm::broomy
 {
+    bool AliasTarget(const char* path, std::string& to) { return RedirectLoad(path, to); }
+
     bool Install(int chartMode)
     {
         g_chartMode = chartMode >= kChartsWyvern && chartMode <= kChartsPadded ? chartMode : kChartsPadded;
