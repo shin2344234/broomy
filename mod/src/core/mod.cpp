@@ -17,6 +17,7 @@
 #include "game/farhook.h"
 #include "game/gamefile.h"
 #include "game/grant.h"
+#include "game/riderfix.h"
 #include "game/mem.h"
 #include "ini_default.h"
 #include "version.h"
@@ -188,6 +189,7 @@ namespace bm::Mod
         LoadOverrides();
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
+        if (g_serving) bm::riderfix::Install(ReadSetting(L"LogStates", 0) != 0);
     }
 
     void Initialize(HMODULE module)
