@@ -53,16 +53,20 @@ namespace
         // FDA30B13 is a spare Kliff action no branch or chart reaches; it
         // plays CD Animator's push-off under its shipped clip name
         // (cd_phm_rd_wyvern_basic_00_00_air_move_fall_walk_end_00, served
-        // from BroomyAnims), lasts the clip's 36 frames, and on anim_end its
-        // slot 1036 takes branch 671 back to the broom idle. Branch 439 had
-        // only slot 1036, FDA30B13 looping on itself.
+        // from bin64\CDAnimator) and lasts the clip's 936 frames. Kliff's
+        // lower chart moves on only when the broom changes state, never on
+        // anim_end (a test in game: branch 671 never fired), so the clip
+        // carries his broom idle itself after the 36 frame kick, and the next
+        // broom state takes him back to 588C2001 as before. Slot 1036 still
+        // points at branch 671 in case the end is ever reached. Branch 439
+        // had only slot 1036, FDA30B13 looping on itself.
         { 0x796B4, 0x00018D7F, 0x0001B77F },          // slot 934 (u16 at +1): branch 397 -> 439
         { 0x6FC79 + 0x08, 0x3F800000, 0x40400000 },   // branch 439 crossfade 1 -> 3 frames (the feet land at frame 6)
         { 0x6FC79 + 0x1C, 0x00000007, 0x00000204 },   // branch 439 kind, as 397
         { 0x6FC79 + 0x24, 0x0000001D, 0x00000000 },   // branch 439 condition, as 397
         { 0x6FC79 + 0x28, 0x00010000, 0x00000000 },
         { 0x7A1DC, 0x0001B77F, 0x00029F7F },          // slot 1036 (u16 at +1): branch 439 -> 671
-        { 0x1D4D0, 0x3F19999A, 0x3F99999A },          // FDA30B13 duration 0.6 s -> 1.2 s
+        { 0x1D4D0, 0x3F19999A, 0x41F9999A },          // FDA30B13 duration 0.6 s -> 31.2 s
     };
     constexpr DWORD kRiddenMs = 3000;
     volatile uintptr_t g_lowerBase = 0;
@@ -112,6 +116,29 @@ namespace
         }
         const uint64_t r = g_original(comp, err, layer, a4, a5, a6, a7, a8, a9, a10, a11, a12);
         if (!g_log) return r;
+        // Diagnosis of the push-off's exit: each distinct branch record of
+        // Kliff's lower chart that gets checked, by file offset (branch n is
+        // at 0x6A34D + 52n), with the check's result code (0 = taken).
+        if (In(pre, g_lowerBase, g_lowerSize) && err)
+        {
+            static uint64_t s_seen[256];
+            static volatile LONG s_n = 0;
+            uint32_t c = 0xFFFFFFFF;
+            bm::mem::Read32(reinterpret_cast<uintptr_t>(err), &c);
+            const uint32_t off = static_cast<uint32_t>(pre - g_lowerBase);
+            const uint64_t key = (static_cast<uint64_t>(off) << 32) | c;
+            bool fresh = true;
+            const LONG n = s_n;
+            for (LONG i = 0; i < n && fresh; ++i) fresh = s_seen[i] != key;
+            if (fresh && n < 256)
+            {
+                s_seen[n] = key;
+                InterlockedIncrement(&s_n);
+                const int branch = off >= 0x6A34D && (off - 0x6A34D) % 52 == 0 ? static_cast<int>((off - 0x6A34D) / 52) : -1;
+                LOG("[branch] Kliff lower +0x%X (b%d) layer %u checked, result %u", off, branch,
+                    static_cast<unsigned>(static_cast<uint8_t>(layer)), c);
+            }
+        }
         uintptr_t rec = 0;
         uint32_t code = 1, target = 0;
         if (!a8 || !err || !bm::mem::Read32(reinterpret_cast<uintptr_t>(err), &code) || code != 0) return r;
