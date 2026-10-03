@@ -48,7 +48,10 @@ namespace bm::broomchart
             { { "dismount_r" }, "nor_std_dismount_r_00" },
             { { "mount_l" }, "nor_std_mount_l_00" },
             { { "mount_r", "mount_up", "std_mount" }, "nor_std_mount_r_00" },
-            { { "75u", "45u", "90u", "takeoff", "landtohover" }, "nor_move_walkfast_f_75u_ing_00" },
+            // The takeoff lifts off level: the 75u climb tipped the broom 60 degrees
+            // under an upright Kliff, and it swung back level as flight began.
+            { { "takeoff", "landtohover" }, "nor_std_idle_01" },
+            { { "75u", "45u", "90u" }, "nor_move_walkfast_f_75u_ing_00" },
             { { "75d", "45d", "90d", "dive" }, "nor_move_walkfast_f_75d_ing_00" },
             { { "_land" }, "nor_std_idle_01" },
             { { "nor_move_run_f" }, "nor_move_run_f_ing_00" },
