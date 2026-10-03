@@ -24,5 +24,11 @@ namespace bm::broomchart
         // about half a second late and shallow.
         { 1, 0x0F18E, 0x41A00000, 0x40800000 },   // m0004_ride_dragon_lower b18 -> takeoff 117F8F51: 20 -> 4 frames
         { 2, 0x0C604, 0x40C00000, 0x41700000 },   // m0004_ride_dragon_upper b27 F5150415 -> E066175D (airborne): 6 -> 15 frames
+        // By hand: b27 also commands E066175D (target_hash2 at +0x18). Kliff's
+        // lower layer moves only on such commands, and none reached it when
+        // the takeoff went on into forward flight, so he stayed in the
+        // push-off (upright) until the stick was let go. Now his E066175D
+        // dispatcher takes b400 to the broom idle 588C2001 as flight begins.
+        { 2, 0x0C614, 0x00000000, 0xE066175D },   // m0004_ride_dragon_upper b27: command E066175D for the rider
     };
 }
