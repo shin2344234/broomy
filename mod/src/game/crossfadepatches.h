@@ -18,6 +18,11 @@ namespace bm::broomchart
         { 1, 0x1050E, 0xBF800000, 0x41700000 },   // m0004_ride_dragon_lower b114 takeoff -> E066175D (anim_end): -1 -> 15 frames
         { 1, 0x1091E, 0xBF800000, 0x41700000 },   // m0004_ride_dragon_lower b134 takeoff -> E066175D (input 10): -1 -> 15 frames
         { 1, 0x104A6, 0xBF800000, 0x41700000 },   // m0004_ride_dragon_lower b112 takeoff -> 0645598D (stick pushed): -1 -> 15 frames
+        // By hand: the takeoff's own dip (B_Body_00 down 42 cm by frame 6, up
+        // again by 13) and Kliff's push-off (3 frame fade, feet down at 6)
+        // must start together; over the shipped 20 frame fade the dip came
+        // about half a second late and shallow.
+        { 1, 0x0F18E, 0x41A00000, 0x40800000 },   // m0004_ride_dragon_lower b18 -> takeoff 117F8F51: 20 -> 4 frames
         { 2, 0x0C604, 0x40C00000, 0x41700000 },   // m0004_ride_dragon_upper b27 F5150415 -> E066175D (airborne): 6 -> 15 frames
     };
 }

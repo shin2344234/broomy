@@ -15,5 +15,12 @@ namespace bm::broomchart
         { 2, 0x074D3, 0x4B495F42, 0x6F425F42 },   // m0004_ride_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 0-3
         { 2, 0x074D7, 0x6165485F, 0x305F7964 },   // m0004_ride_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 4-7
         { 2, 0x074DB, 0x30305F64, 0x00000030 },   // m0004_ride_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 8-11
+        // By hand: the flight idle E066175D's aim event (entry 0x101EB)
+        // smooths toward the camera as 1 - exp(-rate * dt). At the shipped 6
+        // the nose and heading swung to the camera in about 0.4 s as flight
+        // began, nearer 0.25 s while the aim IK's distance pull (aimrate.cpp
+        // now skips it for the broom) held the rate near 4. At 1.0 a
+        // 90 degree swing is 90 percent done in 2.3 s.
+        { 2, 0x101FF, 0x40C00000, 0x3F800000 },   // m0004_ride_dragon_upper: E066175D aim rate 6 -> 1
     };
 }

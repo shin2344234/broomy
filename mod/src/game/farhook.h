@@ -37,5 +37,12 @@ namespace bm::farhook
     // What InstallOverAbsJump would take over: the address such a patch jumps
     // to, or 0 when the entry is not one.
     uintptr_t AbsJumpTarget(uintptr_t target);
+    // Replaces `len` bytes at `at`, which must read `expect`, with a jump to
+    // `code` (copied to Broomy's code page through a relay in int3 padding)
+    // and nops. `code` holds the replaced instructions' work and jumps back
+    // with absolute jumps of its own; `placed` receives where it was copied.
+    // RemoveAll puts the bytes back.
+    bool InstallBranch(const char* name, uintptr_t at, const unsigned char* expect, unsigned len,
+                       const unsigned char* code, unsigned codeLen, uintptr_t* placed, char* why, unsigned whyLen);
     void RemoveAll();
 }

@@ -18,6 +18,7 @@
 #include "game/gamefile.h"
 #include "game/grant.h"
 #include "game/riderfix.h"
+#include "game/aimrate.h"
 #include "game/mem.h"
 #include "ini_default.h"
 #include "version.h"
@@ -190,6 +191,7 @@ namespace bm::Mod
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
         if (g_serving) bm::riderfix::Install(ReadSetting(L"LogStates", 0) != 0);
+        if (g_serving) bm::aimrate::Install();
     }
 
     void Initialize(HMODULE module)
