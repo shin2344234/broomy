@@ -17,11 +17,7 @@ namespace bm::broomchart
         // flight pose, so these cut (-1) or fade over 6 frames; the broom snapped.
         { 1, 0x1050E, 0xBF800000, 0x41700000 },   // m0004_ride_dragon_lower b114 takeoff -> E066175D (anim_end): -1 -> 15 frames
         { 1, 0x1091E, 0xBF800000, 0x41700000 },   // m0004_ride_dragon_lower b134 takeoff -> E066175D (input 10): -1 -> 15 frames
+        { 1, 0x104A6, 0xBF800000, 0x41700000 },   // m0004_ride_dragon_lower b112 takeoff -> 0645598D (stick pushed): -1 -> 15 frames
         { 2, 0x0C604, 0x40C00000, 0x41700000 },   // m0004_ride_dragon_upper b27 F5150415 -> E066175D (airborne): 6 -> 15 frames
-        // Right after the takeoff the nose points up, more than 45 degrees off the
-        // camera, so hover and cruise branch into the 45 degree turn states. Those
-        // branches cut (0), and the broom snapped level and toward the camera.
-        { 1, 0x0F362, 0x00000000, 0x41700000 },   // m0004_ride_dragon_lower b27 E066175D/2B1E3C7C -> 32D295DF: 0 -> 15 frames
-        { 1, 0x0F396, 0x00000000, 0x41700000 },   // m0004_ride_dragon_lower b28 E066175D/2B1E3C7C -> 218CF5DB: 0 -> 15 frames
     };
 }
