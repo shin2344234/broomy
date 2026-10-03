@@ -1,4 +1,4 @@
-# Broomy 1.0.0
+# Broomy 1.0.1
 
 For Crimson Desert 2.03.02, exe 1.0.0.2976.
 

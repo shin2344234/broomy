@@ -9,6 +9,7 @@
 #include "game/broomchart.h"
 #include "game/broomrows.h"
 #include "game/gamefile.h"
+#include "game/riderfix.h"
 #include "game/tablefile.h"
 
 namespace
@@ -165,6 +166,7 @@ namespace
         }
         memcpy(data, g_made[c].data(), size);
         bm::analogspeed::NoteChart(c, reinterpret_cast<uintptr_t>(data), size);
+        bm::riderfix::NoteServed(path, reinterpret_cast<uintptr_t>(data), size);
         if (InterlockedExchange(&g_loggedCharts[c], 1) == 0)
             LOG("[charts] %s is the broom's (%u bytes, from %s) at %p.", path, size, kCharts[c].source, data);
     }

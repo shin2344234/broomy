@@ -17,6 +17,7 @@
 #include "game/gamefile.h"
 #include "game/grant.h"
 #include "game/mem.h"
+#include "game/riderfix.h"
 #include "ini_default.h"
 #include "version.h"
 
@@ -119,6 +120,7 @@ namespace bm::Mod
         bm::broomchart::SetSpeeds(speeds);
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
+        if (g_serving) bm::riderfix::Install(false);
     }
 
     void Initialize(HMODULE module)

@@ -62,6 +62,7 @@ add_library(Broomy SHARED
     src/game/analogspeed.cpp
     src/game/callgate.cpp
     src/game/equipfix.cpp
+    src/game/riderfix.cpp
     src/resources.rc
 )
 
