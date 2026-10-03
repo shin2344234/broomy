@@ -53,12 +53,13 @@ namespace
         // FDA30B13 is a spare Kliff action no branch or chart reaches; it
         // plays CD Animator's push-off under a name of its own,
         // cd_phm_rd_broom_basic_00_00_nor_std_takeoff_00 (Seen below writes
-        // it into the chart; the CD Animator loader serves the files), and lasts the clip's 936 frames. Kliff's
-        // lower chart moves on only when the broom changes state, never on
-        // anim_end (a test in game: branch 671 never fired), so the clip
-        // carries his broom idle itself after the 36 frame kick, and the next
-        // broom state takes him back to 588C2001 as before. Slot 1036 still
-        // points at branch 671 in case the end is ever reached. Branch 439
+        // it into the chart; the CD Animator loader serves the files), and
+        // lasts the clip's 136 frames. Kliff's lower chart moves on only when
+        // a broom chart commands it, never on anim_end (a test in game:
+        // branch 671 never fired). The flight start commands it now
+        // (crossfadepatches.h, b27), so the clip carries one round of his
+        // broom idle after the 36 frame kick only as a margin. Slot 1036
+        // still points at branch 671 in case the end is ever reached. Branch 439
         // had only slot 1036, FDA30B13 looping on itself.
         { 0x796B4, 0x00018D7F, 0x0001B77F },          // slot 934 (u16 at +1): branch 397 -> 439
         { 0x6FC79 + 0x08, 0x3F800000, 0x40400000 },   // branch 439 crossfade 1 -> 3 frames (the feet land at frame 6)
@@ -66,7 +67,7 @@ namespace
         { 0x6FC79 + 0x24, 0x0000001D, 0x00000000 },   // branch 439 condition, as 397
         { 0x6FC79 + 0x28, 0x00010000, 0x00000000 },
         { 0x7A1DC, 0x0001B77F, 0x00029F7F },          // slot 1036 (u16 at +1): branch 439 -> 671
-        { 0x1D4D0, 0x3F19999A, 0x41F9999A },          // FDA30B13 duration 0.6 s -> 31.2 s
+        { 0x1D4D0, 0x3F19999A, 0x40911111 },          // FDA30B13 duration 0.6 s -> 4.53 s (136 frames)
     };
     constexpr DWORD kRiddenMs = 3000;
     constexpr uint32_t kPushOffAt = 0x31339;   // string 193, after its length byte (80)
