@@ -49,8 +49,10 @@ namespace bm::broomchart
             { { "mount_l" }, "nor_std_mount_l_00" },
             { { "mount_r", "mount_up", "std_mount" }, "nor_std_mount_r_00" },
             // The takeoff lifts off level: the 75u climb tipped the broom 60 degrees
-            // under an upright Kliff, and it swung back level as flight began.
-            { { "takeoff", "landtohover" }, "nor_std_idle_01" },
+            // under an upright Kliff, and it swung back level as flight began. The
+            // idle there jumped too, as flight restarted its bob. nor_std_takeoff_00
+            // (CD Animator, examples/level_takeoff.py) holds the idle's first frame.
+            { { "takeoff", "flystart", "landtohover" }, "nor_std_takeoff_00" },
             { { "75u", "45u", "90u" }, "nor_move_walkfast_f_75u_ing_00" },
             { { "75d", "45d", "90d", "dive" }, "nor_move_walkfast_f_75d_ing_00" },
             { { "_land" }, "nor_std_idle_01" },
