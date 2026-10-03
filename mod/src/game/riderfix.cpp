@@ -23,7 +23,7 @@ namespace
     FnCheck g_original = nullptr;
 
     struct Last { uintptr_t comp; uint8_t layer; uint32_t target; };
-    constexpr int kSlots = 64;
+    constexpr int kSlots = 1024;
     Last g_last[kSlots] = {};
     int g_used = 0;
     SRWLOCK g_lock = SRWLOCK_INIT;
