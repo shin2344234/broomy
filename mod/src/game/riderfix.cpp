@@ -41,7 +41,10 @@ namespace
     constexpr Swap kSwaps[] = {
         { 0x6F3F1 + 0x14, 0x07407E6A, 0x588C2001 },   // branch 397, ground states -> broom idle
         { 0x6F3F1 + 0x08, kCut, kTenFrames },
-        { 0x6F48D + 0x14, 0x90337E5C, 0xAD3E621B },   // branch 400, air states -> broom air idle
+        // The air states also take the ground idle. AD3E621B is the same
+        // action in this chart (the same blend, the same branches), and
+        // switching to it at takeoff restarted the blend, a hitch.
+        { 0x6F48D + 0x14, 0x90337E5C, 0x588C2001 },   // branch 400, air states -> broom idle
         { 0x6F48D + 0x08, kCut, kTenFrames },
     };
     constexpr DWORD kRiddenMs = 3000;
