@@ -308,6 +308,41 @@ namespace bm::farhook
         return true;
     }
 
+    bool InstallBranch(const char* name, uintptr_t at, const unsigned char* expect, unsigned len,
+                       const unsigned char* code, unsigned codeLen, uintptr_t* placed, char* why, unsigned whyLen)
+    {
+        Held held;
+        (void)name;
+        why[0] = 0;
+        if (!at || len < 5 || len > 32) { snprintf(why, whyLen, "bad site"); return false; }
+        if (g_n >= 80 || g_caveN >= 8) { snprintf(why, whyLen, "hook table full"); return false; }
+        if (memcmp(reinterpret_cast<const void*>(at), expect, len) != 0) { snprintf(why, whyLen, "the bytes are not the expected ones"); return false; }
+        unsigned char* body = Alloc(codeLen);
+        if (!body) { snprintf(why, whyLen, "code page allocation failed"); return false; }
+        memcpy(body, code, codeLen);
+        if (placed) *placed = reinterpret_cast<uintptr_t>(body);
+        const uintptr_t cave = FindCave(at + 5);
+        if (!cave) { snprintf(why, whyLen, "no int3 padding in reach for a relay"); return false; }
+        unsigned char relay[16];
+        memset(relay, 0xCC, sizeof relay);
+        relay[0] = 0xFF; relay[1] = 0x25; relay[2] = relay[3] = relay[4] = relay[5] = 0;
+        memcpy(relay + 6, &body, 8);
+        if (!WriteCode(cave, relay, sizeof relay, why, whyLen)) return false;
+        g_caves[g_caveN++] = cave;
+
+        unsigned char site[32];
+        memset(site, 0x90, sizeof site);
+        site[0] = 0xE9;
+        const int32_t toCave = static_cast<int32_t>(static_cast<int64_t>(cave) - static_cast<int64_t>(at + 5));
+        memcpy(site + 1, &toCave, 4);
+        Entry& e = g_entries[g_n];
+        e.target = at; e.stolen = len;
+        memcpy(e.orig, expect, len);
+        if (!WriteCode(at, site, len, why, whyLen)) return false;
+        ++g_n;
+        return true;
+    }
+
     void RemoveAll()
     {
         Held held;

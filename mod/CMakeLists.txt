@@ -63,6 +63,7 @@ add_library(Broomy SHARED
     src/game/callgate.cpp
     src/game/equipfix.cpp
     src/game/riderfix.cpp
+    src/game/aimrate.cpp
     src/resources.rc
 )
 

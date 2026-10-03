@@ -1,4 +1,4 @@
-# Broomy 1.0.1
+# Broomy 1.0.2
 
 For Crimson Desert 2.03.02, exe 1.0.0.2976.
 
@@ -30,10 +30,11 @@ radial. Pick it and Kliff calls Broomy the way he calls the Wyvern.
 
 ## Riding
 
-Mount from either side. On the ground Broomy hovers and moves about. Jump to
-take off. In the air the nose follows the camera, the run key boosts, and
-letting go of the stick holds Broomy in place. The flying controls are the
-Wyvern's.
+Mount from either side. On the ground Broomy hovers and moves about, and at
+rest it floats gently up and down. Jump to take off: the broom dips and Kliff
+pushes off the ground with both feet. In the air the nose turns to follow the
+camera, the run key boosts, and letting go of the stick holds Broomy in place.
+The flying controls are the Wyvern's.
 
 On a controller the speed follows how far the left stick is pushed. The
 boost and the keyboard always move at full speed.

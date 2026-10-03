@@ -46,8 +46,34 @@ namespace
         // switching to it at takeoff restarted the blend, a hitch.
         { 0x6F48D + 0x14, 0x90337E5C, 0x588C2001 },   // branch 400, air states -> broom idle
         { 0x6F48D + 0x08, kCut, kTenFrames },
+        // The push-off. Kliff's lower layer takes the mount's action key, so
+        // the broom's takeoff runs Kliff's 117F8F51, whose default slot 934
+        // shares branch 397 with seven other states. Slot 934 alone moves to
+        // branch 439, rewritten as 397 into FDA30B13 with a 3 frame fade.
+        // FDA30B13 is a spare Kliff action no branch or chart reaches; it
+        // plays the push-off under a name of its own,
+        // cd_phm_rd_broom_basic_00_00_nor_std_takeoff_00 (Seen below writes
+        // it into the chart, and broomclips.h has the files), and lasts the
+        // clip's 136 frames. Kliff's lower chart moves on only when a broom
+        // chart commands it, never on anim_end; the flight start commands it
+        // (crossfadepatches.h, b27), so the clip's round of broom idle after
+        // the 36 frame kick is only a margin. Slot 1036 points at branch 671
+        // in case the end is ever reached. Branch 439 had only slot 1036,
+        // FDA30B13 looping on itself. Seth, 3 October: "his feet touched the
+        // ground".
+        { 0x796B4, 0x00018D7F, 0x0001B77F },          // slot 934 (u16 at +1): branch 397 -> 439
+        { 0x6FC79 + 0x08, 0x3F800000, 0x40400000 },   // branch 439 crossfade 1 -> 3 frames (the feet land at frame 6)
+        { 0x6FC79 + 0x1C, 0x00000007, 0x00000204 },   // branch 439 kind, as 397
+        { 0x6FC79 + 0x24, 0x0000001D, 0x00000000 },   // branch 439 condition, as 397
+        { 0x6FC79 + 0x28, 0x00010000, 0x00000000 },
+        { 0x7A1DC, 0x0001B77F, 0x00029F7F },          // slot 1036 (u16 at +1): branch 439 -> 671
+        { 0x1D4D0, 0x3F19999A, 0x40911111 },          // FDA30B13 duration 0.6 s -> 4.53 s (136 frames)
     };
     constexpr DWORD kRiddenMs = 3000;
+    constexpr uint32_t kPushOffAt = 0x31339;   // string 193, after its length byte (80)
+    constexpr char kPushOffOld[] = "1_pc/1_phm/00_riding/cd_phm_rd_wyvern_basic_00_00_air_move_fall_walk_end_00.paa";
+    constexpr char kPushOffNew[] = "1_pc/1_phm/00_riding/cd_phm_rd_broom_basic_00_00_nor_std_takeoff_00.paa";
+    static_assert(sizeof kPushOffNew <= sizeof kPushOffOld, "the new name must fit the old one's room");
     volatile uintptr_t g_lowerBase = 0;
     volatile uint32_t g_lowerSize = 0;
     volatile uintptr_t g_rideOnBase = 0;
@@ -134,6 +160,19 @@ namespace
         InterlockedExchange(&g_swapped, 0);
         ReleaseSRWLockExclusive(&g_swapLock);
         if (!shipped) LOG_ERR("[rider] ride_test3_lower.paac is not the shipped file, so Kliff keeps the dragon pose.");
+        // The push-off's own name. FDA30B13 plays the clip at string 193;
+        // the chart hashes its paths as it parses, which is after this read,
+        // so the name is written here, padded with zeros inside the old
+        // string's room as broomchart.cpp does. Nothing reaches FDA30B13
+        // unless Broomy is ridden, so it keeps the new name throughout.
+        if (shipped && kPushOffAt + sizeof kPushOffOld <= size &&
+            memcmp(data + kPushOffAt, kPushOffOld, sizeof kPushOffOld) == 0)
+        {
+            uint8_t* at = const_cast<uint8_t*>(data) + kPushOffAt;
+            memset(at, 0, sizeof kPushOffOld);
+            memcpy(at, kPushOffNew, sizeof kPushOffNew - 1);
+            LOG("[rider] Kliff's push-off plays as %s.", kPushOffNew);
+        }
     }
 }
 

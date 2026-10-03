@@ -12,8 +12,11 @@ namespace bm::broomchart
     inline constexpr HoverPatch kCrossfadePatches[] = {
         { 1, 0x0F08A, 0x00000000, 0x41700000 },   // m0004_ride_dragon_lower b13 -> 2B1E3C7C: crossfade 0 -> 15 frames
         { 1, 0x0F0F2, 0x00000000, 0x41700000 },   // m0004_ride_dragon_lower b15 -> E066175D: crossfade 0 -> 15 frames
+        { 1, 0x0F18E, 0x41A00000, 0x40800000 },   // m0004_ride_dragon_lower b18 -> 117F8F51: crossfade 20 -> 4 frames
+        { 1, 0x104A6, 0xBF800000, 0x41700000 },   // m0004_ride_dragon_lower b112 -> 0645598D: crossfade -1 -> 15 frames
         { 1, 0x1050E, 0xBF800000, 0x41700000 },   // m0004_ride_dragon_lower b114 -> E066175D: crossfade -1 -> 15 frames
         { 1, 0x1091E, 0xBF800000, 0x41700000 },   // m0004_ride_dragon_lower b134 -> E066175D: crossfade -1 -> 15 frames
         { 2, 0x0C604, 0x40C00000, 0x41700000 },   // m0004_ride_dragon_upper b27 -> E066175D: crossfade 6 -> 15 frames
+        { 2, 0x0C614, 0x00000000, 0xE066175D },   // m0004_ride_dragon_upper b27: commands E066175D for the rider
     };
 }

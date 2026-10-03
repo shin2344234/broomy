@@ -4,10 +4,12 @@
 #include <cstdio>
 #include <cwchar>
 #include <string>
+#include <vector>
 
 #include "core/log.h"
 #include "core/paths.h"
 #include "game/broomblend.h"
+#include "game/broomclips.h"
 #include "game/broomchart.h"
 #include "game/analogspeed.h"
 #include "game/broomy.h"
@@ -17,6 +19,7 @@
 #include "game/gamefile.h"
 #include "game/grant.h"
 #include "game/mem.h"
+#include "game/aimrate.h"
 #include "game/riderfix.h"
 #include "ini_default.h"
 #include "version.h"
@@ -67,15 +70,41 @@ namespace
                               sizeof bm::broomchart::kBroomBlendBytes);
     constexpr char kBlendLeaf[] = "/broom_riding_move.motionblending";
 
+    // The broom's level takeoff and hover idle (broomclips.h), in the order of
+    // kBroomClips. The takeoff's three files are new, so find and exists see
+    // the shipped idle's in their place; the hover replaces the idle.
+    const std::vector<std::string> g_clips = [] {
+        std::vector<std::string> v;
+        for (const bm::broomchart::BroomClip& c : bm::broomchart::kBroomClips)
+            v.emplace_back(reinterpret_cast<const char*>(c.data), c.size);
+        return v;
+    }();
+
+    bool EndsWithI(const char* path, size_t n, const char* tail)
+    {
+        const size_t t = strlen(tail);
+        return n >= t && _stricmp(path + n - t, tail) == 0;
+    }
+
     // Called on every async load, Read, find and existence check.
-    const std::string* Supply(const char* path, std::string*)
+    const std::string* Supply(const char* path, std::string* standIn)
     {
         const size_t n = strlen(path);
-        if (n >= sizeof kBlendLeaf - 1 && _stricmp(path + n - (sizeof kBlendLeaf - 1), kBlendLeaf) == 0)
+        if (EndsWithI(path, n, kBlendLeaf))
         {
             static volatile LONG logged = 0;
             if (InterlockedIncrement(&logged) <= 4) LOG("[blend] Broomy's riding blend goes in for %s.", path);
             return &g_blend;
+        }
+        for (size_t i = 0; i < g_clips.size(); ++i)
+        {
+            const bm::broomchart::BroomClip& c = bm::broomchart::kBroomClips[i];
+            if (!EndsWithI(path, n, c.path)) continue;
+            if (standIn && c.standIn) *standIn = c.standIn;
+            static volatile LONG logged = 0;
+            if (!standIn && InterlockedIncrement(&logged) <= 10)
+                LOG("[clips] Broomy's own %s goes in for %s.", strrchr(c.path, '/') + 1, path);
+            return &g_clips[i];
         }
         return nullptr;
     }
@@ -121,6 +150,7 @@ namespace bm::Mod
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
         if (g_serving) bm::riderfix::Install(false);
+        if (g_serving) bm::aimrate::Install();
     }
 
     void Initialize(HMODULE module)
