@@ -51,9 +51,9 @@ namespace
         // shares branch 397 with seven other states. Slot 934 alone moves to
         // branch 439, rewritten as 397 into FDA30B13 with a 3 frame fade.
         // FDA30B13 is a spare Kliff action no branch or chart reaches; it
-        // plays CD Animator's push-off under its shipped clip name
-        // (cd_phm_rd_wyvern_basic_00_00_air_move_fall_walk_end_00, served
-        // from bin64\CDAnimator) and lasts the clip's 936 frames. Kliff's
+        // plays CD Animator's push-off under a name of its own,
+        // cd_phm_rd_broom_basic_00_00_nor_std_takeoff_00 (Seen below writes
+        // it into the chart; the CD Animator loader serves the files), and lasts the clip's 936 frames. Kliff's
         // lower chart moves on only when the broom changes state, never on
         // anim_end (a test in game: branch 671 never fired), so the clip
         // carries his broom idle itself after the 36 frame kick, and the next
@@ -69,6 +69,10 @@ namespace
         { 0x1D4D0, 0x3F19999A, 0x41F9999A },          // FDA30B13 duration 0.6 s -> 31.2 s
     };
     constexpr DWORD kRiddenMs = 3000;
+    constexpr uint32_t kPushOffAt = 0x31339;   // string 193, after its length byte (80)
+    constexpr char kPushOffOld[] = "1_pc/1_phm/00_riding/cd_phm_rd_wyvern_basic_00_00_air_move_fall_walk_end_00.paa";
+    constexpr char kPushOffNew[] = "1_pc/1_phm/00_riding/cd_phm_rd_broom_basic_00_00_nor_std_takeoff_00.paa";
+    static_assert(sizeof kPushOffNew <= sizeof kPushOffOld, "the new name must fit the old one's room");
     volatile uintptr_t g_lowerBase = 0;
     volatile uint32_t g_lowerSize = 0;
     volatile uintptr_t g_rideOnBase = 0;
@@ -178,6 +182,19 @@ namespace
         InterlockedExchange(&g_swapped, 0);
         ReleaseSRWLockExclusive(&g_swapLock);
         if (!shipped) LOG_ERR("[rider] ride_test3_lower.paac is not the shipped file, so Kliff keeps the dragon pose.");
+        // The push-off's own name. FDA30B13 plays the clip at string 193;
+        // the chart hashes its paths as it parses, which is after this read,
+        // so the name is written here, padded with zeros inside the old
+        // string's room as broomchart.cpp does. Nothing reaches FDA30B13
+        // unless Broomy is ridden, so it keeps the new name throughout.
+        if (shipped && kPushOffAt + sizeof kPushOffOld <= size &&
+            memcmp(data + kPushOffAt, kPushOffOld, sizeof kPushOffOld) == 0)
+        {
+            uint8_t* at = const_cast<uint8_t*>(data) + kPushOffAt;
+            memset(at, 0, sizeof kPushOffOld);
+            memcpy(at, kPushOffNew, sizeof kPushOffNew - 1);
+            LOG("[rider] Kliff's push-off plays as %s.", kPushOffNew);
+        }
     }
 }
 
