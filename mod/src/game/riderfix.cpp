@@ -46,6 +46,23 @@ namespace
         // switching to it at takeoff restarted the blend, a hitch.
         { 0x6F48D + 0x14, 0x90337E5C, 0x588C2001 },   // branch 400, air states -> broom idle
         { 0x6F48D + 0x08, kCut, kTenFrames },
+        // The push-off. Kliff's lower layer takes the mount's action key, so
+        // the broom's takeoff runs Kliff's 117F8F51, whose default slot 934
+        // shares branch 397 with seven other states. Slot 934 alone moves to
+        // branch 439, rewritten as 397 into FDA30B13 with an 8 frame fade.
+        // FDA30B13 is a spare Kliff action no branch or chart reaches; it
+        // plays CD Animator's push-off under its shipped clip name
+        // (cd_phm_rd_wyvern_basic_00_00_air_move_fall_walk_end_00, served
+        // from BroomyAnims), lasts the clip's 36 frames, and on anim_end its
+        // slot 1036 takes branch 671 back to the broom idle. Branch 439 had
+        // only slot 1036, FDA30B13 looping on itself.
+        { 0x796B4, 0x00018D7F, 0x0001B77F },          // slot 934 (u16 at +1): branch 397 -> 439
+        { 0x6FC79 + 0x08, 0x3F800000, 0x41000000 },   // branch 439 crossfade 1 -> 8 frames
+        { 0x6FC79 + 0x1C, 0x00000007, 0x00000204 },   // branch 439 kind, as 397
+        { 0x6FC79 + 0x24, 0x0000001D, 0x00000000 },   // branch 439 condition, as 397
+        { 0x6FC79 + 0x28, 0x00010000, 0x00000000 },
+        { 0x7A1DC, 0x0001B77F, 0x00029F7F },          // slot 1036 (u16 at +1): branch 439 -> 671
+        { 0x1D4D0, 0x3F19999A, 0x3F99999A },          // FDA30B13 duration 0.6 s -> 1.2 s
     };
     constexpr DWORD kRiddenMs = 3000;
     volatile uintptr_t g_lowerBase = 0;
