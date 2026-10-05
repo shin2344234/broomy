@@ -4,6 +4,7 @@
 #include <cstring>
 
 #include "core/log.h"
+#include "game/damiane.h"
 #include "game/farhook.h"
 #include "game/gamefile.h"
 #include "game/mem.h"
@@ -74,6 +75,10 @@ namespace
     constexpr char kPushOffOld[] = "1_pc/1_phm/00_riding/cd_phm_rd_wyvern_basic_00_00_air_move_fall_walk_end_00.paa";
     constexpr char kPushOffNew[] = "1_pc/1_phm/00_riding/cd_phm_rd_broom_basic_00_00_nor_std_takeoff_00.paa";
     static_assert(sizeof kPushOffNew <= sizeof kPushOffOld, "the new name must fit the old one's room");
+    constexpr size_t kSwapCount = sizeof kSwaps / sizeof kSwaps[0];
+    // Each swap's offset in the lower chart the game has: the shipped file,
+    // or the one with Damiane's nodes (broomy.cpp).
+    uint32_t g_at[kSwapCount] = {};
     volatile uintptr_t g_lowerBase = 0;
     volatile uint32_t g_lowerSize = 0;
     volatile uintptr_t g_rideOnBase = 0;
@@ -91,9 +96,10 @@ namespace
         if (base && (g_swapped != 0) != on)
         {
             bool ok = true;
-            for (const Swap& w : kSwaps)
+            for (size_t i = 0; i < kSwapCount; ++i)
             {
-                uint32_t* at = reinterpret_cast<uint32_t*>(base + w.offset);
+                const Swap& w = kSwaps[i];
+                uint32_t* at = reinterpret_cast<uint32_t*>(base + g_at[i]);
                 const uint32_t want = on ? w.broomy : w.shipped, was = on ? w.shipped : w.broomy;
                 if (*at == was) *at = want;
                 else if (*at != want) ok = false;
@@ -143,6 +149,22 @@ namespace
         return r;
     }
 
+    // Where a word of the shipped lower chart sits in the one with Damiane's
+    // nodes (damiane.h).
+    uint32_t Moved(uint32_t offset) { return bm::damiane::Moved(bm::damiane::kCharts[1], offset); }
+
+    // Whether the chart holds every swap's shipped word where the layout puts
+    // it; fills `at` with the offsets.
+    bool Fits(const uint8_t* data, uint32_t size, bool damiane, uint32_t* at)
+    {
+        for (size_t i = 0; i < kSwapCount; ++i)
+        {
+            at[i] = damiane ? Moved(kSwaps[i].offset) : kSwaps[i].offset;
+            if (at[i] + 4 > size || *reinterpret_cast<const uint32_t*>(data + at[i]) != kSwaps[i].shipped) return false;
+        }
+        return true;
+    }
+
     void Seen(const char* path, const uint8_t* data, uint32_t size)
     {
         const size_t n = strlen(path);
@@ -150,28 +172,32 @@ namespace
         if (!strstr(path, "ride") && !strstr(path, "riding")) return;
         if (g_log) LOG("[state] chart %s at %p (%u bytes)", path, data, size);
         if (!strstr(path, "/ride_test3_lower.paac")) return;
-        bool shipped = true;
-        for (const Swap& w : kSwaps)
-            shipped = shipped && w.offset + 4 <= size &&
-                      *reinterpret_cast<const uint32_t*>(data + w.offset) == w.shipped;
+        static_assert(sizeof bm::damiane::kCharts / sizeof bm::damiane::kCharts[0] == 2, "kCharts[1] is the lower chart");
+        uint32_t at[kSwapCount];
+        const bool shipped = Fits(data, size, false, at);
+        const bool damiane = !shipped && Fits(data, size, true, at);
+        const bool known = shipped || damiane;
         AcquireSRWLockExclusive(&g_swapLock);
-        g_lowerBase = shipped ? reinterpret_cast<uintptr_t>(data) : 0;
+        g_lowerBase = known ? reinterpret_cast<uintptr_t>(data) : 0;
         g_lowerSize = size;
+        if (known) memcpy(g_at, at, sizeof at);
         InterlockedExchange(&g_swapped, 0);
         ReleaseSRWLockExclusive(&g_swapLock);
-        if (!shipped) LOG_ERR("[rider] ride_test3_lower.paac is not the shipped file, so Kliff keeps the dragon pose.");
+        if (!known) LOG_ERR("[rider] ride_test3_lower.paac is not the shipped file, so Kliff keeps the dragon pose.");
+        const uint32_t pushOffAt = damiane ? Moved(kPushOffAt) : kPushOffAt;
         // The push-off's own name. FDA30B13 plays the clip at string 193;
         // the chart hashes its paths as it parses, which is after this read,
         // so the name is written here, padded with zeros inside the old
         // string's room as broomchart.cpp does. Nothing reaches FDA30B13
         // unless Broomy is ridden, so it keeps the new name throughout.
-        if (shipped && kPushOffAt + sizeof kPushOffOld <= size &&
-            memcmp(data + kPushOffAt, kPushOffOld, sizeof kPushOffOld) == 0)
+        if (known && pushOffAt + sizeof kPushOffOld <= size &&
+            memcmp(data + pushOffAt, kPushOffOld, sizeof kPushOffOld) == 0)
         {
-            uint8_t* at = const_cast<uint8_t*>(data) + kPushOffAt;
-            memset(at, 0, sizeof kPushOffOld);
-            memcpy(at, kPushOffNew, sizeof kPushOffNew - 1);
-            LOG("[rider] Kliff's push-off plays as %s.", kPushOffNew);
+            uint8_t* name = const_cast<uint8_t*>(data) + pushOffAt;
+            memset(name, 0, sizeof kPushOffOld);
+            memcpy(name, kPushOffNew, sizeof kPushOffNew - 1);
+            LOG("[rider] Kliff's push-off plays as %s%s.", kPushOffNew,
+                damiane ? ", in the lower chart with Damiane's nodes" : "");
         }
     }
 }

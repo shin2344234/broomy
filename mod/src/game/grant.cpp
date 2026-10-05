@@ -1,6 +1,7 @@
 #include "game/grant.h"
 
 #include <Windows.h>
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 
@@ -67,6 +68,98 @@ namespace
     volatile LONG g_rejected[kGrantTries] = {};
     volatile LONG g_checkWindow = 0, g_checks = 0;
 
+    // Where Broomy arrives, for reports of it hanging out of reach: after a
+    // Broomy call, the actor lookup notes the first actor whose row is
+    // Broomy's, the movement handler notes the player (the sender), and the
+    // log gets both heights at each of kHeightAtMs after the call. Broomy's
+    // actor stands on its root and its clips float the broom about 1.5 m
+    // above that, so a broom at rest beside Kliff reads close to his height.
+    constexpr DWORD kHeightAtMs[] = { 2000, 5000, 10000 };
+    constexpr int   kHeightChecks = sizeof kHeightAtMs / sizeof kHeightAtMs[0];
+    volatile LONG   g_calledAt = 0;          // 0 when no call is being watched
+    volatile LONG   g_heightLogged = 0;      // checkpoints logged so far
+    volatile LONG64 g_broomyActor = 0, g_playerActor = 0;
+
+    // The actor's position and the transform field it came from (0 when none
+    // reads): the first world copy that holds one, else, or with local set,
+    // its local position plus its parent's.
+    unsigned Position(uintptr_t actor, float* xyz, bool local = false)
+    {
+        uintptr_t block = 0, tf = 0;
+        if (!bm::mem::ReadPtr(actor + kOff_Actor_Block, &block) ||
+            !bm::mem::ReadPtr(block + kOff_Block_Transform, &tf))
+            return 0;
+        auto good = [](const float* v) {
+            return std::isfinite(v[0]) && std::isfinite(v[1]) && std::isfinite(v[2]) &&
+                   !(v[0] == 0.0f && v[1] == 0.0f && v[2] == 0.0f);
+        };
+        if (!local)
+            for (unsigned off : kTf_WorldCopies)
+                if (bm::mem::ReadF32x3(tf + off, xyz) && good(xyz)) return off;
+        float parent[3] = {};
+        uint32_t pid = 0;
+        if (!bm::mem::ReadF32x3(tf + kOff_Tf_LocalPos, xyz) || !good(xyz)) return 0;
+        if (bm::mem::Read32(tf + kOff_Tf_ParentId, &pid) && pid && pid != 0xFFFFFFFF &&
+            bm::mem::ReadF32x3(tf + kOff_Tf_ParentPos, parent) && good(parent))
+            for (int i = 0; i < 3; ++i) xyz[i] += parent[i];
+        return kOff_Tf_LocalPos;
+    }
+
+    void NoteBroomyActor(uintptr_t out)
+    {
+        if (!g_calledAt || g_broomyActor) return;
+        const int broomy = bm::broomy::Row();
+        uint8_t found = 0;
+        uintptr_t actor = 0, block = 0, status = 0;
+        uint16_t row = 0;
+        if (broomy >= 0 && bm::mem::Read8(out + kOff_Lookup_Found, &found) && found &&
+            bm::mem::ReadPtr(out + kOff_Lookup_Actor, &actor) && bm::mem::ReadPtr(actor + kOff_Actor_Block, &block) &&
+            bm::mem::ReadPtr(block + kOff_Block_Status, &status) && bm::mem::Read16(status + kOff_Status_CharRow, &row) &&
+            row == broomy)
+            InterlockedCompareExchange64(&g_broomyActor, static_cast<LONG64>(actor), 0);
+    }
+
+    // On the server thread, about 37 times a second.
+    void CheckHeight(uintptr_t message)
+    {
+        const LONG at = g_calledAt;
+        if (!at) return;
+        uintptr_t sender = 0, kind = 0;
+        uint8_t k = 0;
+        if (bm::mem::ReadPtr(message, &sender) && bm::mem::ReadPtr(sender + kOff_Sender_Kind, &kind) &&
+            bm::mem::Read8(kind + 1, &k) && k == 1)
+            InterlockedExchange64(&g_playerActor, static_cast<LONG64>(sender));
+        const LONG done = g_heightLogged;
+        // Signed: the call's stamp is ORed with 1, so it can lead the clock by 1 ms.
+        const LONG since = static_cast<LONG>(GetTickCount() - static_cast<DWORD>(at));
+        if (done >= kHeightChecks || since < static_cast<LONG>(kHeightAtMs[done])) return;
+        if (InterlockedCompareExchange(&g_heightLogged, done + 1, done) != done) return;
+        const uintptr_t broomy = static_cast<uintptr_t>(g_broomyActor), player = static_cast<uintptr_t>(g_playerActor);
+        float b[3] = {}, p[3] = {};
+        const double secs = kHeightAtMs[done] / 1000.0;
+        unsigned fb = broomy ? Position(broomy, b) : 0, fp = player ? Position(player, p) : 0;
+        // One space for both: a world position against a local one put Broomy
+        // 6 km from Kliff at his own height.
+        if (fb && fp && (fb == kOff_Tf_LocalPos) != (fp == kOff_Tf_LocalPos))
+        {
+            fb = Position(broomy, b, true);
+            fp = Position(player, p, true);
+        }
+        if (!fb)
+            LOG("[height] %.0f s after the call: Broomy's actor %s.", secs, broomy ? "gave no position" : "was not seen");
+        else if (!fp)
+            LOG("[height] %.0f s after the call: Broomy stands at (%.1f, %.1f, %.1f); the player gave no position.", secs,
+                b[0], b[1], b[2]);
+        else
+        {
+            const float dx = b[0] - p[0], dz = b[2] - p[2];
+            LOG("[height] %.0f s after the call: Broomy stands %.1f m %s Kliff and %.1f m from him (Broomy at %.1f, Kliff "
+                "at %.1f; transform +0x%X and +0x%X).", secs, fabsf(b[1] - p[1]), b[1] >= p[1] ? "above" : "below",
+                sqrtf(dx * dx + dz * dz), b[1], p[1], fb, fp);
+        }
+        if (done + 1 >= kHeightChecks) InterlockedExchange(&g_calledAt, 0);
+    }
+
     // The swap: while the grant's hire runs, its lookup of that actor points
     // the actor's row at Broomy's; the hire puts it back when it returns.
     volatile LONG g_swapId = 0, g_swapTid = 0;
@@ -74,8 +167,6 @@ namespace
     uint16_t      g_swapOld = 0;
 
     bool Pending() { return g_armed && g_tries < kGrantTries; }
-
-    constexpr uint32_t kBroomySlot = 1000032;
 
     bool Rejected(LONG id)
     {
@@ -174,6 +265,7 @@ namespace
             // Wild horses are noted from the moment a save loads, so the
             // hire can go as soon as the check finds no Broomy.
             if ((Pending() || g_loadSeq != g_checkedSeq) && !g_target) Consider(out, static_cast<uint32_t>(id));
+            NoteBroomyActor(out);
             return r;
         }
         InterlockedExchange(&g_swapId, 0);
@@ -264,6 +356,7 @@ namespace
     {
         const uint64_t r = g_moveOriginal(self, error, message);
         GrantNow(message);
+        CheckHeight(message);
         return r;
     }
 
@@ -273,14 +366,22 @@ namespace
         uint16_t id = 0;
         if (message && bm::mem::Read16(message, &id) && (id == 0x0AC1 || id == 0x0876))
         {
-            uint32_t slot = 0;
             if (id == 0x0AC1)
             {
+                uint32_t slot = 0;
                 bm::mem::Read32(message + 5, &slot);
-                bm::callgate::Chosen(slot);
+                LOG("[wedge] request 0x0AC1 sent (a wedge was chosen: reserve slot %u).", slot);
             }
-            LOG("[wedge] request 0x%04X sent (%s%s).", id, id == 0x0AC1 ? "a wedge was chosen" : "the mount is called",
-                slot == kBroomySlot ? ": Broomy's slot" : "");
+            else
+                LOG("[wedge] request 0x0876 sent (the mount is called%s).",
+                    bm::callgate::BroomyChosen() ? ": the saddle wedge holds Broomy" : "");
+            if (id == 0x0876 && bm::callgate::BroomyChosen())
+            {
+                // Each call watches afresh: Broomy's actor is new every time.
+                InterlockedExchange64(&g_broomyActor, 0);
+                InterlockedExchange(&g_heightLogged, 0);
+                InterlockedExchange(&g_calledAt, static_cast<LONG>(GetTickCount() | 1));
+            }
         }
         if (id == kReq_LoadingComplete)
         {

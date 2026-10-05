@@ -8,12 +8,18 @@
 // to OUT under the names the game reads them by, with aliases.txt listing
 // every alias and where it loads from, and checks that every path the new
 // charts name either is the Wyvern's own camera shake or redirects.
+//
+// IN also holds the shipped ride_upper.paac and ride_test3_lower.paac. The
+// check splices Damiane's nodes into them (src/game/damiane.h), writes the
+// results to OUT, and checks that every byte no splice replaces is where
+// Moved, which riderfix finds its words by, says it went.
 // `build.bat chartcheck IN OUT` builds and runs it.
 #include <cstdio>
 #include <cstring>
 #include <string>
 
 #include "game/broomchart.h"
+#include "game/damiane.h"
 
 namespace
 {
@@ -159,6 +165,39 @@ int main(int argc, char** argv)
         printf("package list: %s (%zu bytes from %zu)\n", report.c_str(), newDesc.size(), desc.size());
         if (!Save(out + "characteractionpackagedescription.paacdesc", newDesc)) ++failed;
     }
+    // Damiane's nodes in Kliff's riding charts.
+    for (const bm::damiane::Chart& c : bm::damiane::kCharts)
+    {
+        std::string shipped, built;
+        if (!Load(in + Leaf(c.path), shipped))
+        {
+            printf("%s is missing from IN\n", Leaf(c.path));
+            ++failed;
+            continue;
+        }
+        if (!bm::damiane::Build(c, shipped, built))
+        {
+            printf("%s: Damiane's nodes FAILED (%zu bytes in, %zu out)\n", Leaf(c.path), shipped.size(), built.size());
+            ++failed;
+            continue;
+        }
+        size_t kept = 0, wrong = 0;
+        for (uint32_t o = 0; o < shipped.size(); ++o)
+        {
+            bool replaced = false;
+            for (size_t i = 0; i < c.count && !replaced; ++i)
+                replaced = c.splices[i].cut && c.splices[i].at <= o && o < c.splices[i].at + c.splices[i].cut;
+            if (replaced) continue;
+            ++kept;
+            const uint32_t to = bm::damiane::Moved(c, o);
+            if (to >= built.size() || built[to] != shipped[o]) ++wrong;
+        }
+        printf("  %-28s %zu bytes with Damiane's nodes, %zu splices; %zu of %zu kept bytes misplaced by Moved\n",
+               Leaf(c.path), built.size(), c.count, wrong, kept);
+        if (wrong) ++failed;
+        if (!Save(out + "damiane_" + Leaf(c.path), built)) ++failed;
+    }
+
     printf(failed ? "%d FAILED\n" : "all good\n", failed);
     return failed ? 1 : 0;
 }

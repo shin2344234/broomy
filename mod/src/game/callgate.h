@@ -1,22 +1,27 @@
 #pragma once
 #include <cstdint>
 
-// Lets Broomy's wedge start Kliff's call animation. Kliff's on-foot chart
-// (common_upper_branchset) has one call branch per reserve slot it knows:
-// VehicleSlot (1000006), VehicleSlot_Dragon (1000020) and
-// VehicleSlot_Mechanic (1000019). Each branch's condition asks leaf 0x1D1
-// whether its slot is the one chosen, and no branch names Broomy's slot
-// (1000032), so a Broomy press never calls. While Broomy's wedge is the one
-// chosen, the plugin answers leaf 0x1D1 for VehicleSlot as if VehicleSlot
-// were chosen, for half a second after the wedge request; the chart takes
-// the general call branch. That branch's call event names VehicleSlot as the
-// slot to call, so while Broomy's wedge is the one chosen, the plugin hands
-// the lookup of that event a copy of its data naming Broomy's slot, and the
-// server calls Broomy. KNOWLEDGE.md, "How Broomy's wedge calls".
+// Broomy is one of the saddle wedge's mounts: VehicleSlot (1000006) takes
+// its mercenary list as a third, after the horses and Vehicle_Special. With
+// Broomy chosen there, Kliff's on-foot chart takes its own VehicleSlot call
+// branch and the server calls Broomy, so a call needs nothing from the
+// plugin. The plugin notes when the chosen wedge is the saddle wedge with
+// Broomy, from the server's side of a wedge press.
+//
+// Kliff's falling chart calls Blackstar from the air with an event naming
+// VehicleSlot_Dragon and an air summon-and-ride type (6, where a ground call
+// has 3), whichever wedge is chosen. Handing that event VehicleSlot left
+// Broomy flying 14.3 m under Kliff wherever he went, out of sight in the
+// ground. Seth, 4 October: "disable calling broomy while falling instead of
+// switching back to blackstar". So while Broomy is chosen, the client's
+// chart leaf check says Kliff has not learned Skill_CallDragon, which every
+// falling call branch asks, and a call while falling does nothing.
+// KNOWLEDGE.md, "Broomy in the saddle wedge".
 namespace bm::callgate
 {
-    // From the worker. Patches the client chart component's leaf check.
+    // From the worker. Hooks the server's reserve slot change and the
+    // client's chart leaf check.
     bool Install();
-    // From the request sender: the slot a wedge request chose.
-    void Chosen(uint32_t slotKey);
+    // Whether the chosen wedge is the saddle wedge, holding Broomy.
+    bool BroomyChosen();
 }

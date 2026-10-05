@@ -48,8 +48,9 @@ namespace bm::gamefile
         Patch patch;
     };
 
-    // Research: every file Read fills from the game's own packs, after the
-    // read. Called on every read, so it must be quick.
+    // Every file Read fills from the game's own packs, after the read and
+    // after Serve, so with the bytes the game keeps; it may change them in
+    // place. Called on every read, so it must be quick.
     typedef void (*Seen)(const char* path, const uint8_t* data, uint32_t size);
 
     // Research: the bytes the plugin has for a file the async slot loads, or

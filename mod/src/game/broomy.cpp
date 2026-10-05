@@ -8,6 +8,7 @@
 #include "game/analogspeed.h"
 #include "game/broomchart.h"
 #include "game/broomrows.h"
+#include "game/damiane.h"
 #include "game/gamefile.h"
 #include "game/riderfix.h"
 #include "game/tablefile.h"
@@ -34,6 +35,7 @@ namespace
 
     SRWLOCK g_factsLock = SRWLOCK_INIT;
     CharacterFacts g_facts;
+    volatile LONG g_broomyList = -1;
 
     bool EndsWith(const char* s, size_t n, const char* tail)
     {
@@ -77,6 +79,18 @@ namespace
         const char* slash = strrchr(path, '/');
         const char* leaf = slash ? slash + 1 : path;
         return leaf[0] == 'b' && (leaf[1] == 'm' || leaf[1] == 'b') && leaf[2] >= '0' && leaf[2] <= '9';
+    }
+
+    // Kliff's riding charts with Damiane's nodes (damiane.h), served only onto
+    // the file they were made for.
+    constexpr int kDamianeChartCount = sizeof bm::damiane::kCharts / sizeof bm::damiane::kCharts[0];
+    volatile LONG g_loggedDamiane[kDamianeChartCount] = {};
+
+    int DamianeChartOf(const char* path)
+    {
+        for (int i = 0; i < kDamianeChartCount; ++i)
+            if (_stricmp(path, bm::damiane::kCharts[i].path) == 0) return i;
+        return -1;
     }
 
     // Only inside Serve, where the game's loader can be asked for the
@@ -192,13 +206,23 @@ namespace
         return -1;
     }
 
+    constexpr int kMapIconFileCount = sizeof kMapIconFiles / sizeof kMapIconFiles[0];
+
+    // Which map markup or style file a path is, or -1.
+    int MapIconOf(const char* path, size_t n)
+    {
+        for (int i = 0; i < kMapIconFileCount; ++i)
+            if (EndsWith(path, n, kMapIconFiles[i])) return i;
+        return -1;
+    }
+
     bool Wants(const char* path)
     {
         int half;
         const size_t n = strlen(path);
         if (TableOf(path, half) >= 0 || EndsWith(path, n, kPalocLeaf) || _stricmp(path, kPortraitRegistry) == 0 ||
             _stricmp(path, kDescriptionPath) == 0 || _stricmp(path, kAppearancePath) == 0 ||
-            _stricmp(path, kPoseModifierPath) == 0)
+            _stricmp(path, kPoseModifierPath) == 0 || MapIconOf(path, n) >= 0 || DamianeChartOf(path) >= 0)
             return true;
         return g_ownCharts && (ChartOf(path) >= 0 || AttackOf(path) >= 0 || _stricmp(path, kPackageDesc) == 0 ||
                                (g_chartsReady && AliasLeaf(path) && EndsWith(path, n, ".paa_metabin")));
@@ -207,6 +231,18 @@ namespace
     void Once(volatile LONG& flag, const char* fmt, const char* a, size_t b)
     {
         if (InterlockedExchange(&flag, 1) == 0) LOG(fmt, a, b);
+    }
+
+    bool ServeDamiane(int d, bool found, const std::string& game, std::string& out)
+    {
+        const bm::damiane::Chart& c = bm::damiane::kCharts[d];
+        if (!found || !bm::damiane::Build(c, game, out))
+        {
+            LOG_ERR("[damiane] %s is not the file her nodes were made for, so she rides with Kliff's clips.", c.path);
+            return false;
+        }
+        Once(g_loggedDamiane[d], "[damiane] %s has Damiane's broom nodes (%zu bytes).", c.path, out.size());
+        return true;
     }
 
     bool ServeTable(int t, int half, bool found, const std::string& game, std::string& out)
@@ -229,8 +265,8 @@ namespace
                 const std::string& h = half ? other : game;
                 const std::string& b = half ? game : other;
                 CharacterFacts facts;
-                const bool character = !strcmp(name, "characterinfo");
-                if (BuildTable(name, h, b, e.ours[0], e.ours[1], report, why, character ? &facts : nullptr))
+                const bool character = !strcmp(name, "characterinfo"), merc = !strcmp(name, "mercenaryinfo");
+                if (BuildTable(name, h, b, e.ours[0], e.ours[1], report, why, character || merc ? &facts : nullptr))
                 {
                     e.ok = true;
                     e.shipped[0] = { h.size(), bm::tablefile::Crc32(h.data(), h.size()) };
@@ -242,6 +278,7 @@ namespace
                         g_facts = std::move(facts);
                         ReleaseSRWLockExclusive(&g_factsLock);
                     }
+                    if (merc) InterlockedExchange(&g_broomyList, facts.broomyList);
                 }
                 else
                     LOG_ERR("[tables] %s is the game's own: %s. Broomy will be missing whatever this table holds for it.",
@@ -269,13 +306,14 @@ namespace
     }
 
     volatile LONG g_loggedPaloc = 0, g_loggedPortraits = 0, g_loggedDescription = 0, g_loggedAppearance = 0,
-                  g_loggedPoseModifiers = 0;
+                  g_loggedPoseModifiers = 0, g_loggedMapIcons[kMapIconFileCount] = {};
 
     bool Serve(const char* path, bool found, const std::string& game, std::string& out)
     {
         int half = 0;
         const int t = TableOf(path, half);
         if (t >= 0) return ServeTable(t, half, found, game, out);
+        if (const int d = DamianeChartOf(path); d >= 0) return ServeDamiane(d, found, game, out);
 
         std::string why;
         const size_t n = strlen(path);
@@ -299,6 +337,18 @@ namespace
                 return false;
             }
             Once(g_loggedPortraits, "[files] %s lists Broomy's portrait (%zu bytes).", path, out.size());
+            return true;
+        }
+        if (const int m = MapIconOf(path, n); m >= 0)
+        {
+            if (!found) return false;
+            if (!BuildMapIcons(m < 2, game, out, why))
+            {
+                LOG_ERR("[files] %s is the game's own, so Broomy shows the ibex's map icon: %s.", path, why.c_str());
+                return false;
+            }
+            Once(g_loggedMapIcons[m], "[files] %s draws Broomy with the broom's map icon (%zu bytes).", path,
+                 out.size());
             return true;
         }
         if (_stricmp(path, kPoseModifierPath) == 0)
@@ -370,4 +420,6 @@ namespace bm::broomy
         ReleaseSRWLockShared(&g_factsLock);
         return key;
     }
+
+    int ListIndex() { return g_broomyList; }
 }

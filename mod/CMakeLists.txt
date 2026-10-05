@@ -64,6 +64,7 @@ add_library(Broomy SHARED
     src/game/equipfix.cpp
     src/game/riderfix.cpp
     src/game/aimrate.cpp
+    src/game/leanblend.cpp
     src/resources.rc
 )
 
@@ -101,6 +102,7 @@ target_compile_options(buildcheck PRIVATE /utf-8 /W3)
 add_executable(chartcheck EXCLUDE_FROM_ALL
     tests/chartcheck.cpp
     src/game/broomchart.cpp
+    src/game/tablefile.cpp
 )
 target_include_directories(chartcheck PRIVATE src)
 target_compile_definitions(chartcheck PRIVATE _CRT_SECURE_NO_WARNINGS)

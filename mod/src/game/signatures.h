@@ -116,6 +116,18 @@ namespace bm::sig
     inline constexpr unsigned kOff_Block_Owner    = 0x118;
     inline constexpr unsigned kOff_Owner_Id       = 0x18;
     inline constexpr unsigned kOff_Status_CharRow = 0x30;
+    // Where an actor stands: the block's transform, as Master Looter, Glint
+    // Spotter and Flight Freedom read it. The world position is at +0x29C
+    // with copies at +0x324, +0x3D0 and +0x51C; on a rider and on a mount
+    // +0x29C reads zero and +0x324 holds it (Flight Freedom, 19 September).
+    // +0xB4 is local to the sub-level, off the world by kilometres on the
+    // horizontal and not at all in height (Glint Spotter), or to the parent,
+    // whose position is +0xEC while +0xC8 names one.
+    inline constexpr unsigned kOff_Block_Transform = 0x1A0;
+    inline constexpr unsigned kTf_WorldCopies[]    = { 0x29C, 0x324, 0x3D0, 0x51C };
+    inline constexpr unsigned kOff_Tf_LocalPos     = 0xB4;
+    inline constexpr unsigned kOff_Tf_ParentId     = 0xC8;
+    inline constexpr unsigned kOff_Tf_ParentPos    = 0xEC;
     // The hire takes only an actor whose kind byte is 4, 5 or 6 and whose
     // owner id is 0; anything else fails with the error at +0x6CF7AA4.
     inline constexpr uint8_t  kActorKindHireLo = 4;
@@ -137,35 +149,35 @@ namespace bm::sig
 
     // ---- The call --------------------------------------------------------
 
-    // Kliff's client chart component. Its vtable slot 78 (+0x360BE0 on this
-    // exe) checks a chart leaf that carries data, (component, pointer to the
-    // token pointer, ...), returning 0, 1 or 2; slot 77 checks the built-in
-    // leaves below 0x83. A token is a u32 leaf id and its arguments.
+    // Broomy is one of VehicleSlot's mounts, the saddle wedge's, after the
+    // horses (list 78) and Vehicle_Special (81). The server's side of a
+    // wedge press (TrocTrChangeUseItemReserveSlotReq, 0x0AC1) is (reserve
+    // slot component, u32* error, u32 slot key, slot data, ...); for a
+    // vehicle slot the slot data's u16 at +0xD8 is the chosen mount's
+    // mercenary list index. A nonzero error goes back to the client as
+    // 0x3F5. Unique at +0x2AF0140 on this exe.
+    inline constexpr const char* kSig_ReserveSlotChange =
+        "48 89 5C 24 08 48 89 74 24 10 48 89 7C 24 20 55 41 54 41 55 41 56 41 57 48 8D AC 24 80 FB FF FF "
+        "48 81 EC 80 05 00 00 4D 8B E1 48 8B F2 4C 8B F1 4C 8B 1D";
+    inline constexpr unsigned kOff_SlotData_ListIndex = 0xD8;
+    inline constexpr uint32_t kSlot_Vehicle = 1000006;   // reserveslot VehicleSlot, the saddle wedge
+    inline constexpr uint32_t kSlot_Mechanic = 1000019;  // reserveslot VehicleSlot_Mechanic
+    inline constexpr uint32_t kSlot_Dragon = 1000020;    // reserveslot VehicleSlot_Dragon, Blackstar's
+
+    // Slot 78 of the client's chart component checks a chart leaf that
+    // carries data: (component, pointer to the token pointer, ...). A token is
+    // a u32 leaf id and its arguments. The evaluator (+0x242D370) reads a
+    // leaf's low byte as 0 when it holds, 1 when not, 2 on an error: AND
+    // (0x275) and OR (0x276) treat 0 as true and NOT (0x277) swaps 0 and 1.
     inline constexpr const char* kRtti_ClientChartComponent = ".?AVClientCharacterControlActorComponent@pa@@";
     inline constexpr unsigned    kSlot_ChartDataLeaf = 78;
-    // Leaf 0x1D1 (reserve slot key): 1 while the chosen slot is another one.
-    // The call branches of common_upper_branchset ask it of VehicleSlot
-    // (+0x140E5), VehicleSlot_Dragon (+0x14119) and VehicleSlot_Mechanic
-    // (+0x1414D).
-    inline constexpr uint32_t kLeaf_SlotChosen = 0x1D1;
-    inline constexpr uint32_t kSlot_Vehicle = 1000006;   // reserveslot VehicleSlot
-    inline constexpr uint32_t kSlot_Broomy = 1000032;    // reserveslot VehicleSlot_Broomy
-
-    // The frame event lookup (+0x1F78A20): (frame event request, out, actor,
-    // u32). It finds the frame event the request names in the action the
-    // actor plays; out+8 then points at the event's data. For the call
-    // event (ClientFrameEventCallMercenaryReservedSlot) the data's +0x0C is
-    // the reserve slot key it calls, and the server's call reads it there
-    // (+0x2BA9BEA, +0x2BAB659). Client and server both use it.
-    inline constexpr const char* kSig_FrameEventLookup =
-        "48 89 5C 24 10 48 89 74 24 18 48 89 7C 24 20 55 41 56 41 57 48 8D 6C 24 B9 48 81 EC 90 00 00 00 0F B6 41 08 "
-        "33 DB 48 89 1A";
-    inline constexpr unsigned kOff_FrameEventOut_Data = 0x08;
-    inline constexpr unsigned kOff_CallEvent_SlotKey  = 0x0C;
-    // How long after Broomy's wedge request the chart's VehicleSlot branch is
-    // opened for it. The chart takes the branch in the frame after the
-    // request; left open, the branch fires again every two seconds.
-    inline constexpr uint32_t kCallWindowMs = 500;
+    // Leaf 0xED (skill key, 1): Kliff has learned the skill. Skill 0x5E2 is
+    // Skill_CallDragon (0x5E1 Skill_CallVehicle). The falling chart's three
+    // call branches (basic_upper_fall) ask it, two of them with no question
+    // about the chosen wedge, so a call while falling brings Blackstar
+    // whichever wedge is chosen. Its only other askers are dragon calls.
+    inline constexpr uint32_t kLeaf_Skill = 0xED;
+    inline constexpr uint32_t kSkill_CallDragon = 0x5E2;
 
     // The server's handler of the client's movement request (0x0B0C, static
     // descriptor +0x6A6FC30, slot 2 of its live vtable): (this, u32* error,
@@ -184,4 +196,33 @@ namespace bm::sig
     inline constexpr uint32_t kGrantDelayMs = 3000;    // after loading completes
     inline constexpr uint32_t kGrantRetryMs = 5000;    // after a hire that failed or never came
     inline constexpr int      kGrantTries   = 5;
+
+    // ---- Kliff's lean ----------------------------------------------------
+
+    // A blend motion's update (+0x2EA9F90), from the blend motion's slot in
+    // the motion function table (+0x2E6DAA0, at +0x5B628C8): (blend, dt,
+    // measured values indexed by dimension type, character scale, u8 loop,
+    // the motion's +0x91), returning the motion's time, which the motion
+    // updates only while it is short of its end (+0xF0); the time step
+    // (+0x2EB2B30) wraps it only when the loop byte is set. [blend+0x18] is
+    // the motion. [blend+0x38]+8 is the blend of the motion it started from,
+    // live while its byte +0x15 is 0. When both blends' dimensions match it
+    // copies that one's weights, speeds (+0x5C, a float a dimension) and time
+    // (+0x2EA9670), evaluating them first, with no smoothing, if that one has
+    // none kept (+0x53); otherwise it evaluates its own (+0x2EA98C0) and
+    // eases its speeds by _parameterSmoothingFactor (dimension +0x34) over
+    // dt, unless the space keeps its first weights (_keepInitialBlendWeights,
+    // space +0xE0, set at +0x2EB03D0).
+    inline constexpr const char* kSig_BlendUpdate =
+        "48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 48 89 7C 24 20 41 54 41 56 41 57 48 83 EC 70 48 8B 79 38 "
+        "4D 8B E0 48 8B E9 C5 F8 29 74 24 60";
+    inline constexpr unsigned kOff_Blend_Space  = 0x28;   // the space's +0x28
+    inline constexpr unsigned kOff_Blend_From   = 0x38;
+    inline constexpr unsigned kOff_Space_Dims     = 0x80;
+    inline constexpr unsigned kOff_Space_DimCount = 0x88;
+    inline constexpr unsigned kOff_Dim_Type       = 0x28;
+    inline constexpr unsigned kOff_Dim_Smoothing  = 0x34;
+    // Dimension types, registered at +0x3151340.
+    inline constexpr uint32_t kDim_SpeedUpInWorld      = 4;
+    inline constexpr uint32_t kDim_SpeedForwardInLocal = 6;
 }

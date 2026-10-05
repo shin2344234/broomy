@@ -396,7 +396,7 @@ namespace bm::broomchart
         char line[900];
         snprintf(line, sizeof line,
                  "%zu animation paths and %zu blend paths are the broom's, padded with zeros; %zu riding action%s keyed "
-                 "to Broom_Ride; %zu of %zu ground branches go to flight%s; %zu of %zu Wyvern sound events silenced; %zu of %zu boost edits; %zu of %zu speeds set (ground %d%%, flight %d%%, boost %d%%, climb %d%%); %zu of %zu roll and glide branches cut; %zu of %zu shakes, rumbles and effects removed; %zu of %zu RideOn flight nodes on the blend; %zu of %zu mount edits; %zu of %zu aim IK edits; %zu of %zu crossfades eased; %zu of %zu right-side mount edits; %zu of %zu takeoff edits",
+                 "to Broom_Ride; %zu of %zu ground branches go to flight%s; %zu of %zu Wyvern sound events silenced; %zu of %zu boost edits; %zu of %zu speeds set (ground %d%%, flight %d%%, boost %d%%, climb %d%%); %zu of %zu roll and glide branches cut; %zu of %zu shakes, rumbles, effects and voices removed; %zu of %zu RideOn flight nodes on the blend; %zu of %zu mount edits; %zu of %zu aim IK edits; %zu of %zu crossfades eased; %zu of %zu right-side mount edits; %zu of %zu takeoff edits",
                  anims.size(), blends.size(), keyed, keyed == 1 ? "" : "s", hover, hover + skipped,
                  skipped ? " (the rest did not hold the Wyvern's value)" : "", quiet,
                  sizeof kQuietPatches / sizeof kQuietPatches[0], boost, sizeof kBoostPatches / sizeof kBoostPatches[0], speed,

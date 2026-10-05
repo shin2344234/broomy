@@ -24,4 +24,8 @@ namespace bm::broomy
     // A characterinfo row's _mercenaryInfo as the file has it (a
     // mercenaryinfo key, 78 for the horses), or -1.
     int MercenaryKey(uint32_t row);
+    // Broomy's mercenary list as the game numbers it (21 on this build), the
+    // index a reserve slot's data names, once the game has read the table;
+    // else -1.
+    int ListIndex();
 }

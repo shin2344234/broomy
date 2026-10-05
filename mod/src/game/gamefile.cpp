@@ -173,23 +173,26 @@ namespace
                 return r;
             }
         }
-        const uint64_t r = g_readOriginal(loader, path, buffer, name, a5, a6, a7);
+        uint64_t r = g_readOriginal(loader, path, buffer, name, a5, a6, a7);
+        if (wanted)
+        {
+            const bool found = (r & 0xFF) && buffer->data;
+            std::string game, ours;
+            if (found) game.assign(reinterpret_cast<const char*>(buffer->data), buffer->size);
+            const uintptr_t outer = t_loader;
+            t_loader = loader;
+            const bool serve = g_serve(text, found, game, ours);
+            t_loader = outer;
+            if (serve && Replace(buffer, ours, text) && !found) r = (r & ~0xFFull) | 1;
+        }
+        // After Serve, so an observer sees the bytes the game keeps.
         if (const bm::gamefile::Seen seen = g_seen)
         {
             char seenText[300];
             if ((r & 0xFF) && buffer && buffer->data && bm::mem::ReadEngineString(path, seenText, sizeof seenText))
                 seen(seenText, buffer->data, buffer->size);
         }
-        if (!wanted) return r;
-        const bool found = (r & 0xFF) && buffer->data;
-        std::string game, ours;
-        if (found) game.assign(reinterpret_cast<const char*>(buffer->data), buffer->size);
-        const uintptr_t outer = t_loader;
-        t_loader = loader;
-        const bool serve = g_serve(text, found, game, ours);
-        t_loader = outer;
-        if (!serve || !Replace(buffer, ours, text)) return r;
-        return found ? r : (r & ~0xFFull) | 1;
+        return r;
     }
 
     // The loader reads the task's buffer (+0x28) twice at its start, the

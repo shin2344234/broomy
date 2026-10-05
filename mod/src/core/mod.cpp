@@ -14,10 +14,12 @@
 #include "game/analogspeed.h"
 #include "game/broomy.h"
 #include "game/callgate.h"
+#include "game/damianeclips.h"
 #include "game/equipfix.h"
 #include "game/farhook.h"
 #include "game/gamefile.h"
 #include "game/grant.h"
+#include "game/leanblend.h"
 #include "game/mem.h"
 #include "game/aimrate.h"
 #include "game/riderfix.h"
@@ -65,18 +67,52 @@ namespace
 
     // Broomy's riding blend (broomblend.h): the broom's own clips, laid out
     // for Broomy's speeds so its nose pitches with the angle it flies at.
-    // Every blend path in Broomy's charts names this file.
+    // Every blend path in Broomy's charts names this file. Kliff's
+    // broom_rider_move gets the same layout with rings of its own, so his
+    // lean follows Broomy's speed.
     const std::string g_blend(reinterpret_cast<const char*>(bm::broomchart::kBroomBlendBytes),
                               sizeof bm::broomchart::kBroomBlendBytes);
+    const std::string g_riderBlend(reinterpret_cast<const char*>(bm::broomchart::kRiderBlendBytes),
+                                   sizeof bm::broomchart::kRiderBlendBytes);
     constexpr char kBlendLeaf[] = "/broom_riding_move.motionblending";
+    constexpr char kRiderBlendLeaf[] = "/broom_rider_move.motionblending";
 
-    // The broom's level takeoff and hover idle (broomclips.h), in the order of
-    // kBroomClips. The takeoff's three files are new, so find and exists see
-    // the shipped idle's in their place; the hover replaces the idle.
-    const std::vector<std::string> g_clips = [] {
-        std::vector<std::string> v;
+    // Damiane's copy of Kliff's lean blend, which her nodes in his riding
+    // charts name (damianepatches.h): his rings, her clips (damianeclips.h)
+    // and her skeleton, phw_01, as the game's own phw_ blends name it. No
+    // pack holds it, so find and exists see his in its place.
+    constexpr char kHerBlend[] = "character/binary/motionblending/phw_locomotion/phw_broom_rider_move.motionblending";
+    constexpr char kHisBlend[] = "character/binary/motionblending/phm/broom_rider_move.motionblending";
+    constexpr char kHisClips[] = "1_pc/1_phm/00_riding/cd_phm_rd_broom", kHerClips[] = "1_pc/2_phw/00_riding/cd_phw_rd_broom";
+    constexpr char kHisSkeleton[] = "character/model/1_pc/1_phm/phm_01.pab",
+                   kHerSkeleton[] = "character/model/1_pc/2_phw/phw_01.pab";
+    static_assert(sizeof kHisClips == sizeof kHerClips && sizeof kHisSkeleton == sizeof kHerSkeleton,
+                  "a name in the blend keeps its length");
+
+    std::string Renamed(std::string bytes, const char* from, const char* to)
+    {
+        for (size_t at = bytes.find(from); at != std::string::npos; at = bytes.find(from, at))
+            bytes.replace(at, strlen(to), to);
+        return bytes;
+    }
+
+    const std::string g_herBlend = Renamed(Renamed(g_riderBlend, kHisClips, kHerClips), kHisSkeleton, kHerSkeleton);
+
+    // The clips Broomy carries: the broom's level takeoff and hover idle,
+    // Kliff's push-off and leans (broomclips.h), and Damiane's (damianeclips.h).
+    // A clip no pack holds has a stand-in, a shipped file find and exists see
+    // in its place; the hover replaces the idle.
+    struct Carried
+    {
+        const bm::broomchart::BroomClip* clip;
+        std::string bytes;
+    };
+    const std::vector<Carried> g_clips = [] {
+        std::vector<Carried> v;
         for (const bm::broomchart::BroomClip& c : bm::broomchart::kBroomClips)
-            v.emplace_back(reinterpret_cast<const char*>(c.data), c.size);
+            v.push_back({ &c, std::string(reinterpret_cast<const char*>(c.data), c.size) });
+        for (const bm::broomchart::BroomClip& c : bm::damiane::kClips)
+            v.push_back({ &c, std::string(reinterpret_cast<const char*>(c.data), c.size) });
         return v;
     }();
 
@@ -90,21 +126,30 @@ namespace
     const std::string* Supply(const char* path, std::string* standIn)
     {
         const size_t n = strlen(path);
-        if (EndsWithI(path, n, kBlendLeaf))
+        if (EndsWithI(path, n, kHerBlend))
+        {
+            if (standIn) *standIn = kHisBlend;
+            static volatile LONG logged = 0;
+            if (!standIn && InterlockedIncrement(&logged) <= 4) LOG("[blend] Damiane's lean blend goes in for %s.", path);
+            return &g_herBlend;
+        }
+        const bool rider = EndsWithI(path, n, kRiderBlendLeaf);
+        if (rider || EndsWithI(path, n, kBlendLeaf))
         {
             static volatile LONG logged = 0;
-            if (InterlockedIncrement(&logged) <= 4) LOG("[blend] Broomy's riding blend goes in for %s.", path);
-            return &g_blend;
+            if (InterlockedIncrement(&logged) <= 8)
+                LOG("[blend] %s goes in for %s.", rider ? "Kliff's lean blend" : "Broomy's riding blend", path);
+            return rider ? &g_riderBlend : &g_blend;
         }
-        for (size_t i = 0; i < g_clips.size(); ++i)
+        for (const Carried& k : g_clips)
         {
-            const bm::broomchart::BroomClip& c = bm::broomchart::kBroomClips[i];
+            const bm::broomchart::BroomClip& c = *k.clip;
             if (!EndsWithI(path, n, c.path)) continue;
             if (standIn && c.standIn) *standIn = c.standIn;
             static volatile LONG logged = 0;
-            if (!standIn && InterlockedIncrement(&logged) <= 10)
+            if (!standIn && InterlockedIncrement(&logged) <= 60)
                 LOG("[clips] Broomy's own %s goes in for %s.", strrchr(c.path, '/') + 1, path);
-            return &g_clips[i];
+            return &k.bytes;
         }
         return nullptr;
     }
@@ -121,6 +166,7 @@ namespace
         const bool granting = g_serving && give && bm::grant::Install();
         if (g_serving) bm::callgate::Install();
         if (g_serving) bm::equipfix::Install();
+        if (g_serving) bm::leanblend::Install();
         bm::analogspeed::SetSlowest(ReadSetting(L"SlowestPush", 15));
         if (g_serving) bm::analogspeed::Install();
         if (g_serving && !give) LOG("[grant] GiveBroomy=0, so no save is given Broomy.");
