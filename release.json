@@ -6,6 +6,7 @@
   "dist": "mod/dist",
   "sources": ["mod/src", "mod/Broomy.ini", "mod/CMakeLists.txt"],
   "manualZip": ["mod/README.md", "LICENSE", "THIRD_PARTY_NOTICES.md"],
+  "dmmZip": ["LICENSE", "THIRD_PARTY_NOTICES.md"],
   "gates": [
     {
       "name": "the INI Master metadata matches mod.cpp",
