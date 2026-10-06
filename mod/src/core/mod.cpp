@@ -21,6 +21,8 @@
 #include "game/mem.h"
 #include "game/aimrate.h"
 #include "game/riderfix.h"
+#include "game/speederfiles.h"
+#include "game/speedersound.h"
 #include "ini_default.h"
 #include "version.h"
 
@@ -62,6 +64,7 @@ namespace
     }
 
     bool g_serving = false;
+    HMODULE g_self = nullptr;
 
     // Broomy's riding blend (broomblend.h): the broom's own clips, laid out
     // for Broomy's speeds so its nose pitches with the angle it flies at.
@@ -80,6 +83,31 @@ namespace
         return v;
     }();
 
+    // The speeder's mesh, material, textures and Kliff's riding clips
+    // (speederfiles.h), read from the plugin's resources at start-up, in
+    // the order of kFiles. They come before the broom's own clips, so the
+    // speeder's takeoff replaces the push-off.
+    std::vector<std::string> g_speeder;
+
+    bool LoadSpeeder(HMODULE module)
+    {
+        for (const bm::speederfiles::File& f : bm::speederfiles::kFiles)
+        {
+            HRSRC res = FindResourceW(module, MAKEINTRESOURCEW(f.resource), MAKEINTRESOURCEW(10));   // RT_RCDATA
+            HGLOBAL h = res ? LoadResource(module, res) : nullptr;
+            const void* data = h ? LockResource(h) : nullptr;
+            if (!data)
+            {
+                LOG_ERR("[speeder] resource %d (%s) is missing, so the broom stays a broom.", f.resource, f.path);
+                g_speeder.clear();
+                return false;
+            }
+            g_speeder.emplace_back(static_cast<const char*>(data), SizeofResource(module, res));
+        }
+        LOG("[speeder] %zu files ready: the broom is a speeder bike.", g_speeder.size());
+        return true;
+    }
+
     bool EndsWithI(const char* path, size_t n, const char* tail)
     {
         const size_t t = strlen(tail);
@@ -90,6 +118,16 @@ namespace
     const std::string* Supply(const char* path, std::string* standIn)
     {
         const size_t n = strlen(path);
+        for (size_t i = 0; i < g_speeder.size(); ++i)
+        {
+            const bm::speederfiles::File& f = bm::speederfiles::kFiles[i];
+            if (!EndsWithI(path, n, f.path)) continue;
+            if (standIn && f.standIn) *standIn = f.standIn;
+            static volatile LONG logged = 0;
+            if (!standIn && InterlockedIncrement(&logged) <= 24)
+                LOG("[speeder] the speeder's %s goes in for %s.", strrchr(f.path, '/') + 1, path);
+            return &g_speeder[i];
+        }
         if (EndsWithI(path, n, kBlendLeaf))
         {
             static volatile LONG logged = 0;
@@ -123,6 +161,7 @@ namespace
         if (g_serving) bm::equipfix::Install();
         bm::analogspeed::SetSlowest(ReadSetting(L"SlowestPush", 15));
         if (g_serving) bm::analogspeed::Install();
+        if (g_serving) bm::speedersound::Start(g_self, Clamp(ReadSetting(L"EngineVolume", 60), 0, 100));
         if (g_serving && !give) LOG("[grant] GiveBroomy=0, so no save is given Broomy.");
         while (!g_stop.load())
         {
@@ -140,6 +179,7 @@ namespace bm::Mod
         // On the loading thread, before the game's own start-up code runs,
         // so the files it reads at boot are seen too.
         Paths::Init(module);
+        g_self = module;
         if (!IsGame()) return;
         bm::broomchart::Speeds speeds;
         speeds.ground = Clamp(ReadSetting(L"GroundSpeed", speeds.ground), 10, 1000);
@@ -148,6 +188,7 @@ namespace bm::Mod
         speeds.climb = Clamp(ReadSetting(L"ClimbSpeed", speeds.climb), 10, 1000);
         bm::broomchart::SetSpeeds(speeds);
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
+        if (g_serving) LoadSpeeder(module);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
         if (g_serving) bm::riderfix::Install(false);
         if (g_serving) bm::aimrate::Install();
@@ -182,6 +223,7 @@ namespace bm::Mod
             return;
         }
         bm::analogspeed::Stop();
+        bm::speedersound::Stop();
         if (g_thread)
         {
             WaitForSingleObject(g_thread, 3000);

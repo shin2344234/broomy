@@ -22,4 +22,9 @@ namespace bm::analogspeed
     // reading the left stick.
     bool Install();
     void Stop();
+
+    // Broomy's speed in m/s at its last movement update, with how many
+    // milliseconds ago that was in `age` and whether it was the boost in
+    // `boost`; for the engine sound.
+    float LastSpeed(uint32_t* age, bool* boost);
 }

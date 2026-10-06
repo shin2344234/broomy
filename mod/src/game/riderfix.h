@@ -20,4 +20,7 @@ namespace bm::riderfix
     bool Install(bool logStates);
     // From broomy.cpp's chart patch: where each of Broomy's served charts is.
     void NoteServed(const char* path, uintptr_t base, uint32_t size);
+    // Milliseconds since Broomy's RideOn chart was last checked, which is
+    // every frame while it is ridden; a large number before the first.
+    uint32_t MsSinceRidden();
 }

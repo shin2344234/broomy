@@ -52,6 +52,18 @@ namespace
 
     std::atomic<bool> g_boostSeen{ false };
 
+    // Broomy's speed at its last movement update, for the engine sound.
+    std::atomic<float> g_lastSpeed{ 0.0f };
+    std::atomic<DWORD> g_lastAt{ 0 };
+    std::atomic<bool> g_lastBoost{ false };
+
+    void Note(float speed, bool boost = false)
+    {
+        g_lastSpeed.store(speed, std::memory_order_relaxed);
+        g_lastBoost.store(boost, std::memory_order_relaxed);
+        g_lastAt.store(GetTickCount(), std::memory_order_relaxed);
+    }
+
     // Which of Broomy's charts holds p, with p's offset in it, or -1.
     int ChartOf(uintptr_t p, uint32_t* offset)
     {
@@ -120,17 +132,20 @@ namespace
         uint32_t offset = 0;
         const int chart = ChartOf(NodeHeader(self), &offset);
         if (chart < 0) return r;
-        if (IsBoost(chart, offset))
+        float* speed = reinterpret_cast<float*>(record + kRecordSpeed);
+        const float full = *speed;
+        const bool boost = IsBoost(chart, offset);
+        Note(full > 0.0f ? full : 0.0f, boost);
+        if (boost)
         {
             if (!g_boostSeen.exchange(true)) LOG("[speed] boosting, which stays at full speed whatever the stick does.");
             return r;
         }
-        float* speed = reinterpret_cast<float*>(record + kRecordSpeed);
-        const float full = *speed;
         if (!(full > 0.0f)) return r;
         const float share = Share();
         if (share >= 1.0f) return r;
         *speed = full * share;
+        Note(*speed);
         float* latch = reinterpret_cast<float*>(self + kLatch);
         if (*latch != kUnlatched && *latch > *speed) *latch = kUnlatched;
         return r;
@@ -195,18 +210,12 @@ namespace bm::analogspeed
     bool Install()
     {
         if (g_slowest >= 1.0f)
-        {
             LOG("[speed] SlowestPush=100, so the stick does not change Broomy's speed.");
-            return true;
-        }
         HMODULE xinput = LoadLibraryW(L"xinput1_4.dll");
         if (!xinput) xinput = LoadLibraryW(L"xinput9_1_0.dll");
         if (xinput) g_getState = reinterpret_cast<FnXInputGetState>(GetProcAddress(xinput, "XInputGetState"));
-        if (!g_getState)
-        {
+        if (!g_getState && g_slowest < 1.0f)
             LOG_ERR("[speed] XInput is missing, so Broomy flies at full speed whatever the stick does.");
-            return false;
-        }
         size_t hits = 0;
         const uintptr_t at = mem::FindUnique(kSig_MoveUpdateCall, &hits);
         if (!at)
@@ -222,6 +231,7 @@ namespace bm::analogspeed
             LOG_ERR("[speed] could not hook the movement update's call: %s", why);
             return false;
         }
+        if (!g_getState || g_slowest >= 1.0f) return true;
         g_thread = CreateThread(nullptr, 0, &Poll, nullptr, 0, nullptr);
         LOG("[speed] Broomy's speed follows the left stick: %.0f%% at the lightest push, full from %.0f%%.",
             g_slowest * 100.0f, kFullPush * 100.0f);
@@ -231,5 +241,12 @@ namespace bm::analogspeed
     void Stop()
     {
         g_stop.store(true);
+    }
+
+    float LastSpeed(uint32_t* age, bool* boost)
+    {
+        *age = GetTickCount() - g_lastAt.load(std::memory_order_relaxed);
+        *boost = g_lastBoost.load(std::memory_order_relaxed);
+        return g_lastSpeed.load(std::memory_order_relaxed);
     }
 }

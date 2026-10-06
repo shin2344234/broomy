@@ -36,6 +36,45 @@ The full account of how the mod was made, with the addresses, formats and
 everything that was tried and dropped, is in
 [docs/how-broomy-was-made.md](docs/how-broomy-was-made.md).
 
+## The speeder bike fork
+
+This branch turns the broom into a speeder bike called Speeder Bike. The
+mount's rows, charts and flight are Broomy's; what changes is what the
+plugin hands the game for the broom's mesh, its material and textures, and
+Kliff's riding clips, plus an engine sound of the plugin's own.
+
+The mesh is skinned to `B_Rider_01`, the seat bone, which stays level in
+every riding clip while the broom tips under it, so the speeder flies
+level and still bobs and turns with the body. Kliff's clips keep his
+spine and head from the broom's, with his pelvis held on the saddle, his
+hands on the grips and his feet on the footrests by IK, and a forward lean
+that grows with speed. The engine is the speeder bike's own sound from
+Return of the Jedi, cut from the Star Wars SFX Archive's "Speeder Bike.wav"
+by `speeder/make_engine.py`: idle, close engine and boost loops, and the
+acceleration, boost start, boost stop, start-up and shutdown takes. The
+start-up plays as Kliff gets on, unless he rode in the last 5 seconds, and
+the shutdown as he gets off. The plugin plays them
+through XAudio2 while the speeder is ridden. The idle crosses into the
+close engine and the pitch rises with the speed, the boost has its own
+loop with its start and stop, and a jump in speed of 12 m/s or more plays
+the acceleration, or the boost's stop, quieter, when slowing down.
+`EngineVolume` in the ini sets the volume, and `build.bat soundcheck`
+plays a fake ride through it all. Without the WAV the script makes a
+synthesised hum and no one-shots.
+
+`speeder/` has the scripts that make the files in `mod/assets`. They need
+the model from Sketchfab (THIRD_PARTY_NOTICES.md) unpacked into
+`speeder/src`, Blender 5.2 and CD Animator:
+
+    py -3 speeder/make_engine.py ["Speeder Bike.wav"]
+    py -3 speeder/make_textures.py <broom textures, unpacked>
+    blender -b --factory-startup --python speeder/build_mesh.py -- <broom .pac, plain>
+    blender -b --factory-startup --python speeder/build_rider.py
+    py -3 speeder/pack_assets.py <broom .pac_xml, unpacked>
+
+`speeder/check_pacwrite.py` checks the mesh writer against the broom's own
+mesh.
+
 ## Building
 
 MSVC Build Tools 2022, with the CMake and Ninja they bundle.

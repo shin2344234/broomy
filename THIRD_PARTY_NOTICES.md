@@ -66,3 +66,25 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
+
+## StarWars Speeder Bike, by Idmenthal
+
+The speeder bike's mesh and textures in `mod/assets` are made from
+"StarWars Speeder Bike [free download]" by Idmenthal
+(https://sketchfab.com/idmental.id), from
+https://sketchfab.com/3d-models/starwars-speeder-bike-free-download-1d0ea6fe43c1405b8d4b17722e166f6e,
+licensed under Creative Commons Attribution 4.0
+(http://creativecommons.org/licenses/by/4.0/). Changes: scaled to 85%,
+turned to the broom's axes, reduced to four levels of detail, and the
+textures resized to 1024 and 512 pixels, the ambient occlusion multiplied
+into the base colour, roughness and metal packed into one map, and the
+normal map left out. Star Wars and the speeder bike's design belong to
+Lucasfilm; this is a fan work with no connection to them.
+
+## The speeder bike's sound
+
+`mod/assets/sound` holds two loops cut from "Speeder Bike.wav", the Star
+Wars SFX Archive's collection of the speeder bike's sound from Return of
+the Jedi (https://www.youtube.com/watch?v=xQTdXS5bTpA). The sound is Ben
+Burtt's work for Lucasfilm, used here in a free fan mod with no connection
+to Lucasfilm.

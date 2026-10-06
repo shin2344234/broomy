@@ -1,0 +1,26 @@
+﻿<SkinnedMeshPropertyCommon ReflectObjectXMLDataVersion="9"/>
+<ModelPropertyList>
+	<ModelProperty Index="0" Version="Reflection">
+		<SkinnedMeshProperty ReflectObjectXMLDataVersion="9">
+			<Vector Name="_subMeshResources" IdBase="1" isOverrided="true">
+				<SkinnedMeshMaterialWrapper ItemID="1" _subMeshName="cd_t0000_broom_0001" _jiggleWindWeight="0">
+					<Material Name="_resourceMaterial" _materialName="SkinnedMeshStandard">
+						<Vector Name="_permutations"/>
+						<Vector Name="_parameters">
+							<MaterialParameterTexture StringItemID="_baseColorTexture" ItemID="8" _name="_baseColorTexture" Index="0">
+								<ResourceReferencePath_ITexture Name="_value" _path="character/texture/cd_r0032_00_speeder_0001.dds"/>
+							</MaterialParameterTexture>
+							<MaterialParameterTexture StringItemID="_normalTexture" ItemID="7" _name="_normalTexture" Index="1">
+								<ResourceReferencePath_ITexture Name="_value" _path="character/texture/cd_r0032_00_speeder_0001_n.dds"/>
+							</MaterialParameterTexture>
+							<MaterialParameterTexture StringItemID="_materialTexture" ItemID="6" _name="_materialTexture" Index="2">
+								<ResourceReferencePath_ITexture Name="_value" _path="character/texture/cd_r0032_00_speeder_0001_sp.dds"/>
+							</MaterialParameterTexture>
+						</Vector>
+					</Material>
+				</SkinnedMeshMaterialWrapper>
+			</Vector>
+		</SkinnedMeshProperty>
+	</ModelProperty>
+</ModelPropertyList>
+

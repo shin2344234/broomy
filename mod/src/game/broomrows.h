@@ -16,7 +16,8 @@
 namespace bm::broomrows
 {
     inline constexpr uint32_t kBroomyKey = 1900001;
-    inline constexpr const char* kDisplayName = "Broomy";
+    // The name the game shows. This fork turns the broom into a speeder bike.
+    inline constexpr const char* kDisplayName = "Speeder Bike";
 
     inline constexpr const char* kTableDir = "gamedata/binarystaticinfo__/bin/";
     // Every table Broomy changes, in no particular order.

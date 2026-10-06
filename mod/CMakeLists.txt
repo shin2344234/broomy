@@ -64,13 +64,18 @@ add_library(Broomy SHARED
     src/game/equipfix.cpp
     src/game/riderfix.cpp
     src/game/aimrate.cpp
+    src/game/speedersound.cpp
     src/resources.rc
+    src/speeder.rc
 )
 
 # Broomy.ini again, this time as the INIMETA resource (src/resources.rc);
 # rebuild when the ini's ;@ directives or defaults change.
 set_source_files_properties(src/resources.rc PROPERTIES OBJECT_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/Broomy.ini")
+# The speeder's files (src/speeder.rc, from speeder/pack_assets.py).
+file(GLOB_RECURSE BM_SPEEDER_ASSETS "${CMAKE_CURRENT_SOURCE_DIR}/assets/*")
+set_source_files_properties(src/speeder.rc PROPERTIES OBJECT_DEPENDS "${BM_SPEEDER_ASSETS}")
 
 target_include_directories(Broomy PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/generated" ${minhook_SOURCE_DIR}/src/hde)
 target_link_libraries(Broomy PRIVATE minhook)
@@ -105,6 +110,16 @@ add_executable(chartcheck EXCLUDE_FROM_ALL
 target_include_directories(chartcheck PRIVATE src)
 target_compile_definitions(chartcheck PRIVATE _CRT_SECURE_NO_WARNINGS)
 target_compile_options(chartcheck PRIVATE /utf-8 /W3)
+
+# The offline check of the speeder's engine sounds: build.bat soundcheck.
+add_executable(soundcheck EXCLUDE_FROM_ALL
+    tests/soundcheck.cpp
+    src/game/speedersound.cpp
+    src/speeder.rc
+)
+target_include_directories(soundcheck PRIVATE src)
+target_compile_definitions(soundcheck PRIVATE SPEEDER_SOUNDCHECK _CRT_SECURE_NO_WARNINGS)
+target_compile_options(soundcheck PRIVATE /utf-8 /W3)
 
 add_custom_command(TARGET Broomy POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_SOURCE_DIR}/dist"

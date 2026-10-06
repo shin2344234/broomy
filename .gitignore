@@ -23,3 +23,7 @@ keys.local.env
 # Editor settings.
 .vscode/
 .idea/
+
+# The speeder model (CC BY, see THIRD_PARTY_NOTICES.md) and what the scripts write.
+speeder/src/
+speeder/out/

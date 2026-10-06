@@ -178,6 +178,12 @@ namespace
 
 namespace bm::riderfix
 {
+    uint32_t MsSinceRidden()
+    {
+        const LONG at = g_rideOnAt;
+        return at ? GetTickCount() - static_cast<DWORD>(at) : 0xFFFFFFFFu;
+    }
+
     void NoteServed(const char* path, uintptr_t base, uint32_t size)
     {
         if (!strstr(path, "m0002_armadillo.paac")) return;
