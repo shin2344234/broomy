@@ -17,7 +17,7 @@ namespace
     typedef uint64_t (*FnSlotChange)(uintptr_t, uint32_t*, uintptr_t, uintptr_t, uintptr_t, uintptr_t, uintptr_t,
                                      uintptr_t);
     FnSlotChange  g_slotOriginal = nullptr;
-    volatile LONG g_slotLogged = 0;
+    volatile LONG g_lastList[3] = { -1, -1, -1 };   // saddle, war machine, dragon wedge
 
     // Every press of H sends the chosen wedge twice before the call branch is
     // checked, so this is current by then, the first press after a load too.
@@ -31,11 +31,22 @@ namespace
         if (err || (slot != kSlot_Vehicle && slot != kSlot_Mechanic && slot != kSlot_Dragon)) return r;
         uint16_t list = 0xFFFF;
         if (data) bm::mem::Read16(data + kOff_SlotData_ListIndex, &list);
-        const bool broomy = slot == kSlot_Vehicle && list == bm::broomy::ListIndex();
+        const int broomyList = bm::broomy::ListIndex();
+        const bool broomy = slot == kSlot_Vehicle && list == broomyList;
         const LONG was = InterlockedExchange(&g_broomyChosen, broomy ? 1 : 0);
-        if (broomy != (was != 0) && InterlockedIncrement(&g_slotLogged) <= 20)
+        if (broomy != (was != 0))
             LOG("[call] the chosen wedge is now %s (reserve slot %u, mercenary list %u).",
                 broomy ? "the saddle wedge with Broomy" : "another wedge or mount", slot, list);
+        // Every list each mount wedge settles on, once per change, so a log
+        // shows whether the saddle wedge ever reached Broomy's (bug 1146059).
+        // Each press sends the choice twice, and the repeat says nothing new.
+        const int w = slot == kSlot_Vehicle ? 0 : slot == kSlot_Mechanic ? 1 : 2;
+        const LONG key = static_cast<LONG>(list);
+        if (InterlockedExchange(&g_lastList[w], key) != key)
+            LOG("[call] %s now picks mercenary list %u (%s; Broomy's is %d).",
+                w == 0 ? "the saddle wedge" : w == 1 ? "the war machine wedge" : "the dragon wedge", list,
+                broomy ? "Broomy" : slot != kSlot_Vehicle ? "that wedge's own" : "a horse or Vehicle_Special",
+                broomyList);
         return r;
     }
 

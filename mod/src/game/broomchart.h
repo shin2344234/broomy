@@ -81,13 +81,17 @@ namespace bm::broomchart
 
     // Broomy's speeds as percentages (speedpatches.h), from the ini: ground
     // and flight of the Wyvern's, boost of Broomy's flight speed, climb of
-    // the Wyvern's vertical speeds. Set before the charts are built.
+    // the Wyvern's vertical speeds. Braking is the rate at which Broomy
+    // stops once the controls let go, and turn the rate at which it turns,
+    // both of the Wyvern's. Set before the charts are built.
     struct Speeds
     {
         int ground = 250;
         int flight = 250;
         int boost = 200;
         int climb = 200;
+        int braking = 1500;
+        int turn = 200;
     };
     void SetSpeeds(const Speeds& speeds);
 

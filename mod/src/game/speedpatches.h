@@ -6,7 +6,7 @@
 // plugin multiplies by the ini's percentage for its kind.
 namespace bm::broomchart
 {
-    enum SpeedKind : uint8_t { kGroundSpeed, kFlightSpeed, kBoostSpeed, kClimbSpeed, kNoClimb };
+    enum SpeedKind : uint8_t { kGroundSpeed, kFlightSpeed, kBoostSpeed, kClimbSpeed, kNoClimb, kStopRate, kLandStop, kTurnRate };
 
     struct SpeedPatch
     {
@@ -17,123 +17,153 @@ namespace bm::broomchart
     };
 
     inline constexpr SpeedPatch kSpeedPatches[] = {
-        { 1, 0x004E0, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 4 move word 7: 5
+        { 1, 0x004E0, 0x40A00000, kStopRate },   // m0004_ride_dragon_lower node 4 move word 7: 5
         { 1, 0x00538, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 4 vertical word 3: 20
-        { 1, 0x00689, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 5 move word 7: 5
+        { 1, 0x00689, 0x40A00000, kStopRate },   // m0004_ride_dragon_lower node 5 move word 7: 5
         { 1, 0x006E1, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 5 vertical word 3: 20
-        { 1, 0x008F6, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 6 move word 7: 5
+        { 1, 0x008F6, 0x40A00000, kStopRate },   // m0004_ride_dragon_lower node 6 move word 7: 5
         { 1, 0x0094E, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 6 vertical word 3: 20
-        { 1, 0x00A9F, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 7 move word 7: 5
+        { 1, 0x00A9F, 0x40A00000, kStopRate },   // m0004_ride_dragon_lower node 7 move word 7: 5
         { 1, 0x00AF7, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 7 vertical word 3: 20
-        { 1, 0x00D0C, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 8 move word 7: 5
+        { 1, 0x00D0C, 0x40A00000, kStopRate },   // m0004_ride_dragon_lower node 8 move word 7: 5
         { 1, 0x00D60, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 8 vertical word 2: 5
         { 1, 0x00D64, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 8 vertical word 3: 20
-        { 1, 0x00EB5, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 9 move word 7: 5
+        { 1, 0x00EB5, 0x40A00000, kStopRate },   // m0004_ride_dragon_lower node 9 move word 7: 5
         { 1, 0x00F09, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 9 vertical word 2: 5
         { 1, 0x00F0D, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 9 vertical word 3: 20
         { 1, 0x0111E, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 10 move word 6: 25
         { 1, 0x01122, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 10 move word 7: 25
         { 1, 0x0114E, 0x42200000, kFlightSpeed },   // m0004_ride_dragon_lower node 10 move word 18: 40
+        { 1, 0x01132, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 10 move word 11: 1.5708
         { 1, 0x01313, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 11 move word 6: 20
         { 1, 0x01317, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 11 move word 7: 20
         { 1, 0x01343, 0x41F00000, kFlightSpeed },   // m0004_ride_dragon_lower node 11 move word 18: 30
+        { 1, 0x01327, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 11 move word 11: 1.5708
         { 1, 0x01530, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 12 move word 6: 25
         { 1, 0x01534, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 12 move word 7: 25
         { 1, 0x01560, 0x42200000, kFlightSpeed },   // m0004_ride_dragon_lower node 12 move word 18: 40
+        { 1, 0x01544, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 12 move word 11: 1.5708
         { 1, 0x0173D, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 13 move word 6: 20
         { 1, 0x01741, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 13 move word 7: 20
         { 1, 0x0176D, 0x41F00000, kFlightSpeed },   // m0004_ride_dragon_lower node 13 move word 18: 30
+        { 1, 0x01751, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 13 move word 11: 1.5708
         { 1, 0x01972, 0x41C80000, kBoostSpeed },   // m0004_ride_dragon_lower node 14 move word 6: 25
         { 1, 0x01976, 0x41C80000, kBoostSpeed },   // m0004_ride_dragon_lower node 14 move word 7: 25
         { 1, 0x019A2, 0x42200000, kBoostSpeed },   // m0004_ride_dragon_lower node 14 move word 18: 40
+        { 1, 0x01986, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 14 move word 11: 1.5708
         { 1, 0x019CA, 0x41A00000, kNoClimb },   // m0004_ride_dragon_lower node 14 vertical word 2: 20
         { 1, 0x01B7F, 0x41A00000, kBoostSpeed },   // m0004_ride_dragon_lower node 15 move word 6: 20
         { 1, 0x01B83, 0x41A00000, kBoostSpeed },   // m0004_ride_dragon_lower node 15 move word 7: 20
         { 1, 0x01BAF, 0x41F00000, kBoostSpeed },   // m0004_ride_dragon_lower node 15 move word 18: 30
+        { 1, 0x01B93, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 15 move word 11: 1.5708
         { 1, 0x01BD7, 0x41A00000, kNoClimb },   // m0004_ride_dragon_lower node 15 vertical word 2: 20
         { 1, 0x01DB4, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 16 move word 6: 25
         { 1, 0x01DB8, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 16 move word 7: 25
         { 1, 0x01DE4, 0x42200000, kFlightSpeed },   // m0004_ride_dragon_lower node 16 move word 18: 40
+        { 1, 0x01DC8, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 16 move word 11: 1.5708
         { 1, 0x01E10, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 16 vertical word 3: 20
         { 1, 0x01FC1, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 17 move word 6: 20
         { 1, 0x01FC5, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 17 move word 7: 20
         { 1, 0x01FF1, 0x41F00000, kFlightSpeed },   // m0004_ride_dragon_lower node 17 move word 18: 30
+        { 1, 0x01FD5, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 17 move word 11: 1.5708
         { 1, 0x0201D, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 17 vertical word 3: 20
         { 1, 0x021F6, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 18 move word 6: 25
         { 1, 0x021FA, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 18 move word 7: 25
         { 1, 0x02226, 0x42200000, kFlightSpeed },   // m0004_ride_dragon_lower node 18 move word 18: 40
+        { 1, 0x0220A, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 18 move word 11: 1.5708
         { 1, 0x02252, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 18 vertical word 3: 20
         { 1, 0x023B3, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 19 move word 6: 20
         { 1, 0x023B7, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 19 move word 7: 20
         { 1, 0x023E3, 0x41F00000, kFlightSpeed },   // m0004_ride_dragon_lower node 19 move word 18: 30
+        { 1, 0x023C7, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 19 move word 11: 1.5708
         { 1, 0x0240F, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 19 vertical word 3: 20
         { 1, 0x02570, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 20 move word 6: 25
         { 1, 0x02574, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 20 move word 7: 25
         { 1, 0x025A0, 0x42200000, kFlightSpeed },   // m0004_ride_dragon_lower node 20 move word 18: 40
+        { 1, 0x02584, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 20 move word 11: 1.5708
         { 1, 0x025C8, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 20 vertical word 2: 5
         { 1, 0x025CC, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 20 vertical word 3: 20
         { 1, 0x0277D, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 21 move word 6: 20
         { 1, 0x02781, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 21 move word 7: 20
         { 1, 0x027AD, 0x41F00000, kFlightSpeed },   // m0004_ride_dragon_lower node 21 move word 18: 30
+        { 1, 0x02791, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 21 move word 11: 1.5708
         { 1, 0x027D5, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 21 vertical word 2: 5
         { 1, 0x027D9, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 21 vertical word 3: 20
         { 1, 0x029B2, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 22 move word 6: 20
         { 1, 0x029B6, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 22 move word 7: 20
+        { 1, 0x029C6, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 22 move word 11: 1.5708
         { 1, 0x02BA7, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 23 move word 6: 10
         { 1, 0x02BAB, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 23 move word 7: 20
+        { 1, 0x02BBB, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 23 move word 11: 1.5708
         { 1, 0x02DC4, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 24 move word 6: 20
         { 1, 0x02DC8, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 24 move word 7: 20
+        { 1, 0x02DD8, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 24 move word 11: 1.5708
         { 1, 0x02E1C, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 24 vertical word 2: 5
         { 1, 0x02E20, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 24 vertical word 3: 20
         { 1, 0x02FD1, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 25 move word 6: 10
         { 1, 0x02FD5, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 25 move word 7: 20
+        { 1, 0x02FE5, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 25 move word 11: 1.5708
         { 1, 0x03029, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 25 vertical word 2: 5
         { 1, 0x0302D, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 25 vertical word 3: 20
         { 1, 0x03206, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 26 move word 6: 20
         { 1, 0x0320A, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 26 move word 7: 20
+        { 1, 0x0321A, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 26 move word 11: 1.5708
         { 1, 0x033FB, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 27 move word 6: 10
         { 1, 0x033FF, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 27 move word 7: 20
+        { 1, 0x0340F, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 27 move word 11: 1.5708
         { 1, 0x03618, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 28 move word 6: 20
         { 1, 0x0361C, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 28 move word 7: 20
+        { 1, 0x0362C, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 28 move word 11: 1.5708
         { 1, 0x03670, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 28 vertical word 2: 5
         { 1, 0x03674, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 28 vertical word 3: 20
         { 1, 0x03825, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 29 move word 6: 10
         { 1, 0x03829, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 29 move word 7: 20
+        { 1, 0x03839, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 29 move word 11: 1.5708
         { 1, 0x0387D, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 29 vertical word 2: 5
         { 1, 0x03881, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 29 vertical word 3: 20
         { 1, 0x03A5A, 0x41700000, kFlightSpeed },   // m0004_ride_dragon_lower node 30 move word 6: 15
         { 1, 0x03A5E, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 30 move word 7: 10
+        { 1, 0x03A6E, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 30 move word 11: 1.5708
         { 1, 0x03D03, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 31 move word 6: 10
         { 1, 0x03D07, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 31 move word 7: 10
+        { 1, 0x03D17, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 31 move word 11: 1.5708
         { 1, 0x03E80, 0x41700000, kFlightSpeed },   // m0004_ride_dragon_lower node 32 move word 6: 15
         { 1, 0x03E84, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 32 move word 7: 10
+        { 1, 0x03E94, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 32 move word 11: 1.5708
         { 1, 0x03ED8, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 32 vertical word 2: 5
         { 1, 0x03EDC, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 32 vertical word 3: 20
         { 1, 0x0408D, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 33 move word 6: 10
         { 1, 0x04091, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 33 move word 7: 10
+        { 1, 0x040A1, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 33 move word 11: 1.5708
         { 1, 0x040E5, 0x40A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 33 vertical word 2: 5
         { 1, 0x040E9, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_lower node 33 vertical word 3: 20
         { 1, 0x042C2, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 34 move word 6: 25
         { 1, 0x042C6, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 34 move word 7: 25
         { 1, 0x042F2, 0x42200000, kFlightSpeed },   // m0004_ride_dragon_lower node 34 move word 18: 40
+        { 1, 0x042D6, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 34 move word 11: 1.5708
         { 1, 0x04467, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 35 move word 6: 20
         { 1, 0x0446B, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 35 move word 7: 20
         { 1, 0x04497, 0x41F00000, kFlightSpeed },   // m0004_ride_dragon_lower node 35 move word 18: 30
+        { 1, 0x0447B, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 35 move word 11: 1.5708
         { 1, 0x0460C, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 36 move word 6: 25
         { 1, 0x04610, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 36 move word 7: 25
         { 1, 0x0463C, 0x42200000, kFlightSpeed },   // m0004_ride_dragon_lower node 36 move word 18: 40
+        { 1, 0x04620, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 36 move word 11: 1.5708
         { 1, 0x047C9, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 37 move word 6: 20
         { 1, 0x047CD, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 37 move word 7: 20
         { 1, 0x047F9, 0x41F00000, kFlightSpeed },   // m0004_ride_dragon_lower node 37 move word 18: 30
+        { 1, 0x047DD, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 37 move word 11: 1.5708
         { 1, 0x0498A, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 38 move word 7: 25
         { 1, 0x04C73, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 39 move word 7: 25
         { 1, 0x04F4C, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 40 move word 6: 10
         { 1, 0x04F50, 0x41700000, kFlightSpeed },   // m0004_ride_dragon_lower node 40 move word 7: 15
+        { 1, 0x04F60, 0x3F490FDB, kTurnRate },   // m0004_ride_dragon_lower node 40 move word 11: 0.785398
         { 1, 0x04FA4, 0x42480000, kClimbSpeed },   // m0004_ride_dragon_lower node 40 vertical word 2: 50
         { 1, 0x04FBC, 0x42C80000, kClimbSpeed },   // m0004_ride_dragon_lower node 40 vertical word 2: 100
         { 1, 0x04FC0, 0x43160000, kClimbSpeed },   // m0004_ride_dragon_lower node 40 vertical word 3: 150
         { 1, 0x050E5, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 41 move word 6: 10
         { 1, 0x050E9, 0x41700000, kFlightSpeed },   // m0004_ride_dragon_lower node 41 move word 7: 15
+        { 1, 0x050F9, 0x3F490FDB, kTurnRate },   // m0004_ride_dragon_lower node 41 move word 11: 0.785398
         { 1, 0x0513D, 0x42480000, kClimbSpeed },   // m0004_ride_dragon_lower node 41 vertical word 2: 50
         { 1, 0x05155, 0x42C80000, kClimbSpeed },   // m0004_ride_dragon_lower node 41 vertical word 2: 100
         { 1, 0x05159, 0x43160000, kClimbSpeed },   // m0004_ride_dragon_lower node 41 vertical word 3: 150
@@ -167,9 +197,11 @@ namespace bm::broomchart
         { 1, 0x05DC1, 0x41F00000, kClimbSpeed },   // m0004_ride_dragon_lower node 45 vertical word 3: 30
         { 1, 0x05FB2, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 46 move word 6: 10
         { 1, 0x05FB6, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 46 move word 7: 20
+        { 1, 0x05FC6, 0x3F490FDB, kTurnRate },   // m0004_ride_dragon_lower node 46 move word 11: 0.785398
         { 1, 0x0600E, 0x42480000, kClimbSpeed },   // m0004_ride_dragon_lower node 46 vertical word 3: 50
         { 1, 0x0613B, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 47 move word 6: 10
         { 1, 0x0613F, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 47 move word 7: 20
+        { 1, 0x0614F, 0x3F490FDB, kTurnRate },   // m0004_ride_dragon_lower node 47 move word 11: 0.785398
         { 1, 0x06197, 0x42480000, kClimbSpeed },   // m0004_ride_dragon_lower node 47 vertical word 3: 50
         { 1, 0x062C8, 0x42700000, kFlightSpeed },   // m0004_ride_dragon_lower node 48 move word 7: 60
         { 1, 0x0632C, 0x41700000, kFlightSpeed },   // m0004_ride_dragon_lower node 48 move word 6: 15
@@ -183,9 +215,11 @@ namespace bm::broomchart
         { 1, 0x06621, 0x41F00000, kClimbSpeed },   // m0004_ride_dragon_lower node 49 vertical word 3: 30
         { 1, 0x0671A, 0x41F00000, kClimbSpeed },   // m0004_ride_dragon_lower node 50 vertical word 3: 30
         { 1, 0x06813, 0x41F00000, kClimbSpeed },   // m0004_ride_dragon_lower node 51 vertical word 3: 30
+        { 1, 0x0691C, 0x00000000, kLandStop },   // m0004_ride_dragon_lower node 52 move word 7: 0, the hover's 5 as its base
         { 1, 0x06974, 0x42C80000, kClimbSpeed },   // m0004_ride_dragon_lower node 52 vertical word 3: 100
         { 1, 0x06D9F, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 55 move word 6: 10
         { 1, 0x06DA3, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 55 move word 7: 20
+        { 1, 0x06DB3, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 55 move word 11: 1.5708
         { 1, 0x06E07, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 55 move word 6: 25
         { 1, 0x06E0B, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 55 move word 7: 25
         { 1, 0x06E5F, 0x42B40000, kClimbSpeed },   // m0004_ride_dragon_lower node 55 vertical word 2: 90
@@ -194,6 +228,7 @@ namespace bm::broomchart
         { 1, 0x06E7B, 0x42C80000, kClimbSpeed },   // m0004_ride_dragon_lower node 55 vertical word 3: 100
         { 1, 0x07004, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_lower node 56 move word 6: 10
         { 1, 0x07008, 0x41700000, kFlightSpeed },   // m0004_ride_dragon_lower node 56 move word 7: 15
+        { 1, 0x07018, 0x3FC90FDB, kTurnRate },   // m0004_ride_dragon_lower node 56 move word 11: 1.5708
         { 1, 0x0706C, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 56 move word 6: 20
         { 1, 0x07070, 0x41A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 56 move word 7: 20
         { 1, 0x070C4, 0x41900000, kClimbSpeed },   // m0004_ride_dragon_lower node 56 vertical word 2: 18
@@ -202,19 +237,29 @@ namespace bm::broomchart
         { 1, 0x070E0, 0x42C80000, kClimbSpeed },   // m0004_ride_dragon_lower node 56 vertical word 3: 100
         { 1, 0x072A5, 0x40B33333, kGroundSpeed },   // m0004_ride_dragon_lower node 57 move word 6: 5.6
         { 1, 0x072A9, 0x41A00000, kGroundSpeed },   // m0004_ride_dragon_lower node 57 move word 7: 20
+        { 1, 0x072B9, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 57 move word 11: 0.523599
         { 1, 0x07526, 0x40800000, kGroundSpeed },   // m0004_ride_dragon_lower node 58 move word 6: 4
         { 1, 0x0752A, 0x41A00000, kGroundSpeed },   // m0004_ride_dragon_lower node 58 move word 7: 20
-        { 1, 0x0766B, 0x40400000, kGroundSpeed },   // m0004_ride_dragon_lower node 59 move word 7: 3
-        { 1, 0x078EC, 0x40400000, kGroundSpeed },   // m0004_ride_dragon_lower node 60 move word 7: 3
+        { 1, 0x0753A, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 58 move word 11: 0.523599
+        { 1, 0x0766B, 0x40400000, kStopRate },   // m0004_ride_dragon_lower node 59 move word 7: 3
+        { 1, 0x0767B, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 59 move word 11: 0.523599
+        { 1, 0x078EC, 0x40400000, kStopRate },   // m0004_ride_dragon_lower node 60 move word 7: 3
+        { 1, 0x078FC, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 60 move word 11: 0.523599
         { 1, 0x07A29, 0x41300000, kGroundSpeed },   // m0004_ride_dragon_lower node 61 move word 6: 11
         { 1, 0x07A2D, 0x41A00000, kGroundSpeed },   // m0004_ride_dragon_lower node 61 move word 7: 20
+        { 1, 0x07A3D, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 61 move word 11: 0.523599
         { 1, 0x07CAA, 0x40E00000, kGroundSpeed },   // m0004_ride_dragon_lower node 62 move word 6: 7
         { 1, 0x07CAE, 0x41A00000, kGroundSpeed },   // m0004_ride_dragon_lower node 62 move word 7: 20
-        { 1, 0x07DEF, 0x40A00000, kGroundSpeed },   // m0004_ride_dragon_lower node 63 move word 7: 5
-        { 1, 0x07FD0, 0x40A00000, kGroundSpeed },   // m0004_ride_dragon_lower node 64 move word 7: 5
+        { 1, 0x07CBE, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 62 move word 11: 0.523599
+        { 1, 0x07DEF, 0x40A00000, kStopRate },   // m0004_ride_dragon_lower node 63 move word 7: 5
+        { 1, 0x07DFF, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 63 move word 11: 0.523599
+        { 1, 0x07FD0, 0x40A00000, kStopRate },   // m0004_ride_dragon_lower node 64 move word 7: 5
+        { 1, 0x07FE0, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 64 move word 11: 0.523599
         { 1, 0x0810D, 0x41200000, kGroundSpeed },   // m0004_ride_dragon_lower node 65 move word 6: 10
         { 1, 0x08111, 0x41A00000, kGroundSpeed },   // m0004_ride_dragon_lower node 65 move word 7: 20
-        { 1, 0x08252, 0x40A00000, kGroundSpeed },   // m0004_ride_dragon_lower node 66 move word 7: 5
+        { 1, 0x08121, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 65 move word 11: 0.523599
+        { 1, 0x08252, 0x40A00000, kStopRate },   // m0004_ride_dragon_lower node 66 move word 7: 5
+        { 1, 0x08262, 0x3F060A92, kTurnRate },   // m0004_ride_dragon_lower node 66 move word 11: 0.523599
         { 1, 0x0838F, 0x42480000, kFlightSpeed },   // m0004_ride_dragon_lower node 67 move word 6: 50
         { 1, 0x08393, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 67 move word 7: 25
         { 1, 0x08534, 0x42480000, kFlightSpeed },   // m0004_ride_dragon_lower node 68 move word 6: 50
@@ -223,10 +268,11 @@ namespace bm::broomchart
         { 1, 0x086DD, 0x42480000, kFlightSpeed },   // m0004_ride_dragon_lower node 69 move word 7: 50
         { 1, 0x0886A, 0x42480000, kFlightSpeed },   // m0004_ride_dragon_lower node 70 move word 6: 50
         { 1, 0x0886E, 0x42480000, kFlightSpeed },   // m0004_ride_dragon_lower node 70 move word 7: 50
-        { 1, 0x089F3, 0x40400000, kFlightSpeed },   // m0004_ride_dragon_lower node 71 move word 7: 3
+        { 1, 0x089F3, 0x40400000, kStopRate },   // m0004_ride_dragon_lower node 71 move word 7: 3
         { 1, 0x08A4B, 0x43480000, kClimbSpeed },   // m0004_ride_dragon_lower node 71 vertical word 3: 200
         { 1, 0x08B70, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 72 move word 6: 25
         { 1, 0x08B74, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_lower node 72 move word 7: 5
+        { 1, 0x08B84, 0x3F490FDB, kTurnRate },   // m0004_ride_dragon_lower node 72 move word 11: 0.785398
         { 1, 0x08BCC, 0x41F00000, kClimbSpeed },   // m0004_ride_dragon_lower node 72 vertical word 3: 30
         { 1, 0x08E59, 0x42480000, kFlightSpeed },   // m0004_ride_dragon_lower node 73 move word 6: 50
         { 1, 0x08EC1, 0x41C80000, kFlightSpeed },   // m0004_ride_dragon_lower node 73 move word 6: 25
@@ -254,14 +300,15 @@ namespace bm::broomchart
         { 1, 0x09923, 0x41F00000, kClimbSpeed },   // m0004_ride_dragon_lower node 79 vertical word 3: 30
         { 2, 0x000E0, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_upper node 0 move word 6: 10
         { 2, 0x000E4, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_upper node 0 move word 7: 5
+        { 2, 0x000F4, 0x3F490FDB, kTurnRate },   // m0004_ride_dragon_upper node 0 move word 11: 0.785398
         { 2, 0x0013C, 0x42B40000, kClimbSpeed },   // m0004_ride_dragon_upper node 0 vertical word 3: 90
-        { 2, 0x002DD, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_upper node 1 move word 7: 5
+        { 2, 0x002DD, 0x40A00000, kStopRate },   // m0004_ride_dragon_upper node 1 move word 7: 5
         { 2, 0x00335, 0x41A00000, kClimbSpeed },   // m0004_ride_dragon_upper node 1 vertical word 3: 20
         { 2, 0x0095A, 0x42480000, kGroundSpeed },   // m0004_ride_dragon_upper node 6 move word 6: 50
         { 2, 0x009B6, 0x41F00000, kClimbSpeed },   // m0004_ride_dragon_upper node 6 vertical word 3: 30
-        { 2, 0x01B80, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_upper node 24 move word 7: 5
-        { 2, 0x01EFE, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_upper node 26 move word 7: 5
-        { 2, 0x0227C, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_upper node 28 move word 7: 5
+        { 2, 0x01B80, 0x40A00000, kStopRate },   // m0004_ride_dragon_upper node 24 move word 7: 5
+        { 2, 0x01EFE, 0x40A00000, kStopRate },   // m0004_ride_dragon_upper node 26 move word 7: 5
+        { 2, 0x0227C, 0x40A00000, kStopRate },   // m0004_ride_dragon_upper node 28 move word 7: 5
         { 2, 0x04BD3, 0x41F00000, kFlightSpeed },   // m0004_ride_dragon_upper node 59 move word 6: 30
         { 2, 0x04BD7, 0x40A00000, kFlightSpeed },   // m0004_ride_dragon_upper node 59 move word 7: 5
         { 2, 0x04C3B, 0x41F00000, kFlightSpeed },   // m0004_ride_dragon_upper node 59 move word 6: 30
@@ -284,6 +331,7 @@ namespace bm::broomchart
         { 2, 0x0538A, 0x41200000, kFlightSpeed },   // m0004_ride_dragon_upper node 62 move word 7: 10
         { 2, 0x054E3, 0x40A00000, kGroundSpeed },   // m0004_ride_dragon_upper node 63 move word 6: 5
         { 2, 0x054E7, 0x40A00000, kGroundSpeed },   // m0004_ride_dragon_upper node 63 move word 7: 5
+        { 2, 0x054F7, 0x3F490FDB, kTurnRate },   // m0004_ride_dragon_upper node 63 move word 11: 0.785398
         { 2, 0x05660, 0x41F00000, kGroundSpeed },   // m0004_ride_dragon_upper node 64 move word 6: 30
         { 2, 0x056C8, 0x41200000, kGroundSpeed },   // m0004_ride_dragon_upper node 64 move word 6: 10
         { 2, 0x056CC, 0x41200000, kGroundSpeed },   // m0004_ride_dragon_upper node 64 move word 7: 10

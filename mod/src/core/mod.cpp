@@ -6,6 +6,10 @@
 #include <string>
 #include <vector>
 
+#include <tlhelp32.h>
+#include <winver.h>
+#include <cwctype>
+
 #include "core/log.h"
 #include "core/paths.h"
 #include "game/broomblend.h"
@@ -38,6 +42,62 @@ namespace
     constexpr size_t kMinGameImage = 64ull * 1024 * 1024;
 
     bool IsGame() { return bm::mem::Game().base && bm::mem::Game().size >= kMinGameImage; }
+
+    HMODULE g_module = nullptr;
+
+    // The exe's file version, as its version resource has it, so a report
+    // says which build it came from.
+    std::string ExeVersion()
+    {
+        wchar_t path[MAX_PATH] = {};
+        if (!GetModuleFileNameW(nullptr, path, MAX_PATH)) return "unknown";
+        DWORD ignored = 0;
+        const DWORD bytes = GetFileVersionInfoSizeW(path, &ignored);
+        if (!bytes) return "with no version resource";
+        std::vector<uint8_t> buf(bytes);
+        VS_FIXEDFILEINFO* ffi = nullptr;
+        UINT ffiBytes = 0;
+        if (!GetFileVersionInfoW(path, 0, bytes, buf.data()) ||
+            !VerQueryValueW(buf.data(), L"\\", reinterpret_cast<void**>(&ffi), &ffiBytes) || !ffi ||
+            ffi->dwSignature != 0xFEEF04BD)
+            return "unknown";
+        char v[48];
+        snprintf(v, sizeof v, "%u.%u.%u.%u", HIWORD(ffi->dwFileVersionMS), LOWORD(ffi->dwFileVersionMS),
+                 HIWORD(ffi->dwFileVersionLS), LOWORD(ffi->dwFileVersionLS));
+        return v;
+    }
+
+    // Every other loaded module with "broom" in its name: a second copy of
+    // Broomy (a DMM install and a manual one, or an old BroomMount.asi) hooks
+    // the same reads twice. Bug 1146059 asked which of the ways Broomy can be
+    // missing a player has, and this is one the log could not tell.
+    void LogOtherCopies()
+    {
+        wchar_t own[MAX_PATH] = {};
+        GetModuleFileNameW(g_module, own, MAX_PATH);
+        LOG("[mod] this plugin is %ls.", own);
+        HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, GetCurrentProcessId());
+        if (snap == INVALID_HANDLE_VALUE)
+        {
+            LOG("[mod] the loaded modules could not be listed (error %lu), so a second copy of Broomy would go unseen.",
+                GetLastError());
+            return;
+        }
+        MODULEENTRY32W me{ sizeof me };
+        int others = 0;
+        for (BOOL ok = Module32FirstW(snap, &me); ok; ok = Module32NextW(snap, &me))
+        {
+            if (me.hModule == g_module) continue;
+            std::wstring lower(me.szModule);
+            for (wchar_t& c : lower) c = towlower(c);
+            if (lower.find(L"broom") == std::wstring::npos) continue;
+            ++others;
+            LOG_ERR("[mod] a second copy of Broomy is loaded: %ls. Two copies serve the same tables and hook the same "
+                    "functions; keep one (a manual install in bin64 or the DMM one, not both).", me.szExePath);
+        }
+        CloseHandle(snap);
+        if (!others) LOG("[mod] no other copy of Broomy is loaded.");
+    }
 
     int Clamp(int v, int lo, int hi) { return v < lo ? lo : v > hi ? hi : v; }
 
@@ -164,8 +224,9 @@ namespace
     {
         WriteDefaultIni();
         const bool give = ReadSetting(L"GiveBroomy", 1) != 0;
-        LOG("[mod] %s %s for Crimson Desert exe 1.0.0.3446. GiveBroomy=%d", BM_NAME, BM_VERSION,
+        LOG("[mod] %s %s, running on Crimson Desert exe %s. GiveBroomy=%d", BM_NAME, BM_VERSION, ExeVersion().c_str(),
             give ? 1 : 0);
+        LogOtherCopies();
         if (!g_serving)
             LOG_ERR("[mod] Broomy's files are not being served (see the [files] line above), so Broomy does not exist "
                     "this session.");
@@ -189,6 +250,7 @@ namespace bm::Mod
 {
     void EarlyInstall(HMODULE module)
     {
+        g_module = module;
         // On the loading thread, before the game's own start-up code runs,
         // so the files it reads at boot are seen too.
         Paths::Init(module);
@@ -198,6 +260,8 @@ namespace bm::Mod
         speeds.flight = Clamp(ReadSetting(L"FlightSpeed", speeds.flight), 10, 1000);
         speeds.boost = Clamp(ReadSetting(L"BoostSpeed", speeds.boost), 100, 500);
         speeds.climb = Clamp(ReadSetting(L"ClimbSpeed", speeds.climb), 10, 1000);
+        speeds.braking = Clamp(ReadSetting(L"Braking", speeds.braking), 100, 5000);
+        speeds.turn = Clamp(ReadSetting(L"TurnSpeed", speeds.turn), 50, 500);
         bm::broomchart::SetSpeeds(speeds);
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
@@ -207,6 +271,7 @@ namespace bm::Mod
 
     void Initialize(HMODULE module)
     {
+        g_module = module;
         Paths::Init(module);
         if (!IsGame())
         {

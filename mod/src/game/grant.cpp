@@ -98,6 +98,32 @@ namespace
     int   g_seenCount = 0;
     DWORD g_watchAt = 0;
 
+    // What each roster held at the last check, for the [roster] lines on why
+    // a Broomy in the roster can still be missing from the saddle wedge
+    // (bug 1146059: "already in this save's roster" and no Broomy shown). The
+    // movement handler notes the player's clan, so a line can say whether
+    // Broomy sits in the player's roster or in another one.
+    struct RosterSeen
+    {
+        uintptr_t clan;
+        uint32_t  count;
+        int       broomyAt;      // Broomy's entry index, -1 for none
+        uintptr_t broomyEl, broomyEntry;
+        uint32_t  broomyActor;
+        int       broomyList;    // the list Broomy's row names, from the file
+        uint32_t  horses, special, broomies, noList, other;
+    };
+    constexpr int kMaxRosters = 64;
+    RosterSeen    g_rosters[kMaxRosters];
+    int           g_rosterCount = 0;
+    volatile uintptr_t g_playerClan = 0;
+    uintptr_t     g_playerClanLogged = 0;
+    // A check's [roster] lines wait for the player's clan, up to this long
+    // after the check, then go out without it.
+    constexpr DWORD kRosterReportWaitMs = 30000;
+    LONG          g_reportSeq = 0;
+    DWORD         g_reportArmedAt = 0;
+
     // The grant, armed by a check that found no Broomy.
     volatile LONG g_armed = 0;
     volatile LONG g_candidate = 0;      // the last unowned wild horse seen
@@ -447,6 +473,8 @@ namespace
     uint64_t MoveDetour(uintptr_t self, uint32_t* error, uintptr_t message)
     {
         const uint64_t r = g_moveOriginal(self, error, message);
+        if (const uintptr_t clan = SenderClan(message); clan && clan != g_playerClan)
+            InterlockedExchangePointer(reinterpret_cast<void* volatile*>(&g_playerClan), reinterpret_cast<void*>(clan));
         GrantNow(message);
         CheckHeight(message);
         return r;
@@ -585,6 +613,7 @@ namespace
         }
         bool has = false;
         uint32_t largest = 0;
+        g_rosterCount = 0;
         for (int i = 0; i < found; ++i)
         {
             uint32_t count = 0;
@@ -599,16 +628,112 @@ namespace
                 g_seen[0] = { hits[i], arr };
                 g_seenCount = 1;
             }
-            for (uint32_t k = 0; k < count && !has; ++k)
+            RosterSeen s{ hits[i], count, -1, 0, 0, 0, -1, 0, 0, 0, 0, 0 };
+            for (uint32_t k = 0; k < count; ++k)
             {
                 uintptr_t el = 0, entry = 0;
                 uint16_t r = 0;
-                if (bm::mem::ReadPtr(arr + 8ull * k, &el) && bm::mem::ReadPtr(el + kOff_ClanEl_Entry, &entry) &&
-                    bm::mem::Read16(entry + kOff_ClanEnt_Row, &r) && r == row)
-                    has = true;
+                if (!bm::mem::ReadPtr(arr + 8ull * k, &el) || !bm::mem::ReadPtr(el + kOff_ClanEl_Entry, &entry) ||
+                    !bm::mem::Read16(entry + kOff_ClanEnt_Row, &r))
+                    continue;
+                const int list = bm::broomy::MercenaryKey(r);
+                if (list == kHorseList) ++s.horses;
+                else if (list == 81) ++s.special;
+                else if (list == 87) ++s.broomies;
+                else if (list < 0) ++s.noList;
+                else ++s.other;
+                if (r != row || s.broomyAt >= 0) continue;
+                has = true;
+                s.broomyAt = static_cast<int>(k);
+                s.broomyEl = el;
+                s.broomyEntry = entry;
+                s.broomyList = list;
+                bm::mem::Read32(entry + kOff_ClanEnt_Actor, &s.broomyActor);
             }
+            if (g_rosterCount < kMaxRosters) g_rosters[g_rosterCount++] = s;
         }
         return has;
+    }
+
+    void Hex(uintptr_t at, size_t n, char* out, size_t cap)
+    {
+        uint8_t raw[0x80] = {};
+        if (n > sizeof raw) n = sizeof raw;
+        const bool ok = bm::mem::ReadBytes(at, raw, n);
+        size_t used = 0;
+        for (size_t i = 0; i < n && used + 4 < cap; ++i)
+            used += snprintf(out + used, cap - used, ok ? "%02X " : "?? ", raw[i]);
+        if (used) out[used - 1] = 0;
+    }
+
+    // The [roster] lines for the last check: every roster, whose it is, what
+    // it holds by list, Broomy's entry in full, and then the one reason the
+    // log can see for a Broomy missing from the saddle wedge.
+    void LogRosters(int row)
+    {
+        const uintptr_t player = g_playerClan;
+        g_playerClanLogged = player;
+        bool inPlayers = false, inOther = false, playerSeen = false;
+        int broomyList = -1;
+        uint32_t broomyActor = 0;
+        for (int i = 0; i < g_rosterCount; ++i)
+        {
+            const RosterSeen& s = g_rosters[i];
+            const bool mine = player && s.clan == player;
+            playerSeen |= mine;
+            char broomy[96];
+            if (s.broomyAt >= 0)
+            {
+                (mine ? inPlayers : inOther) = true;
+                if (mine || broomyList < 0) broomyList = s.broomyList, broomyActor = s.broomyActor;
+                if (s.broomyActor)
+                    snprintf(broomy, sizeof broomy, "Broomy is entry %d, actor %08X", s.broomyAt, s.broomyActor);
+                else
+                    snprintf(broomy, sizeof broomy, "Broomy is entry %d, with no actor out", s.broomyAt);
+            }
+            else
+                snprintf(broomy, sizeof broomy, "no Broomy");
+            LOG("[roster] roster %d of %d at %p (%s): %u entries, by list: horses %u, Vehicle_Special %u, Broomy's %u, "
+                "other lists %u, rows with no list %u; %s.", i + 1, g_rosterCount, reinterpret_cast<void*>(s.clan),
+                mine ? "the player's" : player ? "not the player's" : "the player's is not known yet", s.count,
+                s.horses, s.special, s.broomies, s.other, s.noList, broomy);
+            if (s.broomyAt >= 0)
+            {
+                char el[0x20 * 3 + 1] = {}, entry[0x80 * 3 + 1] = {};
+                Hex(s.broomyEl, 0x20, el, sizeof el);
+                Hex(s.broomyEntry, 0x80, entry, sizeof entry);
+                LOG("[roster]   Broomy's element %p: %s", reinterpret_cast<void*>(s.broomyEl), el);
+                LOG("[roster]   Broomy's entry %p (row at +0x%X, actor at +0x%X): %s",
+                    reinterpret_cast<void*>(s.broomyEntry), kOff_ClanEnt_Row, kOff_ClanEnt_Actor, entry);
+            }
+        }
+
+        const std::string missing = bm::broomy::WedgeTablesMissing();
+        const int listIndex = bm::broomy::ListIndex();
+        if (!missing.empty())
+            LOG_ERR("[roster] why Broomy may be missing from the saddle wedge: the game does not have Broomy's %s "
+                    "(see the [tables] lines), so the wedge has no Broomy list to show.", missing.c_str());
+        else if (listIndex < 0)
+            LOG_ERR("[roster] why Broomy may be missing from the saddle wedge: Broomy's mercenary list was not built "
+                    "(see the [tables] mercenaryinfo line).");
+        else if (!inPlayers && !inOther)
+            LOG("[roster] why Broomy may be missing from the saddle wedge: no roster holds Broomy (row %d), so the "
+                "grant gives one%s.", row, g_give ? "" : " unless GiveBroomy=0");
+        else if (broomyList != 87)
+            LOG_ERR("[roster] why Broomy may be missing from the saddle wedge: Broomy's row names list %d, not 87, so "
+                    "the wedge files it under another list.", broomyList);
+        else if (!player || !playerSeen)
+            LOG("[roster] Broomy is in a roster, but the player's roster %s, so whose roster holds it cannot be told "
+                "from this check.", player ? "was not among the ones found" : "is not known yet (no movement reached "
+                "the server)");
+        else if (!inPlayers)
+            LOG_ERR("[roster] why Broomy may be missing from the saddle wedge: Broomy is in a roster that is not the "
+                    "player's, so the wedge, which lists the player's own mounts, has no Broomy. The grant does not "
+                    "give a second one while any roster holds Broomy.");
+        else
+            LOG("[roster] Broomy is in the player's roster on list 87 (index %d) with %s, and all four wedge tables "
+                "are Broomy's. If the saddle wedge still shows no Broomy, the [call] lines say which list each press "
+                "picks.", listIndex, broomyActor ? "an actor out" : "no actor out");
     }
 
     uintptr_t CallTarget(uintptr_t call)
@@ -840,6 +965,20 @@ namespace bm::grant
     void Tick()
     {
         const DWORD now0 = GetTickCount();
+        // The [roster] lines for the last check, once the player's clan is
+        // known, and again whenever it changes (another save loaded).
+        if ((g_reportSeq && (g_playerClan || now0 - g_reportArmedAt >= kRosterReportWaitMs)) ||
+            (!g_reportSeq && g_rosterCount && g_playerClan && g_playerClan != g_playerClanLogged))
+        {
+            g_reportSeq = 0;
+            const int row = broomy::Row();
+            int rosters = 0;
+            if (row >= 0)
+            {
+                RosterHas(row, rosters);
+                LogRosters(row);
+            }
+        }
         if (g_seenCount && g_loadSeq == g_checkedSeq && now0 - g_watchAt >= 2000)
         {
             g_watchAt = now0;
@@ -906,6 +1045,8 @@ namespace bm::grant
         }
         g_checkedSeq = seq;
         g_retryAt = 0;
+        g_reportSeq = seq;
+        g_reportArmedAt = GetTickCount();
         if (has)
         {
             g_lastNoBroomyAt = 0;

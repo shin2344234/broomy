@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <string>
 
 // Broomy's files, handed to the game as it reads them (gamefile), built from
 // the game's own bytes (broomrows). A table's header is read and parsed
@@ -28,4 +29,9 @@ namespace bm::broomy
     // index a reserve slot's data names, once the game has read the table;
     // else -1.
     int ListIndex();
+    // The tables among the four the saddle wedge needs (characterinfo,
+    // mercenaryinfo, mercenarygroupinfo, reserveslot) that the game does not
+    // have Broomy's version of yet, comma separated; empty when it has all
+    // four.
+    std::string WedgeTablesMissing();
 }

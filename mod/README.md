@@ -79,10 +79,16 @@ All of them live in `Broomy.ini` and are read when the game starts.
     FlightSpeed=250    speed in the air, percent of the Wyvern's
     BoostSpeed=200     the boost, percent of Broomy's flight speed
     ClimbSpeed=200     climbing and diving, percent of the Wyvern's
+    Braking=1500       how hard it stops when you let go, percent of the Wyvern's
+    TurnSpeed=200      how fast it turns, percent of the Wyvern's
     SlowestPush=15     speed at the lightest stick push, percent of full
 
-At the defaults Broomy cruises at 62.5 m/s and boosts at 125. Set
-`SlowestPush=100` for one speed whatever the push.
+At the defaults Broomy cruises at 62.5 m/s and boosts at 125, and stops
+from full cruise in under a second. Set `SlowestPush=100` for one speed
+whatever the push.
+
+Fly down to within 20 m of the ground and Broomy descends and lands. Level
+or climbing, it stays at the height you fly.
 
 INI Master (https://www.nexusmods.com/crimsondesert/mods/3578) can edit these
 with a label and range for each.

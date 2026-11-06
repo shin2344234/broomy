@@ -486,4 +486,21 @@ namespace bm::broomy
     }
 
     int ListIndex() { return g_broomyList; }
+
+    std::string WedgeTablesMissing()
+    {
+        static const char* const kWedge[] = { "characterinfo", "mercenaryinfo", "mercenarygroupinfo", "reserveslot" };
+        std::string out;
+        for (const char* name : kWedge)
+            for (int t = 0; t < kTableCount; ++t)
+            {
+                if (strcmp(kTables[t], name)) continue;
+                if (!g_entries[t].served[0] || !g_entries[t].served[1])
+                {
+                    if (!out.empty()) out += ", ";
+                    out += name;
+                }
+            }
+        return out;
+    }
 }

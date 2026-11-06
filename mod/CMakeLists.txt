@@ -76,7 +76,7 @@ set_source_files_properties(src/resources.rc PROPERTIES OBJECT_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/Broomy.ini")
 
 target_include_directories(Broomy PRIVATE src "${CMAKE_CURRENT_BINARY_DIR}/generated" ${minhook_SOURCE_DIR}/src/hde)
-target_link_libraries(Broomy PRIVATE minhook)
+target_link_libraries(Broomy PRIVATE minhook version)
 target_compile_definitions(Broomy PRIVATE WIN32_LEAN_AND_MEAN NOMINMAX _CRT_SECURE_NO_WARNINGS)
 target_compile_options(Broomy PRIVATE /utf-8 /W3)
 

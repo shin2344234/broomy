@@ -747,9 +747,25 @@ namespace bm::broomrows
                 why = "Vehicle_Horse's summon options are not what they were";
                 return false;
             }
+            // The horse-only fields come off too, as every other vehicle list has them: _isShowHorseStatus 0, the
+            // four status rows without the horse's speed, acceleration, turning and jump levels (1000086 to
+            // 1000089), and no camera presets. With the horse's, the tack shop crashed with Broomy summoned
+            // (bug 1146502, LiangWood).
+            const uint32_t status[] = { 1000000, 1000026, 1000002, 1000003 };
+            std::string statusList = Bytes<uint32_t>(4);
+            for (uint32_t s : status) statusList += Bytes<uint32_t>(s);
+            const Span shown = w.At("statusUIList");
+            if (Get<uint8_t>(*src, w, "isShowHorseStatus") != 1 || shown.size != 4 + 8 * 4 ||
+                src->compare(shown.at + 4, 16, statusList, 4, 16) != 0)
+            {
+                why = "Vehicle_Horse's status fields are not what they were";
+                return false;
+            }
             std::string rec;
             if (!Rewrite(*src, w, { { "name", NameBlock(kMercName) }, { "key", Bytes<uint8_t>(kMercKey) },
-                                    { "summonOwnerOption", Bytes<uint8_t>(2) } }, rec, why))
+                                    { "summonOwnerOption", Bytes<uint8_t>(2) }, { "isShowHorseStatus", Bytes<uint8_t>(0) },
+                                    { "cameraPresetCenterHash", Bytes<uint32_t>(0) }, { "cameraPresetHash", Bytes<uint32_t>(0) },
+                                    { "statusUIList", statusList } }, rec, why))
                 return false;
             const int row = static_cast<int>(t.Rows());
             if (!t.Append(kMercKey, rec))
@@ -758,8 +774,10 @@ namespace bm::broomrows
                 return false;
             }
             if (facts) facts->broomyList = row;
-            char line[128];
-            snprintf(line, sizeof line, "mercenaryinfo: %u %s at index %d, from Vehicle_Horse with summon owner option 2",
+            char line[192];
+            snprintf(line, sizeof line,
+                     "mercenaryinfo: %u %s at index %d, from Vehicle_Horse with summon owner option 2 and no horse "
+                     "status or camera",
                      kMercKey, kMercName, row);
             report = line;
             return true;

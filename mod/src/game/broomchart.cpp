@@ -8,6 +8,7 @@
 #include "game/effectpatches.h"
 #include "game/flourishpatches.h"
 #include "game/ikpatches.h"
+#include "game/landpatches.h"
 #include "game/mountpatches.h"
 #include "game/quietpatches.h"
 #include "game/rideonblendpatches.h"
@@ -294,16 +295,21 @@ namespace bm::broomchart
             ++quiet;
         }
         // The ini's speeds (speedpatches.h): each Wyvern speed times the
-        // percentage for its kind.
+        // percentage for its kind. Descend-and-land has no stop rate of its
+        // own, so it brakes from the hover's 5 m/s2.
         size_t speed = 0;
         const float ground = g_speeds.ground / 100.0f, flight = g_speeds.flight / 100.0f;
-        const float scale[] = { ground, flight, flight * (g_speeds.boost / 100.0f), g_speeds.climb / 100.0f, 0.0f };
+        const float braking = g_speeds.braking / 100.0f;
+        const float scale[] = { ground, flight, flight * (g_speeds.boost / 100.0f), g_speeds.climb / 100.0f, 0.0f,
+                                braking, braking, g_speeds.turn / 100.0f };
+        static_assert(sizeof scale / sizeof scale[0] == kTurnRate + 1, "a speed kind without a scale");
         for (const SpeedPatch& p : kSpeedPatches)
         {
             std::string& c = out[p.chart];
             if (p.at + 4 > c.size() || Peek<uint32_t>(c, p.at) != p.wyvern) continue;
             float v;
             memcpy(&v, &p.wyvern, 4);
+            if (p.kind == kLandStop) v = 5.0f;
             v *= scale[p.kind];
             uint32_t u;
             memcpy(&u, &v, 4);
@@ -414,15 +420,27 @@ namespace bm::broomchart
             Poke<uint32_t>(c, p.at, p.broomy);
             ++takeoff;
         }
-        char line[1100];
+        // Flown down near the ground, Broomy descends and lands instead of
+        // climbing back to 29 m, and the descent no longer turns into a
+        // takeoff at 20 m (landpatches.h).
+        size_t land = 0;
+        for (const HoverPatch& p : kLandPatches)
+        {
+            std::string& c = out[p.chart];
+            if (p.at + 4 > c.size() || Peek<uint32_t>(c, p.at) != p.wyvern) continue;
+            Poke<uint32_t>(c, p.at, p.broomy);
+            ++land;
+        }
+        char line[1300];
         snprintf(line, sizeof line,
                  "%zu animation paths and %zu blend paths are the broom's, padded with zeros; %zu riding action%s keyed "
-                 "to Broom_Ride; %zu of %zu ground branches go to flight%s; %zu of %zu Wyvern sound events silenced; %zu of %zu boost edits; %zu of %zu speeds set (ground %d%%, flight %d%%, boost %d%%, climb %d%%); %zu of %zu roll and glide branches cut; %zu of %zu shakes, rumbles, effects and voices removed; %zu of %zu RideOn flight nodes on the blend; %zu of %zu mount edits; %zu of %zu aim IK edits; %zu of %zu crossfades eased; %zu of %zu right-side mount edits; %zu of %zu escort mount edits; %zu of %zu ground start edits; %zu of %zu takeoff edits",
+                 "to Broom_Ride; %zu of %zu ground branches go to flight%s; %zu of %zu Wyvern sound events silenced; %zu of %zu boost edits; %zu of %zu speeds set (ground %d%%, flight %d%%, boost %d%%, climb %d%%, braking %d%%, turn %d%%); %zu of %zu landing edits; %zu of %zu roll and glide branches cut; %zu of %zu shakes, rumbles, effects and voices removed; %zu of %zu RideOn flight nodes on the blend; %zu of %zu mount edits; %zu of %zu aim IK edits; %zu of %zu crossfades eased; %zu of %zu right-side mount edits; %zu of %zu escort mount edits; %zu of %zu ground start edits; %zu of %zu takeoff edits",
                  anims.size(), blends.size(), keyed, keyed == 1 ? "" : "s", hover, hover + skipped,
                  skipped ? " (the rest did not hold the Wyvern's value)" : "", quiet,
                  sizeof kQuietPatches / sizeof kQuietPatches[0], boost, sizeof kBoostPatches / sizeof kBoostPatches[0], speed,
                  sizeof kSpeedPatches / sizeof kSpeedPatches[0], g_speeds.ground, g_speeds.flight, g_speeds.boost,
-                 g_speeds.climb, flourish,
+                 g_speeds.climb, g_speeds.braking, g_speeds.turn, land, sizeof kLandPatches / sizeof kLandPatches[0],
+                 flourish,
                  sizeof kFlourishPatches / sizeof kFlourishPatches[0], effect,
                  sizeof kEffectPatches / sizeof kEffectPatches[0], rideOnBlend,
                  sizeof kRideOnBlendPatches / sizeof kRideOnBlendPatches[0], mount,
