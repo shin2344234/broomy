@@ -1,6 +1,6 @@
-# Broomy 1.0.9
+# Broomy 1.0.11
 
-For Crimson Desert exe 1.0.0.3446 (Steam build 26329202), the second patch of 30 October 2026.
+For Crimson Desert exe 1.0.0.3576 (game 2.04.08, Steam build 26480954), the patch of 6 November 2026.
 
 Pearl Abyss built a flying broom mount and never switched it on. The model,
 its skeleton and its animations are all in the game's archives. This plugin

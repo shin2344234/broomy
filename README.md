@@ -9,7 +9,7 @@ the broom and for Kliff, and a `Broom_Ride` interaction, all unused. The
 plugin wires them up as Broomy, a mount of its own in the saddle wedge of the
 Character radial. The Wyvern and every other mount stay as they are.
 
-Target: Crimson Desert exe 1.0.0.3446 (Steam build 26329202), the second patch of 30 October 2026.
+Target: Crimson Desert exe 1.0.0.3576 (game 2.04.08, Steam build 26480954), the patch of 6 November 2026.
 Players should read `mod/README.md`, which ships with the plugin and covers
 installing, settings and the known limits.
 
@@ -25,7 +25,9 @@ edit. Everything Broomy needs that the game doesn't ship comes from memory:
   built copy.
 - Charts made from the Wyvern's riding charts, with every animation path
   pointed at the broom's clips, the sounds and camera shakes cut, and the
-  speeds taken from the ini.
+  speeds, braking and turn rate taken from the ini. The low-flight states
+  that held the Wyvern about 20 m up go to its descend-and-land state
+  instead, and that state lands rather than taking off again.
 - A pose modifier that turns the broom's body toward the camera in flight.
 - Clips the game doesn't ship, built from its own: the broom held steady in
   level flight, the rider's push-off and leans, and Damiane's own riding
