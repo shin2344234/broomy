@@ -312,6 +312,17 @@ namespace bm::broomrows
         std::string Text(const std::string& rec, Span s) { return rec.substr(s.at + 4, s.size - 4); }
         template <typename T> T Get(const std::string& rec, const Walked& w, const char* name) { return Peek<T>(rec, w.At(name).at); }
 
+        // Another mod's change to a row Broomy copies is reported, never fatal, when Broomy's row writes that field
+        // itself. A mod that shortens every mount's cooldown then costs nothing, and the log names what it changed.
+        template <typename T> void NoteIfChanged(std::string& notes, const char* field, T found, T shipped)
+        {
+            if (found == shipped) return;
+            char one[128];
+            snprintf(one, sizeof one, "%s%s is %llu, shipped %llu", notes.empty() ? "" : ", ", field,
+                     static_cast<unsigned long long>(found), static_cast<unsigned long long>(shipped));
+            notes += one;
+        }
+
         struct Edit
         {
             const char* field;
@@ -600,25 +611,31 @@ namespace bm::broomrows
             }
             const std::string& old = *src;
             const Span flagsAt = w.At("flags");
-            // The values this changes are the ones the ibex row has.
-            const bool same =
-                Text(old, w.At("name")) == "Riding_AlpineIbex_1" && Get<uint32_t>(old, w, "key") == kIbexKey &&
-                flagsAt.size == kFlagCount && old[flagsAt.at + kHirableIndex] == 0 &&
-                Get<uint32_t>(old, w, "upperActionChartPackageGroupName") == Key(kIbexUpper) &&
-                Get<uint32_t>(old, w, "lowerActionChartPackageGroupName") == kUnset &&
-                Get<uint32_t>(old, w, "characterGamePlayDataName") == Key(kIbexGameplay) &&
-                Get<uint32_t>(old, w, "appearanceName") == Key(kIbexAppearance) &&
-                Get<uint32_t>(old, w, "skeletonName") == Key(kIbexSkeleton) &&
-                Get<uint32_t>(old, w, "skeletonVariationName") == Key(kIbexVariation) &&
-                Get<uint16_t>(old, w, "vehicleInfo") == kIbexVehicle && Get<uint8_t>(old, w, "mercenaryInfo") == kSpecialMerc &&
-                Get<uint32_t>(old, w, "uiPortraitPath") == Key(kIbexPortrait) &&
-                Get<uint32_t>(old, w, "vanishTickCount") == 900000 && Get<uint64_t>(old, w, "callMercenaryCoolTime") == 300;
-            if (!same)
+            // The row has to be the ibex's and have the flag count Broomy indexes. Every other value checked here
+            // used to fail the whole table, and Broomy's row overwrites all of them, so another mod's change to the
+            // ibex only goes in the log.
+            const std::string donorName = Text(old, w.At("name"));
+            if (donorName != "Riding_AlpineIbex_1" || Get<uint32_t>(old, w, "key") != kIbexKey || flagsAt.size != kFlagCount)
             {
-                why = "the ibex's row does not hold the values Broomy's was written against (hash of its charts, "
-                      "gameplay data, appearance, skeleton, portrait, vehicle, mercenary list, vanish time or cooldown)";
+                char found[160];
+                snprintf(found, sizeof found, "characterinfo 29448 is %s with %zu flags, not Riding_AlpineIbex_1 with %zu",
+                         donorName.c_str(), static_cast<size_t>(flagsAt.size), static_cast<size_t>(kFlagCount));
+                why = found;
                 return false;
             }
+            std::string changed;
+            NoteIfChanged<uint32_t>(changed, "hirable flag", static_cast<uint8_t>(old[flagsAt.at + kHirableIndex]), 0);
+            NoteIfChanged<uint32_t>(changed, "upper chart", Get<uint32_t>(old, w, "upperActionChartPackageGroupName"), Key(kIbexUpper));
+            NoteIfChanged<uint32_t>(changed, "lower chart", Get<uint32_t>(old, w, "lowerActionChartPackageGroupName"), kUnset);
+            NoteIfChanged<uint32_t>(changed, "gameplay data", Get<uint32_t>(old, w, "characterGamePlayDataName"), Key(kIbexGameplay));
+            NoteIfChanged<uint32_t>(changed, "appearance", Get<uint32_t>(old, w, "appearanceName"), Key(kIbexAppearance));
+            NoteIfChanged<uint32_t>(changed, "skeleton", Get<uint32_t>(old, w, "skeletonName"), Key(kIbexSkeleton));
+            NoteIfChanged<uint32_t>(changed, "skeleton variation", Get<uint32_t>(old, w, "skeletonVariationName"), Key(kIbexVariation));
+            NoteIfChanged<uint32_t>(changed, "vehicle", Get<uint16_t>(old, w, "vehicleInfo"), kIbexVehicle);
+            NoteIfChanged<uint32_t>(changed, "mercenary list", Get<uint8_t>(old, w, "mercenaryInfo"), kSpecialMerc);
+            NoteIfChanged<uint32_t>(changed, "portrait", Get<uint32_t>(old, w, "uiPortraitPath"), Key(kIbexPortrait));
+            NoteIfChanged<uint32_t>(changed, "vanish time", Get<uint32_t>(old, w, "vanishTickCount"), 900000);
+            NoteIfChanged<uint64_t>(changed, "call cooldown", Get<uint64_t>(old, w, "callMercenaryCoolTime"), 300);
             // Its localized strings carry the character key twice, raw and
             // as the decimal digits of (key << 32) | sub.
             uint32_t sub[2] = {};
@@ -722,6 +739,7 @@ namespace bm::broomrows
                      : load ? ", interactions with Broom_Ride_Catch and Broom_Carry_Dead"
                             : ", interactions with Broom_Ride_Catch");
             report = line;
+            if (!changed.empty()) report += "; another mod changed the ibex's row and Broomy's ignores it: " + changed;
             return true;
         }
 
@@ -735,18 +753,20 @@ namespace bm::broomrows
                 why = "mercenaryinfo 78 is not Vehicle_Horse";
                 return false;
             }
-            // _mainDischargeableType 2, _spawnPositionType 3, _summonOwnerOption, _inventoryOwnerType 2, then
-            // _allowedSpawnActorTypeList [5]. With the horses' option 3, Damiane's saddle wedge showed her own
-            // horse, not Kliff's, and no Broomy (Seth, 4 October). Vehicle_Special's 2 shows her the Wyvern, so
-            // Broomy's list takes 2.
+            // _mainDischargeableType 2, _spawnPositionType 3, _inventoryOwnerType 2 and _allowedSpawnActorTypeList
+            // [5] are what the horses' list ships with. Broomy's row writes them, so a mod that changes Vehicle_Horse
+            // cannot change Broomy or take it off the wedge.
+            //
+            // _summonOwnerOption: with the horses' 3, Damiane's saddle wedge showed her own horse, not Kliff's, and
+            // no Broomy (Seth, 4 October). Vehicle_Special's 2 shows her the Wyvern, so Broomy's list takes 2.
             const Span list = w.At("allowedSpawnActorTypeList");
-            if (Get<uint8_t>(*src, w, "mainDischargeableType") != 2 || Get<uint8_t>(*src, w, "spawnPositionType") != 3 ||
-                Get<uint8_t>(*src, w, "summonOwnerOption") != 3 || Get<uint8_t>(*src, w, "inventoryOwnerType") != 2 ||
-                src->compare(list.at, list.size, Bytes<uint32_t>(1) + std::string(1, '\x05')) != 0)
-            {
-                why = "Vehicle_Horse's summon options are not what they were";
-                return false;
-            }
+            const std::string allowed = Bytes<uint32_t>(1) + std::string(1, static_cast<char>(5));
+            std::string changed;
+            NoteIfChanged<uint32_t>(changed, "main dischargeable type", Get<uint8_t>(*src, w, "mainDischargeableType"), 2);
+            NoteIfChanged<uint32_t>(changed, "spawn position type", Get<uint8_t>(*src, w, "spawnPositionType"), 3);
+            NoteIfChanged<uint32_t>(changed, "summon owner option", Get<uint8_t>(*src, w, "summonOwnerOption"), 3);
+            NoteIfChanged<uint32_t>(changed, "inventory owner type", Get<uint8_t>(*src, w, "inventoryOwnerType"), 2);
+            NoteIfChanged<uint32_t>(changed, "spawn actor list bytes", static_cast<uint32_t>(list.size), static_cast<uint32_t>(allowed.size()));
             // The horse-only fields come off too, as every other vehicle list has them: _isShowHorseStatus 0, the
             // four status rows without the horse's speed, acceleration, turning and jump levels (1000086 to
             // 1000089), and no camera presets. With the horse's, the tack shop crashed with Broomy summoned
@@ -754,19 +774,24 @@ namespace bm::broomrows
             const uint32_t status[] = { 1000000, 1000026, 1000002, 1000003 };
             std::string statusList = Bytes<uint32_t>(4);
             for (uint32_t s : status) statusList += Bytes<uint32_t>(s);
-            const Span shown = w.At("statusUIList");
-            if (Get<uint8_t>(*src, w, "isShowHorseStatus") != 1 || shown.size != 4 + 8 * 4 ||
-                src->compare(shown.at + 4, 16, statusList, 4, 16) != 0)
-            {
-                why = "Vehicle_Horse's status fields are not what they were";
-                return false;
-            }
+            NoteIfChanged<uint32_t>(changed, "horse status flag", Get<uint8_t>(*src, w, "isShowHorseStatus"), 1);
             std::string rec;
             if (!Rewrite(*src, w, { { "name", NameBlock(kMercName) }, { "key", Bytes<uint8_t>(kMercKey) },
-                                    { "summonOwnerOption", Bytes<uint8_t>(2) }, { "isShowHorseStatus", Bytes<uint8_t>(0) },
+                                    { "mainDischargeableType", Bytes<uint8_t>(2) }, { "spawnPositionType", Bytes<uint8_t>(3) },
+                                    { "summonOwnerOption", Bytes<uint8_t>(2) }, { "inventoryOwnerType", Bytes<uint8_t>(2) },
+                                    { "allowedSpawnActorTypeList", allowed }, { "isShowHorseStatus", Bytes<uint8_t>(0) },
                                     { "cameraPresetCenterHash", Bytes<uint32_t>(0) }, { "cameraPresetHash", Bytes<uint32_t>(0) },
                                     { "statusUIList", statusList } }, rec, why))
                 return false;
+            if (const std::string* taken = t.Record(kMercKey))
+            {
+                Walked other;
+                std::string ignored;
+                why = "mercenaryinfo already has key 87, named " +
+                      (Walk(*taken, kMercenaryDefs, std::size(kMercenaryDefs), other, ignored, true) ? Text(*taken, other.At("name"))
+                                                                                                    : std::string("something unreadable"));
+                return false;
+            }
             const int row = static_cast<int>(t.Rows());
             if (!t.Append(kMercKey, rec))
             {
@@ -780,7 +805,25 @@ namespace bm::broomrows
                      "status or camera",
                      kMercKey, kMercName, row);
             report = line;
+            if (!changed.empty()) report += "; another mod changed Vehicle_Horse and Broomy's list ignores it: " + changed;
             return true;
+        }
+
+        // A one-byte key list as the tables store it, a u32 count and the keys. False when the field is not that shape.
+        bool KeyList(const std::string& rec, const Span& list, std::string& keys)
+        {
+            if (list.at == kNone || list.size < 4) return false;
+            const uint32_t count = Peek<uint32_t>(rec, list.at);
+            if (list.size != 4 + static_cast<size_t>(count)) return false;
+            keys = rec.substr(list.at + 4, count);
+            return true;
+        }
+
+        std::string KeyListText(const std::string& keys)
+        {
+            std::string out;
+            for (char k : keys) out += (out.empty() ? "" : " ") + std::to_string(static_cast<uint8_t>(k));
+            return out;
         }
 
         bool Group(tablefile::Table& t, std::string& report, std::string& why)
@@ -793,18 +836,26 @@ namespace bm::broomrows
                 why = "mercenarygroupinfo has no Vehicle group";
                 return false;
             }
-            const std::string six("\x4E\x4F\x50\x52\x51\x41", 6);
-            const Span list = w.At("mercenaryInfoList");
-            if (src->compare(list.at, list.size, Bytes<uint32_t>(6) + six) != 0)
+            // Broomy's key goes on the end of whatever list the Vehicle group has, so another mod's vehicle in this
+            // list costs nothing.
+            std::string held;
+            const char shipped[] = { 78, 79, 80, 82, 81, 65 };
+            if (!KeyList(*src, w.At("mercenaryInfoList"), held))
             {
-                why = "the Vehicle group's list is not the one Broomy was written against";
+                why = "the Vehicle group's list is not a count and one-byte keys";
                 return false;
             }
+            if (held.find(static_cast<char>(kMercKey)) != std::string::npos)
+            {
+                report = "mercenarygroupinfo: Vehicle already lists 87 (" + KeyListText(held) + "), so it is left as it is";
+                return true;
+            }
             std::string rec;
-            if (!Rewrite(*src, w, { { "mercenaryInfoList", Bytes<uint32_t>(7) + six + static_cast<char>(kMercKey) } }, rec, why))
+            if (!Rewrite(*src, w, { { "mercenaryInfoList", Bytes<uint32_t>(static_cast<uint32_t>(held.size() + 1)) + held + static_cast<char>(kMercKey) } }, rec, why))
                 return false;
             t.Set(kVehicleGroup, rec);
             report = "mercenarygroupinfo: Vehicle lists Vehicle_Broom";
+            if (held != std::string(shipped, sizeof shipped)) report += " after another mod's list (" + KeyListText(held) + ")";
             return true;
         }
 
@@ -822,20 +873,29 @@ namespace bm::broomrows
                 why = "reserveslot 1000006 is not VehicleSlot";
                 return false;
             }
+            // Broomy's list goes on the end, wherever the others are. The game finds it by its own index in
+            // mercenaryinfo (callgate), so its place in this list does not matter, and a mod that adds a mount of
+            // its own here no longer takes Broomy off the saddle wedge.
             const std::string lists = std::string(1, static_cast<char>(kHorseMerc)) + static_cast<char>(kSpecialMerc);
-            const Span list = w.At("enableMercenaryList");
-            if (src->compare(list.at, list.size, Bytes<uint32_t>(2) + lists) != 0)
+            std::string held;
+            if (!KeyList(*src, w.At("enableMercenaryList"), held))
             {
-                why = "VehicleSlot's mercenary lists are not the horses' and Vehicle_Special's";
+                why = "VehicleSlot's mercenary lists are not a count and one-byte keys";
                 return false;
             }
+            if (held.find(static_cast<char>(kMercKey)) != std::string::npos)
+            {
+                report = "reserveslot: VehicleSlot already takes 87 (" + KeyListText(held) + "), so it is left as it is";
+                return true;
+            }
             std::string rec;
-            if (!Rewrite(*src, w, { { "enableMercenaryList", Bytes<uint32_t>(3) + lists + static_cast<char>(kMercKey) } }, rec,
+            if (!Rewrite(*src, w, { { "enableMercenaryList", Bytes<uint32_t>(static_cast<uint32_t>(held.size() + 1)) + held + static_cast<char>(kMercKey) } }, rec,
                          why))
                 return false;
             t.Set(kVehicleSlot, rec);
             report = "reserveslot: VehicleSlot, the saddle wedge, takes Broomy's list after the horses' and "
                      "Vehicle_Special's";
+            if (held != lists) report += " (the list another mod left was " + KeyListText(held) + ")";
             return true;
         }
 

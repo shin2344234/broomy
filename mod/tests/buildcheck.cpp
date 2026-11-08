@@ -14,6 +14,7 @@
 // the plugin. `build.bat check IN OUT` builds and runs it.
 #include <cstdio>
 #include <cstring>
+#include <initializer_list>
 #include <string>
 #include <utility>
 
@@ -120,6 +121,108 @@ namespace
     }
 }
 
+namespace
+{
+    template <typename T> std::string Le(T v) { return std::string(reinterpret_cast<const char*>(&v), sizeof v); }
+
+    std::string KeyBytes(std::initializer_list<int> keys)
+    {
+        std::string out = Le<uint32_t>(static_cast<uint32_t>(keys.size()));
+        for (int k : keys) out += static_cast<char>(k);
+        return out;
+    }
+
+    // Tables as another mod would leave them. Each case changes one record of
+    // a shipped table, builds it, and says what must then be true: `key`'s
+    // record holds `want`, or, with `sameAs`, Broomy's new record equals the
+    // reference build's. Returns the number of failures.
+    int CheckOtherMods(const std::string& in, const std::string& out)
+    {
+        using bm::tablefile::Table;
+        struct Case
+        {
+            const char* what;
+            const char* table;
+            uint64_t edit;
+            std::string from, to;
+            uint64_t key;
+            std::string want;
+            bool sameAs;
+            const char* noted;
+        };
+        std::string shortStatus = Le<uint32_t>(8), trimmed = Le<uint32_t>(4);
+        for (uint32_t s : { 1000000u, 1000026u, 1000002u, 1000003u })
+        {
+            shortStatus += Le<uint32_t>(s);
+            trimmed += Le<uint32_t>(s);
+        }
+        const Case cases[] = {
+            { "wedge with a fourth list", "reserveslot", 1000006, KeyBytes({ 78, 81 }), KeyBytes({ 78, 81, 90 }), 1000006,
+              KeyBytes({ 78, 81, 90, 87 }), false, "90" },
+            { "wedge without the horses", "reserveslot", 1000006, KeyBytes({ 78, 81 }), KeyBytes({ 81 }), 1000006,
+              KeyBytes({ 81, 87 }), false, "81" },
+            { "wedge already has Broomy", "reserveslot", 1000006, KeyBytes({ 78, 81 }), KeyBytes({ 78, 81, 87 }), 1000006,
+              KeyBytes({ 78, 81, 87 }), false, "already" },
+            { "Vehicle group with a seventh", "mercenarygroupinfo", 65, KeyBytes({ 78, 79, 80, 82, 81, 65 }),
+              KeyBytes({ 78, 79, 80, 82, 81, 65, 90 }), 65, KeyBytes({ 78, 79, 80, 82, 81, 65, 90, 87 }), false, "90" },
+            { "horse's spawn and owner options", "mercenaryinfo", 78, std::string("\x03\x02\x03", 3), std::string("\x01\x02\x01", 3),
+              87, std::string(), true, "summon owner option is 1" },
+            { "horse's status list", "mercenaryinfo", 78, shortStatus, trimmed, 87, std::string(), true, nullptr },
+            { "ibex with no cooldown", "characterinfo", 29448, Le<uint64_t>(300), Le<uint64_t>(0), 1900001, std::string(), true,
+              "call cooldown is 0" },
+            { "ibex with a short vanish time", "characterinfo", 29448, Le<uint32_t>(900000), Le<uint32_t>(5000), 1900001,
+              std::string(), true, "vanish time is 5000" },
+        };
+        int failed = 0;
+        for (const Case& c : cases)
+        {
+            std::string h, b, refH, refB, why;
+            Table t;
+            if (!Load(in + c.table + ".staticinfoheader", h) || !Load(in + c.table + ".staticinfobody", b) ||
+                !Load(out + c.table + ".staticinfoheader", refH) || !Load(out + c.table + ".staticinfobody", refB) ||
+                !t.Parse(h, b, why))
+            {
+                printf("%-30s FAILED: no shipped table\n", c.what);
+                ++failed;
+                continue;
+            }
+            const std::string* src = t.Record(c.edit);
+            size_t at = src ? src->find(c.from) : std::string::npos;
+            // The horse's status list is matched on its first four rows, so
+            // the four it drops are cut by hand.
+            const bool status = c.from.size() == 20 && c.to.size() == 20 && c.from != c.to;
+            if (!src || at == std::string::npos || (!status && src->find(c.from, at + 1) != std::string::npos))
+            {
+                printf("%-30s FAILED: the bytes to change are not in the record once\n", c.what);
+                ++failed;
+                continue;
+            }
+            std::string rec = *src;
+            rec.replace(at, status ? c.from.size() + 16 : c.from.size(), c.to);
+            std::string oh, ob, report;
+            bm::broomrows::CharacterFacts facts;
+            Table got, ref;
+            bool ok = t.Set(c.edit, rec) && t.Build(h, b, why) &&
+                      bm::broomrows::BuildTable(c.table, h, b, oh, ob, report, why, &facts) && got.Parse(oh, ob, why) &&
+                      ref.Parse(refH, refB, why);
+            if (ok)
+            {
+                const std::string* made = got.Record(c.key);
+                const std::string* wanted = ref.Record(c.key);
+                ok = made && (c.sameAs ? wanted && *made == *wanted : made->find(c.want) != std::string::npos);
+                if (ok && c.noted) ok = report.find(c.noted) != std::string::npos;
+            }
+            printf("%-30s %s  %s\n", c.what, ok ? "ok" : "FAILED", ok ? report.c_str() : why.c_str());
+            if (!ok)
+            {
+                printf("    report: %s\n", report.c_str());
+                ++failed;
+            }
+        }
+        return failed;
+    }
+}
+
 int main(int argc, char** argv)
 {
     if (argc != 3)
@@ -129,6 +232,7 @@ int main(int argc, char** argv)
     }
     const std::string in = std::string(argv[1]) + "/", out = std::string(argv[2]) + "/";
     int failed = CheckParseEdges();
+    failed += CheckOtherMods(in, out);
     for (const char* name : bm::broomrows::kTables)
     {
         std::string h, b, wantH, wantB, gotH, gotB, report, why;
