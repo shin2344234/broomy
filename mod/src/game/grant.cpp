@@ -415,7 +415,7 @@ namespace
     // times a second on the thread that also runs the mount call. It calls
     // the server's hire as the hire request's own handler (+0x2CACA50) does:
     // (the sender's clan component, u32* error, u32* actor id, 0, 0), and
-    // HireDetour does the rest. Sending the hire request (kReq_HireToTarget) instead
+    // HireDetour does the rest. Sending the hire request (TrocTrHireMercenaryToTargetReq) instead
     // worked only for a horse beside the player: the server dropped the
     // request for any other before its handler ran (2 October, after a
     // save was loaded from inside the game).
@@ -480,22 +480,87 @@ namespace
         return r;
     }
 
+    // The request ids, read from the game's own message descriptors at
+    // install (signatures.h). They stay 0xFFFF, which no message uses, until
+    // then.
+    uint16_t g_Req_LoadingComplete = 0xFFFF;
+    uint16_t g_Req_WedgeChoice = 0xFFFF;
+    uint16_t g_Req_MountCall = 0xFFFF;
+
+    struct ReqScan
+    {
+        uintptr_t vt[3];
+        uintptr_t desc[3];
+        int       seen[3];
+    };
+
+    // `lea rax,[vtable]; mov [descriptor],rax`: the descriptor of each message
+    // whose vtable the lea loads.
+    bool ReqVisit(uintptr_t hit, void* ctx)
+    {
+        auto* s = static_cast<ReqScan*>(ctx);
+        const uintptr_t vt = bm::mem::RipAt(hit, 7);
+        for (int i = 0; i < 3; ++i)
+            if (vt == s->vt[i])
+            {
+                const uintptr_t desc = bm::mem::RipAt(hit + 7, 7);
+                if (s->desc[i] != desc) ++s->seen[i];
+                s->desc[i] = desc;
+            }
+        return false;
+    }
+
+    bool ReadRequestIds()
+    {
+        const char* names[3] = { kRtti_ReqLoadingComplete, kRtti_ReqWedgeChoice, kRtti_ReqMountCall };
+        ReqScan scan = {};
+        for (int i = 0; i < 3; ++i)
+        {
+            uintptr_t vt[2] = {};
+            if (bm::mem::FindVtablesByName(names[i], vt, 2) != 1)
+            {
+                LOG_ERR("[grant] the message %s was not found, so Broomy is not given this session.", names[i] + 4);
+                return false;
+            }
+            scan.vt[i] = vt[0];
+        }
+        bm::mem::FindIf(kSig_ReqRegister, &ReqVisit, &scan);
+        uint16_t ids[3] = {};
+        for (int i = 0; i < 3; ++i)
+        {
+            uint32_t four = 0;
+            if (scan.seen[i] != 1 || !bm::mem::Read32(scan.desc[i] + kOff_ReqDesc_Four, &four) || four != 4 ||
+                !bm::mem::Read16(scan.desc[i] + kOff_ReqDesc_Id, &ids[i]) || ids[i] == 0xFFFF)
+            {
+                LOG_ERR("[grant] the id of %s could not be read (descriptors found %d), so Broomy is not given this "
+                        "session.", names[i] + 4, scan.seen[i]);
+                return false;
+            }
+        }
+        g_Req_LoadingComplete = ids[0];
+        g_Req_WedgeChoice = ids[1];
+        g_Req_MountCall = ids[2];
+        LOG("[grant] request ids: loading complete 0x%04X, wedge choice 0x%04X, mount call 0x%04X.", ids[0], ids[1],
+            ids[2]);
+        return true;
+    }
+
     uint64_t SendDetour(uintptr_t ctx, uintptr_t buffer, uintptr_t kind, uintptr_t message, uintptr_t length,
                         uintptr_t a6, uintptr_t a7)
     {
         uint16_t id = 0;
-        if (message && bm::mem::Read16(message, &id) && (id == kReq_WedgeChoice || id == kReq_MountCall))
+        if (message && bm::mem::Read16(message, &id) && (id == g_Req_WedgeChoice || id == g_Req_MountCall))
         {
-            if (id == kReq_WedgeChoice)
+            if (id == g_Req_WedgeChoice)
             {
                 uint32_t slot = 0;
                 bm::mem::Read32(message + 5, &slot);
-                LOG("[wedge] request 0x%04X sent (a wedge was chosen: reserve slot %u).", kReq_WedgeChoice, slot);
+                LOG("[wedge] request 0x%04X sent (a wedge was chosen: reserve slot %u).", g_Req_WedgeChoice, slot);
             }
             else
-                LOG("[wedge] request 0x%04X sent (the mount is called%s).", kReq_MountCall,
+                LOG("[wedge] request 0x%04X sent (the mount is called%s).", g_Req_MountCall,
                     bm::callgate::BroomyChosen() ? ": the saddle wedge holds Broomy" : "");
-            if (id == kReq_MountCall && bm::callgate::BroomyChosen())
+            if (id == g_Req_MountCall && bm::callgate::BroomyChosen())
             {
                 // Each call watches afresh: Broomy's actor is new every time.
                 InterlockedExchange64(&g_broomyActor, 0);
@@ -512,7 +577,7 @@ namespace
             const LONG out = g_outAtCall;
             const LONG age = static_cast<LONG>(GetTickCount() - static_cast<DWORD>(out));
             const size_t bytes = static_cast<size_t>(length & 0xFFFF);
-            if (id == kReq_MountCall && out && age < static_cast<LONG>(kOutAtCallMs) &&
+            if (id == g_Req_MountCall && out && age < static_cast<LONG>(kOutAtCallMs) &&
                 InterlockedCompareExchange(&g_outAtCall, 0, out) == out && bytes <= sizeof g_callCopy &&
                 bm::mem::ReadBytes(message, g_callCopy, bytes))
             {
@@ -522,7 +587,7 @@ namespace
                 return r;
             }
         }
-        if (id == kReq_LoadingComplete)
+        if (id == g_Req_LoadingComplete)
         {
             InterlockedExchange(&g_loadedAt, static_cast<LONG>(GetTickCount()));
             InterlockedIncrement(&g_loadSeq);
@@ -887,8 +952,13 @@ namespace
     {
         size_t hits = 0;
         const uintptr_t at = bm::mem::FindUnique(kSig_CallCheck, &hits);
-        const uintptr_t release = at && bm::mem::MatchAt(at + kOff_CallCheck_ReleaseSig, kSig_CallCheckRelease)
-                                      ? CallTarget(at + kOff_CallCheck_ReleaseSig + 4) : 0;
+        // The first build's pair of release and groggy offsets that both match.
+        int pair = -1;
+        for (int i = 0; at && pair < 0 && i < 2; ++i)
+            if (bm::mem::MatchAt(at + kOff_CallCheck_ReleaseSig[i], kSig_CallCheckRelease) &&
+                bm::mem::MatchAt(at + kOff_CallCheck_GroggySig[i], kSig_CallCheckGroggy))
+                pair = i;
+        const uintptr_t release = pair >= 0 ? CallTarget(at + kOff_CallCheck_ReleaseSig[pair] + 4) : 0;
         if (!at || !release)
         {
             LOG_ERR("[faint] the mount call's check was found %zu times (release %s), so a fainted Broomy waits as the "
@@ -905,12 +975,7 @@ namespace
             return;
         }
         LOG("[faint] a call while Broomy is down brings a fresh one.");
-        if (!bm::mem::MatchAt(at + kOff_CallCheck_GroggySig, kSig_CallCheckGroggy))
-        {
-            LOG_ERR("[faint] the groggy test's call was not where expected, so a groggy Broomy waits as the game says.");
-            return;
-        }
-        if (!bm::farhook::InstallOverJump("mount call check groggy test", at + kOff_CallCheck_GroggySig + 3,
+        if (!bm::farhook::InstallOverJump("mount call check groggy test", at + kOff_CallCheck_GroggySig[pair] + 3,
                                           reinterpret_cast<void*>(&GroggyDetour),
                                           reinterpret_cast<void**>(&g_groggyOriginal), why, sizeof why))
         {
@@ -927,7 +992,8 @@ namespace bm::grant
     {
         g_give = give;
         const uintptr_t send = mem::FindUnique(kSig_SendRequest);
-        const uintptr_t hire = mem::FindUnique(kSig_ServerHire);
+        uintptr_t hire = mem::FindUnique(kSig_ServerHire);
+        if (!hire) hire = mem::FindUnique(kSig_ServerHire3576);
         const uintptr_t move = mem::FindUnique(kSig_ServerMoveHandler);
         const uintptr_t lookup = hire && mem::MatchAt(hire + kOff_Hire_LookupCallSig, kSig_HireLookupCall)
                                      ? CallTarget(hire + kOff_Hire_LookupCall) : 0;
@@ -939,6 +1005,7 @@ namespace bm::grant
                     move ? "found" : "missing");
             return false;
         }
+        if (!ReadRequestIds()) return false;
         char why[96] = {}, why2[96] = {}, why3[96] = {}, why4[96] = {};
         const bool a = farhook::Install("request sender", send, reinterpret_cast<void*>(&SendDetour),
                                         reinterpret_cast<void**>(&g_sendOriginal), why, sizeof why);

@@ -10,11 +10,14 @@
 // The entry and the arrival chain's last action are Idle (attribute bit 8),
 // as the ground idle is, so the load onto Broomy, which asks the mount for
 // Idle, shows as soon as a called Broomy arrives.
+// Chart 0 offsets follow exe 1.0.0.3663, whose m0004_dragon_upper.paac has 29
+// twelve-byte insertions after +0x8C72 (348 bytes); each row was moved past
+// them and checked against the shipped word.
 namespace bm::broomchart
 {
     inline constexpr HoverPatch kGroundPatches[] = {
-        { 0, 0x3071F, 0xA9D16F76, 0x622E5BEC },   // m0004_dragon_upper entry 866C7489 branch 2 target_hash
-        { 0, 0x28D8D, 0x00000001, 0x00000101 },   // m0004_dragon_upper 866C7489 attributes, Idle added
-        { 0, 0x2C02D, 0x00000001, 0x00000101 },   // m0004_dragon_upper CB1CB87C attributes, Idle added
+        { 0, 0x3087B, 0xA9D16F76, 0x622E5BEC },   // m0004_dragon_upper entry 866C7489 branch 2 target_hash
+        { 0, 0x28EE9, 0x00000001, 0x00000101 },   // m0004_dragon_upper 866C7489 attributes, Idle added
+        { 0, 0x2C189, 0x00000001, 0x00000101 },   // m0004_dragon_upper CB1CB87C attributes, Idle added
     };
 }

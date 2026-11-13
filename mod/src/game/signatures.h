@@ -95,21 +95,34 @@ namespace bm::sig
     inline constexpr const char* kSig_SendRequest =
         "48 89 5C 24 10 4C 89 4C 24 20 55 56 57 41 54 41 55 41 56 41 57 48 83 EC 20 45 8B E0 4C 8B F2 4C 8B E9 "
         "E8 ?? ?? ?? ?? BD FE 01 00 00";
-    inline constexpr uint16_t kReq_LoadingComplete = 0x0877;   // TrocTrLoadingCompleteReq (0x098D)
-    // The wedge choice, TrocTrChangeUseItemReserveSlotReq (0x0AC1): the
-    // reserve slot key is the u32 at +5.
-    inline constexpr uint16_t kReq_WedgeChoice = 0x08F3;
-    inline constexpr uint16_t kReq_MountCall = 0x0A53;          // (0x0876)
-    // TrocTrHireMercenaryToTargetReq (0x0B8F): u16 id, u8 0, u16 payload
-    // length 5, u32 actor id, u8 0. The server hires that actor for the
-    // sender.
-    inline constexpr uint16_t kReq_HireToTarget = 0x0A63;
+    // The request messages, each a static descriptor named by its class
+    // (.?AVTrocTrLoadingCompleteReq@pa@@ and so on). A registration stub
+    // runs `lea rax,[vtable]; mov [descriptor],rax`, and the descriptor holds
+    // the u32 4 at +8 and the message id as a u16 at +0xC. 3663 renumbered
+    // 199 of 251 messages, so the plugin reads the ids at startup instead of
+    // carrying them. On 3576 they were LoadingComplete 0x0877, the wedge
+    // choice 0x08F3 and the mount call 0x0A53; on 3663 0x0AE5, 0x0B3F and
+    // 0x0C4F. The wedge choice, TrocTrChangeUseItemReserveSlotReq, carries
+    // the reserve slot key as the u32 at +5. TrocTrHireMercenaryToTargetReq
+    // (0x0A63 on 3576, 0x0A09 on 3663) is u16 id, u8 0, u16 payload length
+    // 5, u32 actor id, u8 0, and the server hires that actor for the sender.
+    inline constexpr const char* kRtti_ReqLoadingComplete = ".?AVTrocTrLoadingCompleteReq@pa@@";
+    inline constexpr const char* kRtti_ReqWedgeChoice = ".?AVTrocTrChangeUseItemReserveSlotReq@pa@@";
+    inline constexpr const char* kRtti_ReqMountCall = ".?AVTrocTrFrameEventCallMercenaryReq@pa@@";
+    inline constexpr const char* kSig_ReqRegister = "48 8D 05 ?? ?? ?? ?? 48 89 05";
+    inline constexpr unsigned kOff_ReqDesc_Four = 0x08;
+    inline constexpr unsigned kOff_ReqDesc_Id = 0x0C;
 
     // The server's hire (+0x2E42400): (clan component, u32* error, u32*
     // actor id, u8, u8). It looks the actor up by id, reads its
     // characterinfo row from the status component (status +0x30), then that
     // row's _mercenaryInfo. The first fifteen bytes are three stores.
+    // 3663 dropped the `mov [rsp+8],rcx` and keeps rcx in rsi (+0x2EB77A0);
+    // the reads and the lookup call at +0xB0 are unchanged. Both are tried.
     inline constexpr const char* kSig_ServerHire =
+        "48 89 5C 24 10 4C 89 44 24 18 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 C0 "
+        "48 81 EC 40 01 00 00 45 0F B6 E9 49 8B F8 4C 8B FA 48 8B F1";
+    inline constexpr const char* kSig_ServerHire3576 =
         "48 89 5C 24 10 4C 89 44 24 18 48 89 4C 24 08 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 C0 "
         "48 81 EC 40 01 00 00 45 0F B6 E9 49 8B F8 4C 8B F2";
     // The hire's actor lookup, lookup(manager, out, id), which leaves the
@@ -173,10 +186,10 @@ namespace bm::sig
     // at +0xD8 is the chosen mount's mercenary list index (from 2976; this
     // function does not read it on either exe, so 3392 is unchecked). A
     // nonzero error goes back to the client as 0x3F5. Unique at +0x2D78BC0
-    // on this exe.
+    // on 3576 and +0x2DECB70 on 3663, where `mov r13,r9` became `mov r12,r9`.
     inline constexpr const char* kSig_ReserveSlotChange =
         "48 89 5C 24 08 48 89 74 24 10 48 89 7C 24 20 55 41 54 41 55 41 56 41 57 48 8D AC 24 80 FB FF FF "
-        "48 81 EC 80 05 00 00 4D 8B E9 48 8B F2 4C 8B F1 4C 8B 1D";
+        "48 81 EC 80 05 00 00 4D 8B ?? 48 8B F2 4C 8B F1 4C 8B 1D";
     inline constexpr unsigned kOff_SlotData_ListIndex = 0xD8;
     inline constexpr uint32_t kSlot_Vehicle = 1000006;   // reserveslot VehicleSlot, the saddle wedge
     inline constexpr uint32_t kSlot_Mechanic = 1000019;  // reserveslot VehicleSlot_Mechanic
@@ -227,15 +240,18 @@ namespace bm::sig
     // releases the actor only while out+0x10 is set. The pattern starts at
     // +0x8DE838. From Speeder Bike 1.0.3.
     inline constexpr const char* kSig_CallCheck =
-        "45 8B 76 50 48 8B 4D 88 48 8B 01 B2 01 FF 50 20 45 8B C6 48 8D 55 C8 48 8B 0D ?? ?? ?? ?? 48 8B 49 28 "
+        "45 8B 76 50 48 8B 4D ?? 48 8B 01 B2 01 FF 50 20 45 8B C6 48 8D 55 ?? 48 8B 0D ?? ?? ?? ?? 48 8B 49 28 "
         "E8 ?? ?? ?? ?? 48 8B D0";
     inline constexpr unsigned kOff_CallCheck_Lookup = 0x22;
-    inline constexpr unsigned kOff_CallCheck_ReleaseSig = 0x7A;
-    inline constexpr const char* kSig_CallCheckRelease = "48 8D 4D C8 E8";
-    // `mov rcx,rbx; call +0x18C57E0`, the groggy test, which the game runs
-    // under its own reader lock on [[status+8]+8]. The hook goes on the E8, 3
-    // bytes after the start of the pattern (+0x8DE937). From Speeder Bike.
-    inline constexpr unsigned kOff_CallCheck_GroggySig = 0xFC;
+    // The release call and the groggy test sit at +0x7A and +0xFC on 3576,
+    // and at +0x79 and +0xF7 on 3663 (+0x90E02A), where two stack slots moved.
+    // The first pair where both match is used.
+    inline constexpr unsigned kOff_CallCheck_ReleaseSig[2] = { 0x79, 0x7A };
+    inline constexpr unsigned kOff_CallCheck_GroggySig[2] = { 0xF7, 0xFC };
+    inline constexpr const char* kSig_CallCheckRelease = "48 8D 4D ?? E8";
+    // `mov rcx,rbx; call`, the groggy test, which the game runs under its own
+    // reader lock on [[status+8]+8]. The hook goes on the E8, 3 bytes after
+    // the start of the pattern. From Speeder Bike.
     inline constexpr const char* kSig_CallCheckGroggy = "48 8B CB E8";
     inline constexpr unsigned kOff_MountComp_Actor = 0x08;
     inline constexpr unsigned kOff_Status_DeadA = 0x292;

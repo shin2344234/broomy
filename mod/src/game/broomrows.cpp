@@ -150,7 +150,7 @@ namespace bm::broomrows
         };
 
         // UIMapTextureInfo +0x1725870
-        constexpr Def kMapDefs[] = {
+        constexpr Def kMapDefs3576[] = {
             { "name", Str }, { "key", U32 }, { "isBlocked", U8 }, { "uiHeightDiffSignData", List, 18 },
             { "isUIMapMissionType", U8 }, { "isUIMapNPCType", U8 }, { "isActorType", U8 }, { "isAlwayShowMinimap", U8 },
             { "isPerspectiveIcon", U8 }, { "isUIMapDebugQuestAreaType", U8 }, { "isShowTooltip", U8 },
@@ -167,6 +167,30 @@ namespace bm::broomrows
             { "changeScaleRatio", U32 }, { "lerpSize", U32 }, { "lerpIconMinSize", U32 }, { "autoRemoveDistance", U32 },
             { "zIndex", U32 }, { "platformZIndex", U32 }, { "minScale", U32 }, { "maxScale", U32 },
             { "worldPosition", Raw, 12 }, { "filterGroupName", Loc }, { "tooltipText", Loc },
+            { "canDeactivateStickyIcon", U8 },
+        };
+        // 3663 dropped isMovingPlatform (all 2,058 rows shared with 3576 agree)
+        // and has 28 bytes where 3576 had the 12 of worldPosition. In about
+        // 500 rows 3576's first u32 there was set and 3663's is 0, so the
+        // fields in it are not known; Broomy copies them from the ibex as they
+        // are.
+        constexpr Def kMapDefs[] = {
+            { "name", Str }, { "key", U32 }, { "isBlocked", U8 }, { "uiHeightDiffSignData", List, 18 },
+            { "isUIMapMissionType", U8 }, { "isUIMapNPCType", U8 }, { "isActorType", U8 }, { "isAlwayShowMinimap", U8 },
+            { "isPerspectiveIcon", U8 }, { "isUIMapDebugQuestAreaType", U8 }, { "isShowTooltip", U8 },
+            { "isRegionKnowledgeIcon", U8 }, { "isUIMapDebugQuestType", U8 }, { "isUIMapQuestType", U8 },
+            { "checkHasOwnerActorIcon", U8 }, { "isKeepShowByCharacterInfo", U8 }, { "otherSpaceForceShow", U8 },
+            { "isDiscoverGimmickIcon", U8 }, { "isWorldmapFocusable", U8 }, { "uiFilterGroupByInfo", U8 },
+            { "indoorStateForceShow", U8 }, { "useChangeScale", U8 }, { "isFixScaleIconImage", U8 },
+            { "useChangeScaleWhenZoomOut", U8 }, { "minimapForceUpdateIcon", U8 }, { "useAutoAbyssLayer", U8 },
+            { "isSimpleMaterial", U8 }, { "uiMapLayerType", U8 }, { "isFlexibleSize", U8 }, { "isFlexibleIcon", U8 },
+            { "filterType", U8 }, { "uiTemplateName", U32 },
+            { "filterGroupParentInfo", U32 }, { "knowledgeInfo", U32 }, { "uiTextureName", U32 },
+            { "uiFilterTextureName", U32 }, { "uiFilterGroupComponentName", U32 }, { "uiSmallTextureName", U32 },
+            { "mapIconType", U32 }, { "gameplayTriggerInfo", U32 }, { "lerpMaxZoom", U32 }, { "lerpMinZoom", U32 },
+            { "changeScaleRatio", U32 }, { "lerpSize", U32 }, { "lerpIconMinSize", U32 }, { "autoRemoveDistance", U32 },
+            { "zIndex", U32 }, { "platformZIndex", U32 }, { "minScale", U32 }, { "maxScale", U32 },
+            { "worldPosition", Raw, 28 }, { "filterGroupName", Loc }, { "tooltipText", Loc },
             { "canDeactivateStickyIcon", U8 },
         };
 
@@ -429,10 +453,11 @@ namespace bm::broomrows
         // means a horse or Broomy (no ibex has a cargo seat). Compiled, a call
         // is 03, the u16 function id, its arguments and a u16 subject, here 0
         // (the actor himself); OR is 00 before its two operands. The function
-        // id of CheckRidingVehicleType is 0x0108 on 3392 (0x0103 before).
+        // id of CheckRidingVehicleType is 0x0109 on 3663 and 0x0108 from 3392
+        // to 3576 (0x0103 before); the one the first row holds is used.
         constexpr uint32_t kHorseType = 0xA50D2251, kIbexType = 0x5B9EB68A;
         constexpr uint32_t kOnHorseRows[] = { 302, 11026, 1000222 };
-        constexpr char kCheckRidingVehicleType[3] = { '\x03', '\x08', '\x01' };
+        constexpr uint16_t kCheckRidingVehicleType[] = { 0x0109, 0x0108 };
         // A horse's load pivots stand Kliff 0.7 m either side of its root and
         // 1.25 m along it, within 1.5 m and 2 m up, facing within 90 degrees.
         // On Broomy that was a spot by the bristles (Seth, test19: "a very
@@ -1068,8 +1093,19 @@ namespace bm::broomrows
 
         bool OnHorseOrBroomy(tablefile::Table& t, std::string& why)
         {
-            const auto onType = [](uint32_t type)
-            { return std::string(kCheckRidingVehicleType, 3) + Bytes<uint32_t>(type) + std::string(2, '\0'); };
+            const std::string* first = t.Record(kOnHorseRows[0]);
+            uint16_t fn = 0;
+            for (uint16_t id : kCheckRidingVehicleType)
+                if (!fn && first && first->find('\x03' + Bytes<uint16_t>(id) + Bytes<uint32_t>(kHorseType)) != std::string::npos)
+                    fn = id;
+            if (!fn)
+            {
+                why = "interactioninfo " + std::to_string(kOnHorseRows[0]) +
+                      ": no CheckRidingVehicleType(horse) under a known function id";
+                return false;
+            }
+            const auto onType = [fn](uint32_t type)
+            { return '\x03' + Bytes<uint16_t>(fn) + Bytes<uint32_t>(type) + std::string(2, '\0'); };
             const std::string horse = onType(kHorseType), either = std::string(1, '\0') + horse + onType(kIbexType);
             for (uint32_t key : kOnHorseRows)
             {
@@ -1203,7 +1239,13 @@ namespace bm::broomrows
         {
             const std::string* src = t.Record(kIbexMapTexture);
             Walked w;
-            if (!src || !Walk(*src, kMapDefs, std::size(kMapDefs), w, why, true) ||
+            bool walked = src && Walk(*src, kMapDefs, std::size(kMapDefs), w, why, true);
+            if (src && !walked)
+            {
+                w = Walked();
+                walked = Walk(*src, kMapDefs3576, std::size(kMapDefs3576), w, why, true);
+            }
+            if (!walked ||
                 Text(*src, w.At("name")) != kIbexMapName || Get<uint32_t>(*src, w, "key") != kIbexMapTexture ||
                 Get<uint32_t>(*src, w, "uiTemplateName") != Key(kIbexMapComponent))
             {

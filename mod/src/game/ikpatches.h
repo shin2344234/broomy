@@ -7,12 +7,15 @@
 // charts (build 1.0.0.3392). The aim IK's reference bone is B_Body_00, which
 // the broom has, instead of the Wyvern's B_IK_Head_00, and the flight idle's
 // aim turns the broom to the camera over about two seconds.
+// Chart 0 offsets follow exe 1.0.0.3663, whose m0004_dragon_upper.paac has 29
+// twelve-byte insertions after +0x8C72 (348 bytes); each row was moved past
+// them and checked against the shipped word.
 namespace bm::broomchart
 {
     inline constexpr HoverPatch kIkPatches[] = {
-        { 0, 0x21CC8, 0x4B495F42, 0x6F425F42 },   // m0004_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 0-3
-        { 0, 0x21CCC, 0x6165485F, 0x305F7964 },   // m0004_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 4-7
-        { 0, 0x21CD0, 0x30305F64, 0x00000030 },   // m0004_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 8-11
+        { 0, 0x21E24, 0x4B495F42, 0x6F425F42 },   // m0004_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 0-3
+        { 0, 0x21E28, 0x6165485F, 0x305F7964 },   // m0004_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 4-7
+        { 0, 0x21E2C, 0x30305F64, 0x00000030 },   // m0004_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 8-11
         { 2, 0x06EAE, 0x4B495F42, 0x6F425F42 },   // m0004_ride_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 0-3
         { 2, 0x06EB2, 0x6165485F, 0x305F7964 },   // m0004_ride_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 4-7
         { 2, 0x06EB6, 0x30305F64, 0x00000030 },   // m0004_ride_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 8-11
