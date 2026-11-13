@@ -9,7 +9,7 @@ the broom and for Kliff, and a `Broom_Ride` interaction, all unused. The
 plugin wires them up as Broomy, a mount of its own in the saddle wedge of the
 Character radial. The Wyvern and every other mount stay as they are.
 
-Target: Crimson Desert exe 1.0.0.3576 (game 2.04.08, Steam build 26480954), the patch of 6 November 2026.
+Target: Crimson Desert exe 1.0.0.3663 (game 2.05.00, Steam build 26636972), the patch of 13 November 2026.
 Players should read `mod/README.md`, which ships with the plugin and covers
 installing, settings and the known limits.
 
@@ -22,7 +22,9 @@ edit. Everything Broomy needs that the game doesn't ship comes from memory:
   mercenaryinfo, mercenarygroupinfo, reserveslot, vehicleinfo,
   characterappearanceindexinfo, interactioninfo, uimaptextureinfo and
   uifiltergroupinfo. The game reads its own file and the plugin swaps in its
-  built copy.
+  built copy. When another mod has changed the ibex, the horse list, the
+  Vehicle group or VehicleSlot, Broomy's rows keep their own values and its
+  key goes on the end of the list the other mod left.
 - Charts made from the Wyvern's riding charts, with every animation path
   pointed at the broom's clips, the sounds and camera shakes cut, and the
   speeds, braking and turn rate taken from the ini. The low-flight states
@@ -44,7 +46,10 @@ edit. Everything Broomy needs that the game doesn't ship comes from memory:
   Broomy's to the minimap and world map `.uibinary` files as well as to the
   `.thtml` and `.css` ones.
 
-A few seconds after a save loads, the plugin checks the roster. A save
+At start the plugin reads the ids of the three requests it watches, loading
+complete, wedge choice and mount call, from the game's own request
+descriptors, since 2.05.00 renumbered them. A few seconds after a save
+loads, the plugin checks the roster. A save
 without Broomy gets one by hiring a wild horse under Broomy's character row
 on the game server's own thread, or after four seconds with no horse in
 reach, another wild animal. Broomy's list is the third in the saddle

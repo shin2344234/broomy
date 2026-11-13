@@ -1,6 +1,7 @@
-# Broomy 1.0.11
+# Broomy 1.0.12
 
-For Crimson Desert exe 1.0.0.3576 (game 2.04.08, Steam build 26480954), the patch of 6 November 2026.
+For Crimson Desert exe 1.0.0.3663 (game 2.05.00, Steam build 26636972), the patch of 13 November 2026.
+On an older game, use Broomy 1.0.11.
 
 Pearl Abyss built a flying broom mount and never switched it on. The model,
 its skeleton and its animations are all in the game's archives. This plugin
@@ -32,6 +33,10 @@ the Wyvern. Choose it there, and the call key calls Broomy from then on, the
 way it calls any mount you choose. Kliff, Damiane and Oongka share the one
 Broomy. A save from an earlier version keeps its Broomy, which moves to the
 saddle wedge.
+
+Another mod that changes the horse list, the Vehicle mount group or the
+saddle wedge's lists no longer pushes Broomy out of the wedge. Broomy's
+entry goes after whatever that mod left there.
 
 ## Riding
 
