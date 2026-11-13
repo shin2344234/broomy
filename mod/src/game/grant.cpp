@@ -139,17 +139,20 @@ namespace
     volatile LONG g_rejected[kGrantTries] = {};
     volatile LONG g_checkWindow = 0, g_checks = 0;
 
-    // Where Broomy arrives, for reports of it hanging out of reach: after a
-    // Broomy call, the actor lookup notes the first actor whose row is
-    // Broomy's, the movement handler notes the player (the sender), and the
-    // log gets both heights at each of kHeightAtMs after the call. Broomy's
-    // actor stands on its root and its clips float the broom about 1.5 m
-    // above that, so a broom at rest beside Kliff reads close to his height.
-    constexpr DWORD kHeightAtMs[] = { 2000, 5000, 10000 };
-    constexpr int   kHeightChecks = sizeof kHeightAtMs / sizeof kHeightAtMs[0];
+    // Where Broomy arrives, for reports of it hanging out of reach or slow to
+    // come: after a Broomy call, the actor lookup notes the actors whose row
+    // is Broomy's (the first and the latest), the movement handler notes the
+    // player (the sender), and once a second for kHeightChecks seconds the
+    // log dumps every position field of each (signatures.h, kTf_Dump) and
+    // gives the distance from their live world positions. Broomy's actor
+    // stands on its root and its clips float the broom about 1.5 m above
+    // that, so a broom at rest beside Kliff reads close to his height.
+    constexpr DWORD kHeightEveryMs = 1000;
+    constexpr int   kHeightChecks = 30;
     volatile LONG   g_calledAt = 0;          // 0 when no call is being watched
     volatile LONG   g_heightLogged = 0;      // checkpoints logged so far
-    volatile LONG64 g_broomyActor = 0, g_playerActor = 0;
+    volatile LONG64 g_broomyActor = 0, g_broomyLatest = 0, g_playerActor = 0;
+    volatile LONG   g_broomySwitches = 0;    // times the latest Broomy actor changed
 
     // When the client's call check last found Broomy out and up (0 for none);
     // the call request it sends follows within a few milliseconds and is sent
@@ -178,34 +181,93 @@ namespace
 
     bool g_give = true;   // GiveBroomy; without it the roster is read, never added to
 
-    // The actor's position and the transform field it came from (0 when none
-    // reads): the first world copy that holds one, else, or with local set,
-    // its local position plus its parent's.
-    unsigned Position(uintptr_t actor, float* xyz, bool local = false)
+    constexpr int kTfDumpN = sizeof kTf_Dump / sizeof kTf_Dump[0];
+
+    // What one actor's position fields read at the last checkpoint, to mark
+    // the ones that held still. Only the server thread's checkpoint touches
+    // these.
+    struct TfSeen
     {
-        uintptr_t block = 0, tf = 0;
-        if (!bm::mem::ReadPtr(actor + kOff_Actor_Block, &block) ||
-            !bm::mem::ReadPtr(block + kOff_Block_Transform, &tf))
-            return 0;
-        auto good = [](const float* v) {
-            return std::isfinite(v[0]) && std::isfinite(v[1]) && std::isfinite(v[2]) &&
-                   !(v[0] == 0.0f && v[1] == 0.0f && v[2] == 0.0f);
-        };
-        if (!local)
-            for (unsigned off : kTf_WorldCopies)
-                if (bm::mem::ReadF32x3(tf + off, xyz) && good(xyz)) return off;
-        float parent[3] = {};
-        uint32_t pid = 0;
-        if (!bm::mem::ReadF32x3(tf + kOff_Tf_LocalPos, xyz) || !good(xyz)) return 0;
-        if (bm::mem::Read32(tf + kOff_Tf_ParentId, &pid) && pid && pid != 0xFFFFFFFF &&
-            bm::mem::ReadF32x3(tf + kOff_Tf_ParentPos, parent) && good(parent))
-            for (int i = 0; i < 3; ++i) xyz[i] += parent[i];
-        return kOff_Tf_LocalPos;
+        uintptr_t actor;
+        bool      have[kTfDumpN];
+        float     v[kTfDumpN][3];
+    };
+    TfSeen g_seenBroomy{}, g_seenLatest{}, g_seenMount{}, g_seenPlayer{};
+
+    bool GoodPos(const float* v)
+    {
+        return std::isfinite(v[0]) && std::isfinite(v[1]) && std::isfinite(v[2]) &&
+               !(v[0] == 0.0f && v[1] == 0.0f && v[2] == 0.0f);
     }
 
+    // Logs every position field of the actor's transform (kTf_Dump), each
+    // marked zero, non-finite or unreadable instead of skipped, and "held"
+    // when it reads exactly what it read at the last checkpoint. Returns the
+    // live world position's field, +0x29C else +0x324, with the position in
+    // xyz, or 0 when neither holds one (signatures.h says why the other
+    // copies are not used).
+    unsigned DumpPosition(const char* who, uintptr_t actor, TfSeen& seen, float* xyz)
+    {
+        if (seen.actor != actor)
+        {
+            seen = TfSeen{};
+            seen.actor = actor;
+        }
+        uint32_t eid = 0, pid = 0;
+        uintptr_t block = 0, tf = 0;
+        const bool eidOk = bm::mem::Read32(actor + kOff_Actor_Eid, &eid);
+        if (!bm::mem::ReadPtr(actor + kOff_Actor_Block, &block) ||
+            !bm::mem::ReadPtr(block + kOff_Block_Transform, &tf) || !tf)
+        {
+            LOG("[height]   %s, actor %08X%s at %p: its transform is unreadable (block %p).", who, eid,
+                eidOk ? "" : " (id unreadable)", reinterpret_cast<void*>(actor), reinterpret_cast<void*>(block));
+            return 0;
+        }
+        const bool pidOk = bm::mem::Read32(tf + kOff_Tf_ParentId, &pid);
+        char line[1536];
+        int n = snprintf(line, sizeof line, "%s, actor %08X%s at %p, transform %p, parent id %08X%s:", who, eid,
+                         eidOk ? "" : " (id unreadable)", reinterpret_cast<void*>(actor),
+                         reinterpret_cast<void*>(tf), pid, pidOk ? "" : " (unreadable)");
+        unsigned live = 0;
+        for (int i = 0; i < kTfDumpN; ++i)
+        {
+            const unsigned off = kTf_Dump[i];
+            float v[3] = {};
+            const bool read = bm::mem::ReadF32x3(tf + off, v);
+            const bool held = read && seen.have[i] && memcmp(seen.v[i], v, sizeof v) == 0;
+            const char* mark = "";
+            if (!read) mark = " unreadable";
+            else if (!std::isfinite(v[0]) || !std::isfinite(v[1]) || !std::isfinite(v[2])) mark = " non-finite";
+            else if (v[0] == 0.0f && v[1] == 0.0f && v[2] == 0.0f) mark = " zero";
+            if (n > 0 && n < static_cast<int>(sizeof line))
+            {
+                if (read)
+                    n += snprintf(line + n, sizeof line - n, " +0x%X (%.2f, %.2f, %.2f)%s%s%s", off, v[0], v[1], v[2],
+                                  mark, held ? " held" : "", i + 1 < kTfDumpN ? "," : ".");
+                else
+                    n += snprintf(line + n, sizeof line - n, " +0x%X%s%s", off, mark, i + 1 < kTfDumpN ? "," : ".");
+            }
+            seen.have[i] = read;
+            if (read) memcpy(seen.v[i], v, sizeof v);
+            if (!live && read && GoodPos(v))
+                for (unsigned w : kTf_LiveWorld)
+                    if (w == off)
+                    {
+                        live = off;
+                        memcpy(xyz, v, sizeof v);
+                    }
+        }
+        LOG("[height]   %s", line);
+        return live;
+    }
+
+    // Every lookup while a call is watched: the first actor with Broomy's row
+    // stays the one watched, and the latest is kept too, so a Broomy the game
+    // swaps for another actor shows in the dump. Counted here, logged at the
+    // next checkpoint, since lookups run many times a second.
     void NoteBroomyActor(uintptr_t out)
     {
-        if (!g_calledAt || g_broomyActor) return;
+        if (!g_calledAt) return;
         const int broomy = bm::broomy::Row();
         uint8_t found = 0;
         uintptr_t actor = 0, block = 0, status = 0;
@@ -214,7 +276,14 @@ namespace
             bm::mem::ReadPtr(out + kOff_Lookup_Actor, &actor) && bm::mem::ReadPtr(actor + kOff_Actor_Block, &block) &&
             bm::mem::ReadPtr(block + kOff_Block_Status, &status) && bm::mem::Read16(status + kOff_Status_CharRow, &row) &&
             row == broomy)
+        {
             InterlockedCompareExchange64(&g_broomyActor, static_cast<LONG64>(actor), 0);
+            if (static_cast<uintptr_t>(g_broomyLatest) != actor)
+            {
+                InterlockedExchange64(&g_broomyLatest, static_cast<LONG64>(actor));
+                InterlockedIncrement(&g_broomySwitches);
+            }
+        }
     }
 
     // On the server thread, about 37 times a second.
@@ -230,30 +299,42 @@ namespace
         const LONG done = g_heightLogged;
         // Signed: the call's stamp is ORed with 1, so it can lead the clock by 1 ms.
         const LONG since = static_cast<LONG>(GetTickCount() - static_cast<DWORD>(at));
-        if (done >= kHeightChecks || since < static_cast<LONG>(kHeightAtMs[done])) return;
+        if (done >= kHeightChecks || since < static_cast<LONG>(kHeightEveryMs * (done + 1))) return;
         if (InterlockedCompareExchange(&g_heightLogged, done + 1, done) != done) return;
-        const uintptr_t broomy = static_cast<uintptr_t>(g_broomyActor), player = static_cast<uintptr_t>(g_playerActor);
-        float b[3] = {}, p[3] = {};
-        const double secs = kHeightAtMs[done] / 1000.0;
-        unsigned fb = broomy ? Position(broomy, b) : 0, fp = player ? Position(player, p) : 0;
-        // One space for both: a world position against a local one put Broomy
-        // 6 km from Kliff at his own height.
-        if (fb && fp && (fb == kOff_Tf_LocalPos) != (fp == kOff_Tf_LocalPos))
-        {
-            fb = Position(broomy, b, true);
-            fp = Position(player, p, true);
-        }
-        if (!fb)
-            LOG("[height] %.0f s after the call: Broomy's actor %s.", secs, broomy ? "gave no position" : "was not seen");
+        const uintptr_t broomy = static_cast<uintptr_t>(g_broomyActor), latest = static_cast<uintptr_t>(g_broomyLatest),
+                        player = static_cast<uintptr_t>(g_playerActor);
+        // The clock, not the checkpoint: the checks run on the player's
+        // movement messages, so with Kliff standing still they lag it.
+        const double secs = since / 1000.0;
+        LOG("[height] %.1f s after the call (check %d of %d): Broomy's actor %p, latest %p (%ld changes), Kliff %p.",
+            secs, done + 1, kHeightChecks, reinterpret_cast<void*>(broomy), reinterpret_cast<void*>(latest),
+            static_cast<long>(g_broomySwitches), reinterpret_cast<void*>(player));
+        float b[3] = {}, p[3] = {}, tmp[3] = {};
+        const unsigned fb = broomy ? DumpPosition("Broomy", broomy, g_seenBroomy, b) : 0;
+        if (latest && latest != broomy) DumpPosition("Broomy as the latest lookup gave it", latest, g_seenLatest, tmp);
+        // The mount component's own actor, which the faint check reads.
+        uintptr_t block = 0, comp = 0, mount = 0;
+        if (broomy && bm::mem::ReadPtr(broomy + kOff_Actor_Block, &block) &&
+            bm::mem::ReadPtr(block + kOff_Block_Owner, &comp) && comp &&
+            bm::mem::ReadPtr(comp + kOff_MountComp_Actor, &mount) && mount && mount != broomy)
+            DumpPosition("Broomy's mount component's actor", mount, g_seenMount, tmp);
+        const unsigned fp = player ? DumpPosition("Kliff", player, g_seenPlayer, p) : 0;
+        if (!broomy)
+            LOG("[height] %.1f s after the call: no lookup has returned an actor with Broomy's row yet.", secs);
+        else if (!fb)
+            LOG("[height] %.1f s after the call: Broomy has no live world position yet (+0x29C and +0x324 read zero), "
+                "so no distance. The +0x3D0 and +0x51C above are not used: on 2.05.00 they kept an old position while "
+                "Broomy was away.", secs);
         else if (!fp)
-            LOG("[height] %.0f s after the call: Broomy stands at (%.1f, %.1f, %.1f); the player gave no position.", secs,
-                b[0], b[1], b[2]);
+            LOG("[height] %.1f s after the call: Broomy is at (%.1f, %.1f, %.1f) from +0x%X; Kliff has no live world "
+                "position.", secs, b[0], b[1], b[2], fb);
         else
         {
             const float dx = b[0] - p[0], dz = b[2] - p[2];
-            LOG("[height] %.0f s after the call: Broomy stands %.1f m %s Kliff and %.1f m from him (Broomy at %.1f, Kliff "
-                "at %.1f; transform +0x%X and +0x%X).", secs, fabsf(b[1] - p[1]), b[1] >= p[1] ? "above" : "below",
-                sqrtf(dx * dx + dz * dz), b[1], p[1], fb, fp);
+            LOG("[height] %.1f s after the call: Broomy stands %.1f m %s Kliff and %.1f m from him (Broomy at (%.1f, "
+                "%.1f, %.1f) from +0x%X, Kliff at (%.1f, %.1f, %.1f) from +0x%X).", secs, fabsf(b[1] - p[1]),
+                b[1] >= p[1] ? "above" : "below", sqrtf(dx * dx + dz * dz), b[0], b[1], b[2], fb, p[0], p[1], p[2],
+                fp);
         }
         if (done + 1 >= kHeightChecks) InterlockedExchange(&g_calledAt, 0);
     }
@@ -564,6 +645,8 @@ namespace
             {
                 // Each call watches afresh: Broomy's actor is new every time.
                 InterlockedExchange64(&g_broomyActor, 0);
+                InterlockedExchange64(&g_broomyLatest, 0);
+                InterlockedExchange(&g_broomySwitches, 0);
                 InterlockedExchange(&g_heightLogged, 0);
                 InterlockedExchange(&g_calledAt, static_cast<LONG>(GetTickCount() | 1));
             }

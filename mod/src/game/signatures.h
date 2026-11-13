@@ -151,8 +151,24 @@ namespace bm::sig
     // +0xB4 is local to the sub-level, off the world by kilometres on the
     // horizontal and not at all in height (Glint Spotter), or to the parent,
     // whose position is +0xEC while +0xC8 names one.
+    //
+    // Only +0x29C and +0x324 follow an actor the game is moving. On 2.05.00
+    // (13 November 2026) the first call after a load read +0x29C and +0x324
+    // as zero on Broomy for 10 s while +0x51C held (x, 0.0, z) 10.4 km from
+    // Kliff, the same value at 2, 5 and 10 s, and Broomy was ridden 25 s
+    // after that one press. A later call read +0x3D0 at 595.9 at 2 and 5 s
+    // while Broomy ran in from 220 m, and again 2314.6 three times over. So
+    // +0x3D0 and +0x51C keep an old position while the actor is away from
+    // the player, and the [height] probe takes no distance from them.
     inline constexpr unsigned kOff_Block_Transform = 0x1A0;
     inline constexpr unsigned kTf_WorldCopies[]    = { 0x29C, 0x324, 0x3D0, 0x51C };
+    inline constexpr unsigned kTf_LiveWorld[]      = { 0x29C, 0x324 };
+    // Every position the [height] probe dumps: the world ones, the local ones
+    // (+0xB4, copied at +0x12C and +0x63C, Glint Spotter) and the parent's.
+    inline constexpr unsigned kTf_Dump[]           = { 0x29C, 0x324, 0x3D0, 0x51C, 0xB4, 0x12C, 0x63C, 0xEC };
+    // The entity id, whose top byte is the type tag (B0 for a character),
+    // as Glint Spotter and Master Looter read it.
+    inline constexpr unsigned kOff_Actor_Eid       = 0x60;
     inline constexpr unsigned kOff_Tf_LocalPos     = 0xB4;
     inline constexpr unsigned kOff_Tf_ParentId     = 0xC8;
     inline constexpr unsigned kOff_Tf_ParentPos    = 0xEC;
