@@ -1,7 +1,11 @@
-# Broomy 1.0.12
+# Broomy 1.0.13
 
 For Crimson Desert exe 1.0.0.3663 (game 2.05.00, Steam build 26636972), the patch of 13 November 2026.
 On an older game, use Broomy 1.0.11.
+
+1.0.13 fixes three rare timing faults between the game's own threads. Broomy
+could miss a table it built, refuse to clear a fainted Broomy just after a load,
+or enter a lock before it was set up. Nothing in how Broomy plays changes.
 
 Pearl Abyss built a flying broom mount and never switched it on. The model,
 its skeleton and its animations are all in the game's archives. This plugin

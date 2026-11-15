@@ -48,7 +48,9 @@ edit. Everything Broomy needs that the game doesn't ship comes from memory:
 
 At start the plugin reads the ids of the three requests it watches, loading
 complete, wedge choice and mount call, from the game's own request
-descriptors, since 2.05.00 renumbered them. A few seconds after a save
+descriptors, since 2.05.00 renumbered them. The roster scan works on local
+copies and publishes the player's roster once it ends, so a call made during
+the scan still finds Broomy's entry. A few seconds after a save
 loads, the plugin checks the roster. A save
 without Broomy gets one by hiring a wild horse under Broomy's character row
 on the game server's own thread, or after four seconds with no horse in
