@@ -28,6 +28,8 @@ namespace bm::mem
     // the RTTI structure because those bytes decoded as instructions.
     bool Executable(uintptr_t p, size_t n);
     long FaultCount();
+    // How many times the region cache's lock has been taken.
+    long RegionLockCount();
 
     bool Read8 (uintptr_t a, uint8_t*  out);
     bool Read16(uintptr_t a, uint16_t* out);

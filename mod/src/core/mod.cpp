@@ -237,10 +237,15 @@ namespace
         bm::analogspeed::SetSlowest(ReadSetting(L"SlowestPush", 15));
         if (g_serving) bm::analogspeed::Install();
         if (g_serving && !give) LOG("[grant] GiveBroomy=0, so no save is given Broomy.");
+        int ticks = 0;
         while (!g_stop.load())
         {
             Sleep(500);
             if (granting) bm::grant::Tick();
+            // Once, 30 seconds in, so the memory checks from loading have run.
+            if (++ticks == 60)
+                LOG("[mem] the region cache lock is a static SRWLOCK, taken %ld times so far.",
+                    bm::mem::RegionLockCount());
         }
         return 0;
     }

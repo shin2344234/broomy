@@ -39,26 +39,27 @@ namespace bm::mem
         struct Region { uintptr_t base, end; DWORD when; bool ok; };
         Region g_regs[256];
         int    g_regN = 0, g_regNext = 0;
-        CRITICAL_SECTION g_regCs;
-        LONG   g_regCsReady = 0;
+        // Statically initialised, so there is no first-use setup to race. The
+        // old critical section was set up on first use with a three-state
+        // flag, and a second thread arriving while the first was still inside
+        // InitializeCriticalSection moved the flag on itself and entered the
+        // lock before it existed. Nothing under this lock takes it again, so a
+        // non-recursive lock is enough.
+        SRWLOCK g_regLock = SRWLOCK_INIT;
+        // Counted under the lock, so it costs no extra interlocked operation.
+        volatile LONG g_regTaken = 0;
         volatile LONG g_faults = 0;
 
         void RegLock()
         {
-            if (InterlockedCompareExchange(&g_regCsReady, 1, 0) == 0)
-                InitializeCriticalSection(&g_regCs);
-            while (InterlockedCompareExchange(&g_regCsReady, 2, 2) != 2)
-            {
-                // First initializer publishes state 2 once the CS is ready.
-                if (InterlockedCompareExchange(&g_regCsReady, 2, 1) == 1) break;
-                Sleep(0);
-            }
-            EnterCriticalSection(&g_regCs);
+            AcquireSRWLockExclusive(&g_regLock);
+            g_regTaken = g_regTaken + 1;
         }
-        void RegUnlock() { LeaveCriticalSection(&g_regCs); }
+        void RegUnlock() { ReleaseSRWLockExclusive(&g_regLock); }
     }
 
     long FaultCount() { return g_faults; }
+    long RegionLockCount() { return g_regTaken; }
 
     bool Readable(uintptr_t a, size_t n)
     {
