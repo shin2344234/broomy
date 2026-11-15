@@ -97,6 +97,15 @@ namespace
     Seen  g_seen[1];
     int   g_seenCount = 0;
     DWORD g_watchAt = 0;
+    // The player's roster as the faint and groggy detours read it, from the
+    // game's threads: g_seen[0].clan once a scan has finished, 0 while none
+    // has. RosterHas works on locals and sets this once, at its end, so a
+    // call during the scan's second or more never sees the scan half done.
+    volatile uintptr_t g_playerRoster = 0;
+    void SetPlayerRoster(uintptr_t clan)
+    {
+        InterlockedExchangePointer(reinterpret_cast<void* volatile*>(&g_playerRoster), reinterpret_cast<void*>(clan));
+    }
 
     // What each roster held at the last check, for the [roster] lines on why
     // a Broomy in the roster can still be missing from the saddle wedge
@@ -742,9 +751,13 @@ namespace
     bool RosterHas(int row, int& rosters)
     {
         rosters = 0;
-        g_seenCount = 0;
         uintptr_t vt[2] = {};
-        if (bm::mem::FindVtablesByName(kRtti_ServerClan, vt, 2) != 1) return false;
+        if (bm::mem::FindVtablesByName(kRtti_ServerClan, vt, 2) != 1)
+        {
+            g_seenCount = 0;
+            SetPlayerRoster(0);
+            return false;
+        }
         uintptr_t hits[64];
         int found = 0;
         MEMORY_BASIC_INFORMATION mbi;
@@ -761,6 +774,8 @@ namespace
         }
         bool has = false;
         uint32_t largest = 0;
+        Seen best{};
+        int bestCount = 0;
         g_rosterCount = 0;
         for (int i = 0; i < found; ++i)
         {
@@ -773,8 +788,8 @@ namespace
             if (count > largest)
             {
                 largest = count;
-                g_seen[0] = { hits[i], arr };
-                g_seenCount = 1;
+                best = { hits[i], arr };
+                bestCount = 1;
             }
             RosterSeen s{ hits[i], count, -1, 0, 0, 0, -1, 0, 0, 0, 0, 0 };
             for (uint32_t k = 0; k < count; ++k)
@@ -800,6 +815,9 @@ namespace
             }
             if (g_rosterCount < kMaxRosters) g_rosters[g_rosterCount++] = s;
         }
+        g_seen[0] = best;
+        g_seenCount = bestCount;
+        SetPlayerRoster(bestCount ? best.clan : 0);
         return has;
     }
 
@@ -967,7 +985,8 @@ namespace
             InterlockedExchange(&g_lookedAt, static_cast<LONG>(GetTickCount() | 1));
             return r;
         }
-        const bool stored = g_seenCount && StoreBroomy(g_seen[0].clan, static_cast<uint32_t>(id));
+        const uintptr_t roster = g_playerRoster;
+        const bool stored = roster && StoreBroomy(roster, static_cast<uint32_t>(id));
         if (!stored)
         {
             LOG_ERR("[faint] Broomy (actor %08X) is down at the call (dead %u %u, groggy %d), but its "
@@ -1018,7 +1037,8 @@ namespace
         InterlockedExchange(&g_outAtCall, 0);   // this press is refused, so nothing follows to send twice
         uint32_t groggyValue = 0;
         bm::mem::Read32(status + kOff_Status_Groggy, &groggyValue);
-        if (id && g_seenCount && StoreBroomy(g_seen[0].clan, id))
+        const uintptr_t roster = g_playerRoster;
+        if (id && roster && StoreBroomy(roster, id))
         {
             InterlockedExchange(&g_clearedId, static_cast<LONG>(id));
             InterlockedExchange(&g_clearedAt, static_cast<LONG>(GetTickCount() | 1));
@@ -1136,6 +1156,7 @@ namespace bm::grant
             if (mem::FindVtablesByName(kRtti_ServerClan, vt, 2) == 1 && RostersChanged(vt[0]))
             {
                 g_seenCount = 0;
+                SetPlayerRoster(0);
                 InterlockedExchange(&g_armed, 0);
                 InterlockedExchange(&g_loadedAt, static_cast<LONG>(now0));
                 InterlockedIncrement(&g_loadSeq);
