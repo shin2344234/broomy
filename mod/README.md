@@ -1,7 +1,9 @@
-# Broomy 1.0.13
+# Broomy 1.0.14
 
-For Crimson Desert exe 1.0.0.3663 (game 2.05.00, Steam build 26636972), the patch of 13 November 2026.
-On an older game, use Broomy 1.0.11.
+For Crimson Desert exe 1.0.0.3732 (game 2.05.01, Steam build 26776744), the update of 18 November 2026.
+On exe 1.0.0.3663 use Broomy 1.0.13, and on an older game Broomy 1.0.11.
+1.0.14 matches Kliff's and Damiane's broom clips to the byte 3732 changed in
+the game's own broom files. It was not tested in play.
 
 1.0.13 fixes three rare timing faults between the game's own threads. Broomy
 could miss a table it built, refuse to clear a fainted Broomy just after a load,
