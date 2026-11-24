@@ -34,7 +34,10 @@ edit. Everything Broomy needs that the game doesn't ship comes from memory:
 - Clips the game doesn't ship, built from its own: the broom held steady in
   level flight, the rider's push-off and leans, and Damiane's own riding
   clips, which nodes of hers added to Kliff's riding charts play. The
-  riders' lean blends are laid out on Broomy's speeds.
+  riders' lean blends are laid out on Broomy's speeds. With `SideSaddle=1`
+  side-saddle copies of the riders' idle, push-off and leans go in for the
+  astride ones, built from them with the hips turned to the left, the chest
+  and head turned back to face ahead and the hands held on the grip.
 - The horse's way of loading a bounty. Broomy's vehicle row gets the horse's cargo seat, its interaction list gets a copy of
   Horse_Carry_Dead that shows without focus, and the horse's Unload accepts
   Broomy. Every broom clip moves the cargo seat behind Kliff, and the

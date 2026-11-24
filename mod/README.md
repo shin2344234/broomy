@@ -93,10 +93,17 @@ All of them live in `Broomy.ini` and are read when the game starts.
     Braking=1500       how hard it stops when you let go, percent of the Wyvern's
     TurnSpeed=200      how fast it turns, percent of the Wyvern's
     SlowestPush=15     speed at the lightest stick push, percent of full
+    SideSaddle=0       1 rides side-saddle, both legs over the left side
 
 At the defaults Broomy cruises at 62.5 m/s and boosts at 125, and stops
 from full cruise in under a second. Set `SlowestPush=100` for one speed
 whatever the push.
+
+With `SideSaddle=1` the rider sits sideways with both legs hanging over
+Broomy's left side, chest and head turned to face ahead and both hands on
+the grip. The lean at speed, the climb, the dive and the push-off all keep
+that seat. Getting on and off still swings a leg over as before, and the
+rider turns into the side-saddle seat as the mount ends.
 
 Fly down to within 20 m of the ground and Broomy descends and lands. Level
 or climbing, it stays at the height you fly.

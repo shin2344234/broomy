@@ -29,6 +29,7 @@
 #include "game/mem.h"
 #include "game/aimrate.h"
 #include "game/riderfix.h"
+#include "game/sidesaddleclips.h"
 #include "ini_default.h"
 #include "version.h"
 
@@ -166,21 +167,30 @@ namespace
     // across the broom (captivepatches.h).
     // A clip no pack holds has a stand-in, a shipped file find and exists see
     // in its place; the hover replaces the idle.
+    // With SideSaddle=1 the side-saddle clips (sidesaddleclips.h) come first,
+    // so they go in for the astride ones of the same path: Kliff's idle,
+    // push-off, leans, climb and dive, and Damiane's. Oongka plays Kliff's.
     struct Carried
     {
         const bm::broomchart::BroomClip* clip;
         std::string bytes;
+        bool side;
     };
-    const std::vector<Carried> g_clips = [] {
-        std::vector<Carried> v;
-        for (const bm::broomchart::BroomClip& c : bm::broomchart::kBroomClips)
-            v.push_back({ &c, std::string(reinterpret_cast<const char*>(c.data), c.size) });
-        for (const bm::broomchart::BroomClip& c : bm::damiane::kClips)
-            v.push_back({ &c, std::string(reinterpret_cast<const char*>(c.data), c.size) });
-        for (const bm::broomchart::BroomClip& c : bm::captive::kClips)
-            v.push_back({ &c, std::string(reinterpret_cast<const char*>(c.data), c.size) });
-        return v;
-    }();
+    std::vector<Carried> g_clips;
+    bool g_sideSaddle = false;
+
+    // Before SupplyLoads, so Supply never sees the list change.
+    void CarryClips(bool side)
+    {
+        auto add = [](const bm::broomchart::BroomClip& c, bool s) {
+            g_clips.push_back({ &c, std::string(reinterpret_cast<const char*>(c.data), c.size), s });
+        };
+        if (side)
+            for (const bm::broomchart::BroomClip& c : bm::sidesaddle::kClips) add(c, true);
+        for (const bm::broomchart::BroomClip& c : bm::broomchart::kBroomClips) add(c, false);
+        for (const bm::broomchart::BroomClip& c : bm::damiane::kClips) add(c, false);
+        for (const bm::broomchart::BroomClip& c : bm::captive::kClips) add(c, false);
+    }
 
     bool EndsWithI(const char* path, size_t n, const char* tail)
     {
@@ -212,6 +222,12 @@ namespace
             const bm::broomchart::BroomClip& c = *k.clip;
             if (!EndsWithI(path, n, c.path)) continue;
             if (standIn && c.standIn) *standIn = c.standIn;
+            if (k.side)
+            {
+                // Every load, so a play test shows each one that went in.
+                if (!standIn) LOG("[saddle] side-saddle %s goes in for %s.", strrchr(c.path, '/') + 1, path);
+                return &k.bytes;
+            }
             static volatile LONG logged = 0;
             if (!standIn && InterlockedIncrement(&logged) <= 60)
                 LOG("[clips] Broomy's own %s goes in for %s.", strrchr(c.path, '/') + 1, path);
@@ -237,6 +253,12 @@ namespace
         bm::analogspeed::SetSlowest(ReadSetting(L"SlowestPush", 15));
         if (g_serving) bm::analogspeed::Install();
         if (g_serving && !give) LOG("[grant] GiveBroomy=0, so no save is given Broomy.");
+        if (g_serving && g_sideSaddle)
+            LOG("[saddle] SideSaddle=1, so Kliff, Damiane and Oongka ride side-saddle, both legs over Broomy's left "
+                "side: %zu side-saddle clips go in for the astride ones. Getting on and off stays astride.",
+                _countof(bm::sidesaddle::kClips));
+        else if (g_serving)
+            LOG("[saddle] SideSaddle=0, so riders sit astride.");
         int ticks = 0;
         while (!g_stop.load())
         {
@@ -268,6 +290,8 @@ namespace bm::Mod
         speeds.braking = Clamp(ReadSetting(L"Braking", speeds.braking), 100, 5000);
         speeds.turn = Clamp(ReadSetting(L"TurnSpeed", speeds.turn), 50, 500);
         bm::broomchart::SetSpeeds(speeds);
+        g_sideSaddle = ReadSetting(L"SideSaddle", 0) != 0;
+        CarryClips(g_sideSaddle);
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
         if (g_serving) bm::riderfix::Install(false);
