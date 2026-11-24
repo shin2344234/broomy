@@ -104,6 +104,7 @@ target_compile_options(buildcheck PRIVATE /utf-8 /W3)
 add_executable(chartcheck EXCLUDE_FROM_ALL
     tests/chartcheck.cpp
     src/game/broomchart.cpp
+    src/game/chartwalk.cpp
     src/game/tablefile.cpp
 )
 target_include_directories(chartcheck PRIVATE src)

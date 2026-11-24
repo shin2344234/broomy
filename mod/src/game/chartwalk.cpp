@@ -4,8 +4,12 @@
 
 namespace
 {
-    // Record sizes of the eleven node arrays, in file order.
-    constexpr uint32_t kArraySizes[] = { 12, 16, 0x68, 0x94, 24, 36, 12, 96, 12, 12, 16 };
+    // Record sizes of the eleven node arrays, in file order. Exe 1.0.0.3663
+    // grew array 3's records (AI move speeds) from 0x94 bytes to 0xA0: in
+    // the Wyvern's m0004_dragon_upper.paac the 29 nodes with one each grew
+    // by 12 bytes, and the offsets in their array tables moved with them.
+    // Kliff's and the riding charts have none.
+    constexpr uint32_t kArraySizes[] = { 12, 16, 0x68, 0xA0, 24, 36, 12, 96, 12, 12, 16 };
     constexpr int kArrays = sizeof kArraySizes / sizeof kArraySizes[0];
     constexpr uint32_t kArrayTable = 0x70;   // u16 offset, u8 count, u8 0, per array
 

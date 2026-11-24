@@ -1,4 +1,5 @@
 #include "game/broomchart.h"
+#include "game/chartwalk.h"
 #include "game/boostpatches.h"
 #include "game/crossfadepatches.h"
 #include "game/rightmountpatches.h"
@@ -205,6 +206,84 @@ namespace bm::broomchart
             if (rest) *rest = s.substr(0, s.size() - t);
             return true;
         }
+
+        // quiet_patches.py and effect_patches.py, run on the chart in hand.
+        // Their tables hold offsets in the shipped Wyvern charts and skip any
+        // offset that holds another word, so a Wyvern chart another mod
+        // rewrote kept its roars. Here every node's frame event instances
+        // are walked: a sound event's hash (word 49) and a voice's (word 3)
+        // are zeroed, and each instance that reaches a voice, effect, effect
+        // switch, camera shake, camera shake switch, blur or rumble is
+        // pointed at the chart's first sound event, zeroed by then. With
+        // `write` false nothing changes and the counts are what is left.
+        constexpr uint32_t kSoundType = 0x43, kVoiceType = 0x44;
+
+        bool Cut(uint32_t type)
+        {
+            switch (type)
+            {
+            case 0x39: case 0x3B: case kVoiceType: case 0x4B: case 0x4C: case 0x52: case 0x60: return true;
+            default: return false;
+            }
+        }
+
+        bool Silence(std::string& c, bool write, size_t& hashes, size_t& events, const char*& why)
+        {
+            hashes = events = 0;
+            chartwalk::Chart w;
+            if (!chartwalk::Walk(reinterpret_cast<const uint8_t*>(c.data()), static_cast<uint32_t>(c.size()), w, why))
+                return false;
+            uint32_t quiet = UINT32_MAX;
+            for (int pass = 0; pass < 2; ++pass)
+                for (size_t n = 0; n < w.nodes.size(); ++n)
+                {
+                    const uint32_t at = w.nodeEvents[n];
+                    for (uint32_t i = 0; i < w.U8(at); ++i)
+                    {
+                        const uint32_t inst = at + 1 + i * chartwalk::kEventSize;
+                        const uint32_t e = w.U32(inst + chartwalk::kEventIndex);
+                        uint32_t type, hash;
+                        if (!w.EventWord(e, 0, type))
+                        {
+                            why = "a frame event instance points past the event buffer";
+                            return false;
+                        }
+                        type &= 0xFFFF;
+                        if (pass == 0)
+                        {
+                            const uint32_t k = type == kSoundType ? 49 : type == kVoiceType ? 3 : 0;
+                            if (!k) continue;
+                            if (!w.EventWord(e, k, hash))
+                            {
+                                why = "a sound or voice event runs past the event buffer";
+                                return false;
+                            }
+                            if (type == kSoundType && e < quiet) quiet = e;
+                            if (!hash) continue;
+                            ++hashes;
+                            if (write) Poke<uint32_t>(c, w.events + 4 * (e + k), 0);
+                        }
+                        else if (Cut(type))
+                        {
+                            ++events;
+                            if (!write) continue;
+                            if (quiet == UINT32_MAX)
+                            {
+                                why = "it has no sound event to point the effects and voices at";
+                                return false;
+                            }
+                            Poke<uint32_t>(c, inst + chartwalk::kEventIndex, quiet);
+                        }
+                    }
+                }
+            return true;
+        }
+    }
+
+    bool NoisesLeft(const std::string& chart, size_t& hashes, size_t& events, const char*& why)
+    {
+        std::string copy = chart;
+        return Silence(copy, false, hashes, events, why);
     }
 
     void SetIdleLeaf(const char* leaf) { g_idle = leaf; }
@@ -431,6 +510,23 @@ namespace bm::broomchart
             Poke<uint32_t>(c, p.at, p.broomy);
             ++land;
         }
+        // Whatever sound the tables missed, in a Wyvern chart that is not the
+        // shipped one: found by walking each chart (Silence).
+        size_t walkedHashes = 0, walkedEvents = 0;
+        std::string unwalked;
+        for (int c = 0; c < kChartCount; ++c)
+        {
+            size_t h = 0, e = 0;
+            const char* fail = nullptr;
+            if (!Silence(out[c], true, h, e, fail))
+            {
+                const char* leaf = strrchr(kCharts[c].source, '/');
+                unwalked += std::string("; ") + (leaf ? leaf + 1 : kCharts[c].source) + " did not walk (" + fail +
+                            "), so only the offset tables quieted it";
+            }
+            walkedHashes += h;
+            walkedEvents += e;
+        }
         char line[1300];
         snprintf(line, sizeof line,
                  "%zu animation paths and %zu blend paths are the broom's, padded with zeros; %zu riding action%s keyed "
@@ -451,6 +547,12 @@ namespace bm::broomchart
                  sizeof kGroundPatches / sizeof kGroundPatches[0], takeoff,
                  sizeof kTakeoffPatches / sizeof kTakeoffPatches[0]);
         report = line;
+        snprintf(line, sizeof line,
+                 "; walking the charts silenced %zu more sound and voice hashes and %zu more effects and voices than "
+                 "the offset tables",
+                 walkedHashes, walkedEvents);
+        report += line;
+        report += unwalked;
         return true;
     }
 

@@ -99,6 +99,22 @@ int main(int argc, char** argv)
             printf("padded: %s\n", report.c_str());
             for (int c = 0; c < kChartCount; ++c)
                 if (!Save(out + "padded_" + Leaf(kCharts[c].path), padded[c])) ++failed;
+            // None of the Wyvern's sounds, voices or effects is left in what
+            // ships, whatever layout the Wyvern's charts came in.
+            for (int c = 0; c < kChartCount; ++c)
+            {
+                size_t hashes = 0, events = 0;
+                const char* fail = nullptr;
+                if (!NoisesLeft(padded[c], hashes, events, fail))
+                {
+                    printf("  %-28s does not walk: %s\n", Leaf(kCharts[c].path), fail);
+                    ++failed;
+                    continue;
+                }
+                printf("  %-28s %zu sound and voice hashes, %zu effects and voices left\n", Leaf(kCharts[c].path),
+                       hashes, events);
+                if (hashes || events) ++failed;
+            }
         }
     }
 

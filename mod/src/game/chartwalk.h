@@ -2,8 +2,8 @@
 #include <cstdint>
 #include <vector>
 
-// A walk over an action chart (.paac) in the layout of exe 1.0.0.3392,
-// which finds where each section and record starts so a caller can look
+// A walk over an action chart (.paac) in the layout of exe 1.0.0.3392, with
+// 3663's larger array 3 records (chartwalk.cpp), which finds where each section and record starts so a caller can look
 // records up by what they are (an action's key, the branch an action loops
 // on) rather than by a fixed offset. The layout is the one the game's own
 // readers take (top level +0x214A4C0, node +0x2149030, tail +0x214AE40,

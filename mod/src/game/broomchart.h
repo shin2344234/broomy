@@ -98,6 +98,13 @@ namespace bm::broomchart
     bool BuildCharts(const std::string (&wyvern)[kChartCount], std::string (&out)[kChartCount], Aliases& aliases,
                      std::string& report, std::string& why, bool padded = false);
 
+    // The Wyvern's noises a chart still carries: sound and voice events whose
+    // hash is not zero, and frame event instances that reach a voice, effect,
+    // effect switch, camera shake, camera shake switch, blur or rumble. The
+    // padded build leaves none, whatever layout the Wyvern's charts came in.
+    // False, with a reason, when the chart does not walk.
+    bool NoisesLeft(const std::string& chart, size_t& hashes, size_t& events, const char*& why);
+
     // The package list with GoldStar's upper group given the sub-package
     // the Wyvern's upper group has, pointing at the armadillo's chart path.
     bool BuildPackageDesc(const std::string& game, std::string& out, std::string& report, std::string& why);
