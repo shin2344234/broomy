@@ -21,10 +21,13 @@ namespace bm::broomrows
     inline constexpr const char* kDisplayName = "Broomy";
 
     inline constexpr const char* kTableDir = "gamedata/binarystaticinfo__/bin/";
-    // Every table Broomy changes, in no particular order.
+    // Every table Broomy changes, in no particular order. interactioninfo.dlc_01
+    // is the DLC's (dlc\dlc_01\0008, same folder in the game's paths), whose
+    // rows the game uses over the base table's of the same key.
     inline constexpr const char* kTables[] = { "stringinfo", "characterinfo", "mercenaryinfo", "mercenarygroupinfo",
                                                "reserveslot", "vehicleinfo", "characterappearanceindexinfo",
-                                               "interactioninfo", "uimaptextureinfo", "uifiltergroupinfo" };
+                                               "interactioninfo", "interactioninfo.dlc_01", "uimaptextureinfo",
+                                               "uifiltergroupinfo" };
 
     // The broom has no appearance file, and a file the packs do not hold
     // cannot be read, so Broomy's appearance names one that ships and that

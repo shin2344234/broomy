@@ -116,23 +116,26 @@ namespace bm::tablefile
                     rows.push_back(std::move(r));
                 }
                 if (!fits || p != hn || expect != body.size() || rows.empty()) continue;
-                // A record opens with its key, then its position.
+                // A record opens with its key, then its position: the row, plus 10 in the DLC's interactioninfo.
                 const unsigned kw = width;
                 bool ok = true;
+                uint32_t first = 0;
                 for (size_t i = 0; i < rows.size() && ok; ++i)
                 {
                     uint32_t index;
                     if (rows[i].len < kw + 4) { ok = false; break; }
                     memcpy(&index, body.data() + rows[i].off + kw, 4);
-                    ok = index == i;
+                    if (i == 0) first = index;
+                    ok = index == first + i;
                 }
                 if (!ok) continue;
 
                 matched = true;
                 newLayout_ = true;
+                firstRow_ = first;
                 wide_ = width == 8;
                 keySize_ = wide_ ? 4 : width;
-                moveDialog_ = name && !strcmp(name, "interactioninfo");
+                moveDialog_ = name && (!strcmp(name, "interactioninfo") || !strcmp(name, "interactioninfo.dlc_01"));
                 for (size_t i = 0; i < rows.size(); ++i)
                 {
                     const Row& r = rows[i];
@@ -212,7 +215,7 @@ namespace bm::tablefile
             }
             const std::string name = rec.substr(4, nl);
             std::string out = rec.substr(4 + nl, kw);
-            Put<uint32_t>(out, static_cast<uint32_t>(row));
+            Put<uint32_t>(out, static_cast<uint32_t>(firstRow_ + row));
             out.append(rec, 4 + nl + kw, std::string::npos);
             if (wide_)
             {

@@ -1153,17 +1153,28 @@ namespace bm::broomrows
             return true;
         }
 
-        bool OnHorseOrBroomy(tablefile::Table& t, std::string& why)
+        // Horse_UnCarry_Dead, NpcBind_Release and NpcBind_Down_Release pass with Kliff on a horse; each takes
+        // Broomy's type too, as OR(horse, ibex). `skipMissing` is for a table that need not hold all three (the
+        // DLC's); `spliced` counts the rows changed.
+        bool OnHorseOrBroomy(tablefile::Table& t, std::string& why, bool skipMissing, int& spliced)
         {
-            const std::string* first = t.Record(kOnHorseRows[0]);
+            spliced = 0;
+            uint32_t probe = kOnHorseRows[0];
+            const std::string* first = nullptr;
+            for (uint32_t key : kOnHorseRows)
+            {
+                first = t.Record(key);
+                probe = key;
+                if (first || !skipMissing) break;
+            }
             uint16_t fn = 0;
             for (uint16_t id : kCheckRidingVehicleType)
                 if (!fn && first && first->find('\x03' + Bytes<uint16_t>(id) + Bytes<uint32_t>(kHorseType)) != std::string::npos)
                     fn = id;
             if (!fn)
             {
-                why = "interactioninfo " + std::to_string(kOnHorseRows[0]) +
-                      ": no CheckRidingVehicleType(horse) under a known function id";
+                if (skipMissing && !first) return true;
+                why = "interactioninfo " + std::to_string(probe) + ": no CheckRidingVehicleType(horse) under a known function id";
                 return false;
             }
             const auto onType = [fn](uint32_t type)
@@ -1172,13 +1183,35 @@ namespace bm::broomrows
             for (uint32_t key : kOnHorseRows)
             {
                 const std::string* src = t.Record(key);
+                if (!src && skipMissing) continue;
                 std::string rec = src ? *src : std::string();
                 if (!src || !Splice(rec, horse, either, "CheckRidingVehicleType(horse)", why) || !t.Set(key, rec))
                 {
                     why = "interactioninfo " + std::to_string(key) + ": " + (src ? why : "no such row");
                     return false;
                 }
+                ++spliced;
             }
+            return true;
+        }
+
+        // The DLC's own interactioninfo. On 3840 it grew from 25 rows to 522 and carries byte-for-byte copies of
+        // the three rows above, and the game uses the DLC's row where both tables have a key: the condition probe
+        // on 26 November saw Horse_UnCarry_Dead compiled as shipped, AND(horse, ...), and no
+        // CheckRidingVehicleType(ibex) evaluated at all, so no unload prompt on Broomy. Its copies take the same
+        // splice. Nothing is added to it; Broomy's own rows stay in the base table.
+        bool DlcInteraction(tablefile::Table& t, std::string& report, std::string& why)
+        {
+            if (!g_offerLoad)
+            {
+                report = "interactioninfo.dlc_01: left as it is (LoadRow is off)";
+                return true;
+            }
+            int spliced = 0;
+            if (!OnHorseOrBroomy(t, why, true, spliced)) return false;
+            report = spliced ? "interactioninfo.dlc_01: its copies of Horse_UnCarry_Dead, NpcBind_Release and "
+                               "NpcBind_Down_Release take Broomy as a horse (" + std::to_string(spliced) + " of 3 rows)"
+                             : "interactioninfo.dlc_01: holds none of the unload and release rows, left as it is";
             return true;
         }
 
@@ -1209,7 +1242,9 @@ namespace bm::broomrows
                 }
             // A copy: each Append can move the table's records.
             const std::string broom = *src;
-            if (!CatchRide(t, broom, w, why) || (g_offerLoad && (!CarryRow(t, why) || !OnHorseOrBroomy(t, why)))) return false;
+            int spliced = 0;
+            if (!CatchRide(t, broom, w, why) || (g_offerLoad && (!CarryRow(t, why) || !OnHorseOrBroomy(t, why, false, spliced))))
+                return false;
             report = "interactioninfo: Broom_Ride keeps both pivots, mount keys 262C63D3 and A272684B; "
                      "Broom_Ride_Catch (1900068) added for mounting with a captive, mount keys 33F65149 and 4DC25870";
             if (g_offerLoad)
@@ -1447,6 +1482,7 @@ namespace bm::broomrows
         else if (!strcmp(name, "vehicleinfo")) ok = Vehicle(t, report, why);
         else if (!strcmp(name, "characterappearanceindexinfo")) ok = AppearanceIndex(t, report, why);
         else if (!strcmp(name, "interactioninfo")) ok = Interaction(t, report, why);
+        else if (!strcmp(name, "interactioninfo.dlc_01")) ok = DlcInteraction(t, report, why);
         else if (!strcmp(name, "uimaptextureinfo")) ok = MapTexture(t, report, why);
         else if (!strcmp(name, "uifiltergroupinfo")) ok = FilterGroup(t, report, why);
         else why = "not a table Broomy changes";

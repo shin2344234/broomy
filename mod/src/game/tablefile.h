@@ -23,7 +23,9 @@
 // the appearance index, its u32 key and i32 tag), a u32 name length, the
 // name, a u32 body offset and a u32 record length. The record has lost its
 // name, and after its key carries a u32 holding the row's position in the
-// header. Records sit in header order, back to back. Parse reads either
+// header, counted from 0 in every base table and from 10 in the DLC's
+// interactioninfo.dlc_01; Build keeps the first row's number. Records sit in
+// header order, back to back. Parse reads either
 // layout and keeps every record in the form 3732 wrote, the name, the key
 // and the fields, so the builders walk one shape; Build writes the layout
 // the table came in. NewLayout() says which, for the fields whose contents
@@ -74,6 +76,10 @@ namespace bm::tablefile
         std::vector<std::string> records_;  // by header row
         std::vector<size_t> bodyOrder_;     // header rows, in the order their records sit in the body
         std::unordered_multimap<uint64_t, size_t> index_;
+        // Last, so every member above keeps the offset it has in Speeder
+        // Bike's copy of this class, which its stack check links against
+        // Broomy's broomrows.
+        uint32_t firstRow_ = 0;             // the position the first record carries (3840 layout)
     };
 
     uint32_t Crc32(const void* data, size_t n);
