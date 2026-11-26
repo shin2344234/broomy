@@ -620,11 +620,15 @@ namespace bm::broomrows
 
         bool Strings(tablefile::Table& t, std::string& report, std::string& why)
         {
+            // The map row's _uiTemplateName is a stringinfo key, and the game draws nothing for a key whose string
+            // it cannot find. 3840's row names the shared mount component with Broomy's property, so that string
+            // has to be here too; before 3840 the row named Broomy's own component.
             const char* texts[] = { ChartUpper(), ChartLower(), kGameplay, kAppearancePath, kSkeleton, kPortrait,
-                                    kMapComponent };
+                                    kMapComponent, kMapMount };
             int added = 0;
             for (const char* text : texts)
             {
+                if (text == kMapMount && !t.NewLayout()) continue;
                 const uint32_t key = Key(text);
                 if (const std::string* rec = t.Record(key))
                 {
