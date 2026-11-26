@@ -543,7 +543,9 @@ namespace bm::broomrows
         // one. The ibex row's _uiTemplateName on 3840 is the hash of "MapIcon_ActorMount(VehicleAlpineIbex Hired)"
         // (D5673015), as the Horse, Bear and Wyvern rows' are of theirs.
         constexpr const char* kIbexMapMount = "MapIcon_ActorMount(VehicleAlpineIbex Hired)";
-        constexpr const char* kMapMount = "MapIcon_ActorMount(VehicleBroomy Hired)";
+        // The shared component has a property record per kind of mount in the compiled UI files, which this reader
+        // cannot add to (see BuildMapBinary), so the row keeps the ibex template and Broomy draws the ibex icon.
+        constexpr const char* kMapMount = "MapIcon_ActorMount(VehicleAlpineIbex Hired)";
         constexpr const char* kMapName = "Actor_Vehicle_Broomy_Hired";
         constexpr const char* kMapComponent = "MapIcon_ActorVehicleBroomy_Hired";
         constexpr const char* kIbexMapImage = "textureid(cd_Icon_map_AlpineIbex)";
