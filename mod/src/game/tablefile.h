@@ -17,6 +17,17 @@
 // a changed table is written whole: records in their body order, offsets
 // worked out again. Parse refuses a table that does not write back byte for
 // byte, so an edit never starts from a misread.
+//
+// Exe 1.0.0.3840 (game 2.06.00) changed the container. The header is a u16
+// count (a u32 for the appearance index), then per row the key (8 bytes for
+// the appearance index, its u32 key and i32 tag), a u32 name length, the
+// name, a u32 body offset and a u32 record length. The record has lost its
+// name, and after its key carries a u32 holding the row's position in the
+// header. Records sit in header order, back to back. Parse reads either
+// layout and keeps every record in the form 3732 wrote, the name, the key
+// and the fields, so the builders walk one shape; Build writes the layout
+// the table came in. NewLayout() says which, for the fields whose contents
+// moved too (characterinfo, interactioninfo, uimaptextureinfo).
 namespace bm::tablefile
 {
     struct Key
