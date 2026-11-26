@@ -246,6 +246,7 @@ namespace bm::broomrows
         // _isBlocked to _checkObjectOnTop; _showWhenTargeted is the second. What follows the pivots is the
         // condition list, whose expressions are polymorphic trees, so it is not walked (see Suffix).
         constexpr size_t kShowWhenTargetedIndex = 1;
+        constexpr size_t kShowUIAtPivotSocketIndex = 4;
         constexpr Def kInteractionDefs[] = {
             { "name", Str }, { "key", U32 }, { "flags", Raw, 24 }, { "rewardDropSetInfo", U32 },
             { "uiKeyTriggerSoundName", U32 }, { "activityGroupInfo", U32 }, { "categoryInfo", U16 },
@@ -1095,16 +1096,23 @@ namespace bm::broomrows
             Walked w;
             if (!carry || !WalkInteraction(*carry, w, why) || Text(*carry, w.At("name")) != from ||
                 Get<uint32_t>(*carry, w, "key") != kHorseCarry || w.pivots.size() != 2 || Count(*carry, from) != 3 ||
-                static_cast<uint8_t>((*carry)[w.At("flags").at + kShowWhenTargetedIndex]) != 1)
+                static_cast<uint8_t>((*carry)[w.At("flags").at + kShowWhenTargetedIndex]) != 1 ||
+                static_cast<uint8_t>((*carry)[w.At("flags").at + kShowUIAtPivotSocketIndex]) != 0)
             {
-                why = "interactioninfo 301 is not Horse_Carry_Dead with two pivots, its name three times and "
-                      "_showWhenTargeted 1";
+                why = "interactioninfo 301 is not Horse_Carry_Dead with two pivots, its name three times, "
+                      "_showWhenTargeted 1 and _showUIAtPivotSocket 0";
                 return false;
             }
             static_assert(sizeof "Horse_Carry_Dead" == sizeof "Broom_Carry_Dead", "the record keeps its size");
             std::string rec = *carry;
             Poke<uint32_t>(rec, w.At("key").at, kBroomCarry);
             Poke<uint8_t>(rec, w.At("flags").at + kShowWhenTargetedIndex, 0);
+            // _showUIAtPivotSocket 1, as on Broom_Ride and Broom_Ride_Catch. Every row on Broomy's list with it 0
+            // that can pass on the ground took the d-pad radials in a session that loaded with Broomy out:
+            // Horse_Ride_Catch (probe 1), this row in 1.0.5-test13 and test14 and on 3840 (26 November, back
+            // with LoadRow=0). Horse_Ride_Catch and Broom_Ride_Catch differ in the pivots, the tag 01878589 and
+            // this flag, and test14 had both of the others and lost the radial.
+            Poke<uint8_t>(rec, w.At("flags").at + kShowUIAtPivotSocketIndex, 1);
             uint32_t keys = 0;
             for (int i = 0; i < 2; ++i)
             {
