@@ -9,8 +9,8 @@
 namespace bm::broomchart
 {
     inline constexpr HoverPatch kBoostPatches[] = {
-        { 1, 0x0F4FE, 0x410EEFBF, 0x0E23DEE4 },   // m0004_ride_dragon_lower b49 target: dive -> acceleration
-        { 1, 0x0F512, 0x01010000, 0x01000000 },   // m0004_ride_dragon_lower b49 cond_count 1 -> 0
+        { 1, 0x0F4E8, 0x410EEFBF, 0x0E23DEE4 },   // m0004_ride_dragon_lower b49 target: dive -> acceleration
+        { 1, 0x0F4FC, 0x01010000, 0x01000000 },   // m0004_ride_dragon_lower b49 cond_count 1 -> 0
         { 1, 0x019C2, 0x00000000, 0x447A0000 },   // m0004_ride_dragon_lower 0E23DEE4 vertical window time_start 0.00 -> 1000
         { 1, 0x019C6, 0x40422222, 0x447A0000 },   // m0004_ride_dragon_lower 0E23DEE4 vertical window time_end 3.03 -> 1000
         { 1, 0x01BCF, 0x00000000, 0x447A0000 },   // m0004_ride_dragon_lower 0E23DEE4 vertical window time_start 0.00 -> 1000
@@ -23,7 +23,7 @@ namespace bm::broomchart
         { 1, 0x01AE7, 0xFFFF0000, 0xFFFF0A00 },   // m0004_ride_dragon_lower 0E23DEE4 moves like cruise (header +0x45 0x00 -> 0x0A)
         { 1, 0x01498, 0xFFFF0000, 0xFFFF0A00 },   // m0004_ride_dragon_lower 570E1E87 moves like cruise (header +0x45 0x00 -> 0x0A)
         { 1, 0x016A5, 0xFFFF0000, 0xFFFF0A00 },   // m0004_ride_dragon_lower 570E1E87 moves like cruise (header +0x45 0x00 -> 0x0A)
-        { 1, 0x0B13C, 0x00000100, 0x00000000 },   // m0004_ride_dragon_lower 0E23DEE4 action +0x5D 1 -> 0, free to climb and dive
-        { 1, 0x0BB5C, 0x00000100, 0x00000000 },   // m0004_ride_dragon_lower 570E1E87 action +0x5D 1 -> 0, free to climb and dive
+        { 1, 0x0B126, 0x00000100, 0x00000000 },   // m0004_ride_dragon_lower 0E23DEE4 action +0x5D 1 -> 0, free to climb and dive
+        { 1, 0x0BB46, 0x00000100, 0x00000000 },   // m0004_ride_dragon_lower 570E1E87 action +0x5D 1 -> 0, free to climb and dive
     };
 }

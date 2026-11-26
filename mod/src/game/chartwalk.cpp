@@ -101,7 +101,9 @@ namespace bm::chartwalk
         return true;
     }
 
-    bool Walk(const uint8_t* data, uint32_t size, Chart& c, const char*& why)
+    namespace
+    {
+    bool WalkWith(const uint8_t* data, uint32_t size, Chart& c, const char*& why, unsigned stubBytes)
     {
         c = Chart();
         c.data = data;
@@ -139,7 +141,7 @@ namespace bm::chartwalk
         r.Skip(static_cast<uint64_t>(r.U32()) * 4);
         for (int t = 0; t < 10 && r.ok; ++t)          // string tables
             for (uint32_t s = r.U16(); s && r.ok; --s) r.Skip(r.U8());
-        r.Skip(18 + 22);                              // scalars, the empty reflection stub
+        r.Skip(18 + stubBytes);                       // scalars, the empty reflection stub (gone in 3840)
         const uint32_t hashes = r.U16(), sockets = r.U16(), includes = r.U16(), actions = r.U16(), rec12 = r.U16();
         r.Skip(hashes * 4ull + sockets * 40ull + includes * 2ull);
         c.actions = r.p;
@@ -175,5 +177,17 @@ namespace bm::chartwalk
             return false;
         }
         return true;
+    }
+    }
+
+    // Exe 1.0.0.3840 dropped the 22 byte reflection stub, so a chart that
+    // does not walk with it is walked without.
+    bool Walk(const uint8_t* data, uint32_t size, Chart& c, const char*& why)
+    {
+        if (WalkWith(data, size, c, why, 22)) return true;
+        const char* first = why;
+        if (WalkWith(data, size, c, why, 0)) return true;
+        why = first;
+        return false;
     }
 }

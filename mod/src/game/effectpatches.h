@@ -39,853 +39,853 @@ namespace bm::broomchart
         { 0, 0x027B7, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x0298D, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x02A6E, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0574B, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0582C, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0590D, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x059EE, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x05ACF, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x05BC4, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x05CA5, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x05D86, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x05E67, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x05F48, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0603D, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0611E, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x061FF, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x062E0, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x063C1, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x06586, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x06737, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x068E8, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x06A99, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x06C4A, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x06E0F, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x06E37, 0x000002DB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x06E4B, 0x00000335, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x06E73, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x06E87, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x06E9B, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x06EAF, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x06EC3, 0x00000443, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x06FA4, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x06FCC, 0x000002DB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x06FE0, 0x00000335, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07008, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0701C, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07030, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07044, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07058, 0x00000443, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07139, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x07161, 0x000002DB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07175, 0x00000335, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0719D, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x071B1, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x071C5, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x071D9, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x071ED, 0x00000443, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x072CE, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x072F6, 0x000002DB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0730A, 0x00000335, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07332, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07346, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0735A, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0736E, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07382, 0x00000443, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07463, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0748B, 0x000002DB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0749F, 0x00000335, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x074C7, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x074DB, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x074EF, 0x0000038F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07503, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07517, 0x00000443, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x076DC, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x076F0, 0x00000523, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x077D1, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x077E5, 0x00000523, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x078C6, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x078DA, 0x00000523, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x079BB, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x079CF, 0x00000523, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07AB0, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x07AC4, 0x00000523, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x07BB9, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x07CAE, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x07DA3, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0A36F, 0x000005E8, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0A584, 0x000005E8, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0A942, 0x000005E8, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0AB57, 0x000005E8, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0AD14, 0x000006B7, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x0574B, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0582C, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0590D, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x059EE, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x05ACF, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x05BC4, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x05CA5, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x05D86, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x05E67, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x05F48, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0603D, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0611E, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x061FF, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x062E0, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x063C1, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x06586, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x06737, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x068E8, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x06A99, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x06C4A, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x06E0F, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x06E37, 0x000002D8, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x06E4B, 0x00000332, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x06E73, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x06E87, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x06E9B, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x06EAF, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x06EC3, 0x00000440, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x06FA4, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x06FCC, 0x000002D8, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x06FE0, 0x00000332, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07008, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0701C, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07030, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07044, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07058, 0x00000440, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07139, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x07161, 0x000002D8, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07175, 0x00000332, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0719D, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x071B1, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x071C5, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x071D9, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x071ED, 0x00000440, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x072CE, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x072F6, 0x000002D8, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0730A, 0x00000332, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07332, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07346, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0735A, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0736E, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07382, 0x00000440, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07463, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0748B, 0x000002D8, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0749F, 0x00000332, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x074C7, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x074DB, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x074EF, 0x0000038C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07503, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07517, 0x00000440, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x076DC, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x076F0, 0x00000520, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x077D1, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x077E5, 0x00000520, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x078C6, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x078DA, 0x00000520, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x079BB, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x079CF, 0x00000520, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07AB0, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x07AC4, 0x00000520, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x07BB9, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x07CAE, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x07DA3, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0A36F, 0x000005E2, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0A584, 0x000005E2, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0A942, 0x000005E2, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0AB57, 0x000005E2, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0AD14, 0x000006B1, 0x0000005E },   // m0004_dragon_upper effect switch
         { 0, 0x0AEA9, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x0B03E, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0B1D3, 0x000006B7, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x0B1D3, 0x000006B1, 0x0000005E },   // m0004_dragon_upper effect switch
         { 0, 0x0B368, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x0B4FD, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0B692, 0x000006B7, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x0B827, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x0B83B, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x0B84F, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0B9F8, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0BBB5, 0x000006B7, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x0B692, 0x000006B1, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x0B827, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x0B83B, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x0B84F, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0B9F8, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0BBB5, 0x000006B1, 0x0000005E },   // m0004_dragon_upper effect switch
         { 0, 0x0BD4A, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x0BEF3, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x0C199, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x0C30A, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0C44F, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0C463, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0C477, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0C48B, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0C49F, 0x00000845, 0x0000005E },   // m0004_dragon_upper blur
-        { 0, 0x0C4C7, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0C4DB, 0x0000083C, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0C5F8, 0x000005E8, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0C620, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0C634, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0C648, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0C65C, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0C670, 0x00000845, 0x0000005E },   // m0004_dragon_upper blur
-        { 0, 0x0C684, 0x00000892, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0C698, 0x000008EC, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0C6C0, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0C6D4, 0x0000083C, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0C97A, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0CB2B, 0x000002DB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CB3F, 0x00000335, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CB67, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0CB7B, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CB8F, 0x000002DB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CBA3, 0x00000335, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CBB7, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CBCB, 0x00000443, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CBDF, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CBF3, 0x000002DB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CC07, 0x00000335, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CC1B, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CDCC, 0x00000946, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CDF4, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0CE08, 0x00000946, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CE1C, 0x00000946, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CE30, 0x00000946, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0CFF5, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0D1BA, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0D37F, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0D4BC, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0D4D0, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0D4E4, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0D4F8, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0D50C, 0x00000845, 0x0000005E },   // m0004_dragon_upper blur
-        { 0, 0x0D534, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0D548, 0x0000083C, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0D6ED, 0x000005E8, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0D715, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0D729, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0D73D, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0D751, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0D765, 0x00000845, 0x0000005E },   // m0004_dragon_upper blur
-        { 0, 0x0D779, 0x00000892, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0D78D, 0x000008EC, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0D7B5, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x0D7C9, 0x0000083C, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x0DA23, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0DA37, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0DB50, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0DB64, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0DC7D, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0DC91, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E091, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E0B9, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E1BE, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E1E6, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E2EB, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E313, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E404, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E418, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E531, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E545, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E65E, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0E672, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0EA86, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0EAAE, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0EBC7, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0EBDB, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0EC03, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0ED1C, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0ED30, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0ED58, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0EE49, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0EE5D, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0EF76, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0EF8A, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F0A3, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F0B7, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F4CB, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F4F3, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F60C, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0F634, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F670, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F789, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F7B1, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F95F, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x0F987, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0C44F, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0C463, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0C477, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0C48B, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0C49F, 0x0000083F, 0x0000005E },   // m0004_dragon_upper blur
+        { 0, 0x0C4C7, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0C4DB, 0x00000836, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0C5F8, 0x000005E2, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0C620, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0C634, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0C648, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0C65C, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0C670, 0x0000083F, 0x0000005E },   // m0004_dragon_upper blur
+        { 0, 0x0C684, 0x0000088C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0C698, 0x000008E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0C6C0, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0C6D4, 0x00000836, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0C97A, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0CB2B, 0x000002D8, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CB3F, 0x00000332, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CB67, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0CB7B, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CB8F, 0x000002D8, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CBA3, 0x00000332, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CBB7, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CBCB, 0x00000440, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CBDF, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CBF3, 0x000002D8, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CC07, 0x00000332, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CC1B, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CDCC, 0x00000940, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CDF4, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0CE08, 0x00000940, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CE1C, 0x00000940, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CE30, 0x00000940, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0CFF5, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0D1BA, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0D37F, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0D4BC, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0D4D0, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0D4E4, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0D4F8, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0D50C, 0x0000083F, 0x0000005E },   // m0004_dragon_upper blur
+        { 0, 0x0D534, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0D548, 0x00000836, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0D6ED, 0x000005E2, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0D715, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0D729, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0D73D, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0D751, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0D765, 0x0000083F, 0x0000005E },   // m0004_dragon_upper blur
+        { 0, 0x0D779, 0x0000088C, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0D78D, 0x000008E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0D7B5, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x0D7C9, 0x00000836, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x0DA23, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0DA37, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0DB50, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0DB64, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0DC7D, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0DC91, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E091, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E0B9, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E1BE, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E1E6, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E2EB, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E313, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E404, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E418, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E531, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E545, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E65E, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0E672, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0EA86, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0EAAE, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0EBC7, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0EBDB, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0EC03, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0ED1C, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0ED30, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0ED58, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0EE49, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0EE5D, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0EF76, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0EF8A, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F0A3, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F0B7, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F4CB, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F4F3, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F60C, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x0F634, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F670, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F789, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F7B1, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F95F, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x0F987, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
         { 0, 0x0FA54, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x0FB21, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x0FBEE, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x0FEE6, 0x00000BB5, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x100B8, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x100CC, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x101E5, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x101F9, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x10312, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x10326, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1073A, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x10762, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x10ADE, 0x00000BE8, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x10AF2, 0x00000C44, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x0FEE6, 0x00000BAE, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x100B8, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x100CC, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x101E5, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x101F9, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x10312, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x10326, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1073A, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x10762, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x10ADE, 0x00000BE0, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x10AF2, 0x00000C3C, 0x0000005E },   // m0004_dragon_upper effect switch
         { 0, 0x1127A, 0x00000230, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x113D3, 0x00000230, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1140F, 0x00000DF3, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11423, 0x00000E4D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11437, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11473, 0x00000EA7, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1140F, 0x00000DEA, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11423, 0x00000E44, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11437, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11473, 0x00000E9E, 0x0000005E },   // m0004_dragon_upper effect
         { 0, 0x11487, 0x00000006, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1149B, 0x00000F01, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11590, 0x00000F60, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1149B, 0x00000EF8, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11590, 0x00000F57, 0x0000005E },   // m0004_dragon_upper effect
         { 0, 0x115A4, 0x00000230, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x115B8, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x115F4, 0x00000E4D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11608, 0x000003E9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11630, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11644, 0x00000EA7, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11658, 0x00000F01, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x115B8, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x115F4, 0x00000E44, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11608, 0x000003E6, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11630, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11644, 0x00000E9E, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11658, 0x00000EF8, 0x0000005E },   // m0004_dragon_upper effect
         { 0, 0x11680, 0x00000006, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x11761, 0x00000F60, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11775, 0x00000F60, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1179D, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x11815, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1225B, 0x0000107D, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x12350, 0x000010D6, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1246D, 0x000005E8, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x124A9, 0x000010F4, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x124BD, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x124D1, 0x00000845, 0x0000005E },   // m0004_dragon_upper blur
-        { 0, 0x124E5, 0x00001103, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x124F9, 0x0000115D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1250D, 0x000011B7, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x12521, 0x00001211, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x12652, 0x00000946, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11761, 0x00000F57, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11775, 0x00000F57, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1179D, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x11815, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1225B, 0x00001074, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x12350, 0x000010CD, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1246D, 0x000005E2, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x124A9, 0x000010EB, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x124BD, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x124D1, 0x0000083F, 0x0000005E },   // m0004_dragon_upper blur
+        { 0, 0x124E5, 0x000010FA, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x124F9, 0x00001154, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1250D, 0x000011AE, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x12521, 0x00001208, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x12652, 0x00000940, 0x0000005E },   // m0004_dragon_upper effect
         { 0, 0x1290D, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x12A7E, 0x0000013C, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x13DF5, 0x00000F60, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x13E45, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x13E59, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1441C, 0x000006B7, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x145B6, 0x00000F60, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1472F, 0x0000134F, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x14743, 0x0000135E, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x14757, 0x000013B8, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1476B, 0x00001412, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1477F, 0x0000146C, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x147A7, 0x000014C6, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x147BB, 0x00001520, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x147CF, 0x0000134F, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x147F7, 0x0000157A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1480B, 0x000015D4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1481F, 0x0000134F, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x14900, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x149E1, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x14D74, 0x000016DF, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x14D88, 0x0000173B, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x14D9C, 0x00001797, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x14DB0, 0x000017F3, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x14F81, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x14F95, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1517A, 0x000016DF, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1518E, 0x0000173B, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x151A2, 0x00001797, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x151B6, 0x000017F3, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15387, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1539B, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15580, 0x000016DF, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15594, 0x0000173B, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x155A8, 0x00001797, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x155BC, 0x000017F3, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1578D, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x157A1, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15986, 0x000016DF, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1599A, 0x0000173B, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x159AE, 0x00001797, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x159C2, 0x000017F3, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15B93, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15BA7, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15D68, 0x000016DF, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15D7C, 0x0000173B, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15D90, 0x00001797, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15DA4, 0x000017F3, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15F75, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x15F89, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1614A, 0x000016DF, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1615E, 0x0000173B, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16172, 0x00001797, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16186, 0x000017F3, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16357, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1636B, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1652C, 0x000016DF, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16540, 0x0000173B, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16554, 0x00001797, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16568, 0x000017F3, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16739, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1674D, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1690E, 0x000016DF, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16922, 0x0000173B, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16936, 0x00001797, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1694A, 0x000017F3, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16B1B, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16B2F, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16CF0, 0x000016DF, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16D04, 0x0000173B, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16D18, 0x00001797, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16D2C, 0x000017F3, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16EFD, 0x00000713, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x16F11, 0x0000076F, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x177F8, 0x0000184F, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x1780C, 0x0000185E, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x1815C, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x18170, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1842A, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1843E, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x185EF, 0x00000A0A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x18603, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x188BD, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x188D1, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x18ED3, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x190ED, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x19307, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x19521, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1973B, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x19969, 0x000007CB, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x19A66, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19A8E, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19AB6, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19ACA, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19ADE, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19AF2, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19C03, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19C2B, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19C3F, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19C53, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19C67, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19C7B, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19D8C, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19DB4, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19DC8, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19DDC, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19DF0, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19E04, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19F15, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19F29, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19F51, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19F65, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19F79, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x19F8D, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A0B2, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A0C6, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A0DA, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A0EE, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A102, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A116, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A23B, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A24F, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A263, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A277, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A28B, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A29F, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A3B0, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A3C4, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A3EC, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A400, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A414, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A428, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A54D, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A561, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A575, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A589, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A59D, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A5B1, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A6D6, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A6EA, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A6FE, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A712, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A726, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A73A, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A83F, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A853, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A87B, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A88F, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A8A3, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A8B7, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A9A8, 0x00001BAB, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A9BC, 0x00001C05, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A9E4, 0x00001C5F, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1A9F8, 0x00001D6D, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1AA0C, 0x00001CB9, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1AA20, 0x00001D13, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1AB01, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1AB15, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1ADE4, 0x00001DD3, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1AE0C, 0x00001E7A, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1B0A2, 0x00001DD3, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1B0CA, 0x00001E7A, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1B22B, 0x00001F2E, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1B253, 0x00001E7A, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1B519, 0x00001DD3, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1B541, 0x00001E7A, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1B70A, 0x00001F2E, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1B732, 0x00001E7A, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x13DF5, 0x00000F57, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x13E45, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x13E59, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1441C, 0x000006B1, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x145B6, 0x00000F57, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1472F, 0x00001345, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x14743, 0x00001354, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x14757, 0x000013AE, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1476B, 0x00001408, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1477F, 0x00001462, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x147A7, 0x000014BC, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x147BB, 0x00001516, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x147CF, 0x00001345, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x147F7, 0x00001570, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1480B, 0x000015CA, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1481F, 0x00001345, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x14900, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x149E1, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x14D74, 0x000016D5, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x14D88, 0x00001731, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x14D9C, 0x0000178D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x14DB0, 0x000017E9, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x14F81, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x14F95, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1517A, 0x000016D5, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1518E, 0x00001731, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x151A2, 0x0000178D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x151B6, 0x000017E9, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15387, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1539B, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15580, 0x000016D5, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15594, 0x00001731, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x155A8, 0x0000178D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x155BC, 0x000017E9, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1578D, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x157A1, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15986, 0x000016D5, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1599A, 0x00001731, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x159AE, 0x0000178D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x159C2, 0x000017E9, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15B93, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15BA7, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15D68, 0x000016D5, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15D7C, 0x00001731, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15D90, 0x0000178D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15DA4, 0x000017E9, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15F75, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x15F89, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1614A, 0x000016D5, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1615E, 0x00001731, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16172, 0x0000178D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16186, 0x000017E9, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16357, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1636B, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1652C, 0x000016D5, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16540, 0x00001731, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16554, 0x0000178D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16568, 0x000017E9, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16739, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1674D, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1690E, 0x000016D5, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16922, 0x00001731, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16936, 0x0000178D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1694A, 0x000017E9, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16B1B, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16B2F, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16CF0, 0x000016D5, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16D04, 0x00001731, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16D18, 0x0000178D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16D2C, 0x000017E9, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16EFD, 0x0000070D, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x16F11, 0x00000769, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x177F8, 0x00001845, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x1780C, 0x00001854, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x1815C, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x18170, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1842A, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1843E, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x185EF, 0x00000A03, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x18603, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x188BD, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x188D1, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x18ED3, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x190ED, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x19307, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x19521, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1973B, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x19969, 0x000007C5, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x19A66, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19A8E, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19AB6, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19ACA, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19ADE, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19AF2, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19C03, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19C2B, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19C3F, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19C53, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19C67, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19C7B, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19D8C, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19DB4, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19DC8, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19DDC, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19DF0, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19E04, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19F15, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19F29, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19F51, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19F65, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19F79, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x19F8D, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A0B2, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A0C6, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A0DA, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A0EE, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A102, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A116, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A23B, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A24F, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A263, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A277, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A28B, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A29F, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A3B0, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A3C4, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A3EC, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A400, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A414, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A428, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A54D, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A561, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A575, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A589, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A59D, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A5B1, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A6D6, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A6EA, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A6FE, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A712, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A726, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A73A, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A83F, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A853, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A87B, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A88F, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A8A3, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A8B7, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A9A8, 0x00001BA1, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A9BC, 0x00001BFB, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A9E4, 0x00001C55, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1A9F8, 0x00001D63, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1AA0C, 0x00001CAF, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1AA20, 0x00001D09, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1AB01, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1AB15, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1ADE4, 0x00001DC9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1AE0C, 0x00001E70, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1B0A2, 0x00001DC9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1B0CA, 0x00001E70, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1B22B, 0x00001F22, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1B253, 0x00001E70, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1B519, 0x00001DC9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1B541, 0x00001E70, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1B70A, 0x00001F22, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1B732, 0x00001E70, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x1BBDF, 0x00000006, 0x0000005E },   // m0004_dragon_upper voice
         { 0, 0x1BCE4, 0x00000006, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1C151, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1C232, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1C34B, 0x0000202A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1C35F, 0x000020DE, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1C387, 0x00002084, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1C151, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1C232, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1C34B, 0x0000201E, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1C35F, 0x000020D2, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1C387, 0x00002078, 0x0000005E },   // m0004_dragon_upper effect
         { 0, 0x1C4A0, 0x00000006, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1C4B4, 0x0000202A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1C4C8, 0x000020DE, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1C4F0, 0x00002084, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1C4B4, 0x0000201E, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1C4C8, 0x000020D2, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1C4F0, 0x00002078, 0x0000005E },   // m0004_dragon_upper effect
         { 0, 0x1C609, 0x00000006, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1C61D, 0x0000202A, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1C631, 0x000020DE, 0x0000005E },   // m0004_dragon_upper effect switch
-        { 0, 0x1C659, 0x00002084, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1CADA, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1CBBB, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1CCB0, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1D62B, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1D70C, 0x000002B9, 0x0000005E },   // m0004_dragon_upper voice
-        { 0, 0x1E242, 0x00000F60, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1E26A, 0x00000AA4, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1E27E, 0x000009B0, 0x0000005E },   // m0004_dragon_upper effect
-        { 0, 0x1E727, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x1E73B, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x1E74F, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x1E763, 0x00000833, 0x0000005E },   // m0004_dragon_upper rumble
-        { 0, 0x1E777, 0x00000845, 0x0000005E },   // m0004_dragon_upper blur
-        { 0, 0x1E79F, 0x00000824, 0x0000005E },   // m0004_dragon_upper camera shake
-        { 0, 0x1E7B3, 0x0000083C, 0x0000005E },   // m0004_dragon_upper rumble
-        { 1, 0x00756, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0076A, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00792, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x007A6, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x007BA, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x007CE, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x007F6, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0080A, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00B6C, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00B80, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00BA8, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00BBC, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00BD0, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00BE4, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00C0C, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00C20, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00F82, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00F96, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00FBE, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00FD2, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00FE6, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x00FFA, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01022, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01036, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x011DB, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x011EF, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01217, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0122B, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01394, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x013A8, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x013D0, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x013E4, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x013F8, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0140C, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01434, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01448, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01605, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01619, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01641, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01655, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x017D6, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x017EA, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01812, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01826, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0183A, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0184E, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01876, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0188A, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01A47, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01A5B, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01A83, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01A97, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01C18, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01C2C, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01C54, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01C68, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01C7C, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01C90, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01CB8, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01CCC, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01E89, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01E9D, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01EC5, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x01ED9, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0205A, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0206E, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02096, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x020AA, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x020BE, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x020D2, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x020FA, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0210E, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x022CB, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02474, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02488, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02645, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02659, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02681, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02695, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02816, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0282A, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02852, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02866, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0287A, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0288E, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x028B6, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x028CA, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02A6F, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02A83, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02AAB, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02ABF, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02C28, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02C3C, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02C64, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02C78, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02C8C, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02CA0, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02CC8, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02CDC, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02E99, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02EAD, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02ED5, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x02EE9, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0306A, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0307E, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x030A6, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x030BA, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x030CE, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x030E2, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0310A, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0311E, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x032C3, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x032D7, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x032FF, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03313, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0347C, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03490, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x034B8, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x034CC, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x034E0, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x034F4, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0351C, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03530, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x036ED, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03701, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03729, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0373D, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x038BE, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x038D2, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x038FA, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0390E, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03922, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03936, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0395E, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03972, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03B03, 0x0000040A, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03B2B, 0x000003B0, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03B3F, 0x0000040A, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03B53, 0x000003B0, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03B67, 0x0000040A, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03B7B, 0x000003B0, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03B8F, 0x0000040A, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03BA3, 0x000003B0, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03BB7, 0x0000040A, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03BDF, 0x000003B0, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03BF3, 0x0000040A, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03C07, 0x000003B0, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03C1B, 0x0000040A, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x03F55, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03F69, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03F91, 0x00000274, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x03FA5, 0x000002D0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x04126, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0413A, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x04162, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x04176, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0418A, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0419E, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x041C6, 0x00000168, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x041DA, 0x000001C4, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0437F, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x04510, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x04524, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x046E1, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0488A, 0x000000B0, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x0489E, 0x0000010C, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x04A0B, 0x000005C1, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04A1F, 0x00000675, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04A5B, 0x0000047A, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x04A6F, 0x00000483, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x04A83, 0x00000492, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x04A97, 0x0000061B, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04AAB, 0x000006CF, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04AE7, 0x000005C1, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04AFB, 0x00000675, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04B23, 0x000004A4, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04B37, 0x000004FE, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04B4B, 0x00000558, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04CF4, 0x000005C1, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04D08, 0x00000675, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04D44, 0x0000047A, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x04D58, 0x00000483, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x04D6C, 0x00000492, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x04D80, 0x0000061B, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04D94, 0x000006CF, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04DD0, 0x000005C1, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04DE4, 0x00000675, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04E0C, 0x000004A4, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04E20, 0x000004FE, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x04E34, 0x00000558, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x0540F, 0x00000811, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x05487, 0x00000823, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x0549B, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x054AF, 0x00000823, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x054C3, 0x0000087D, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x05764, 0x00000811, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x057DC, 0x00000823, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x057F0, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x05804, 0x00000823, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x05818, 0x0000087D, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x05AB9, 0x00000811, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x05B31, 0x00000923, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x05B45, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x05B59, 0x00000923, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x05B6D, 0x0000087D, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x05E0E, 0x00000811, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x05E86, 0x00000923, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x05E9A, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x05EAE, 0x00000923, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x05EC2, 0x0000087D, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x06A9E, 0x00000AB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x06AB2, 0x00000AC3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x06AC6, 0x00000ACC, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x06C03, 0x00000B54, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x06C17, 0x00000AC3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x06C2B, 0x00000ACC, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x06C53, 0x00000B63, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x06C67, 0x00000BBD, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x06C7B, 0x00000C17, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x06CA3, 0x00000C78, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x06EA4, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x06ECC, 0x00000D0D, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x06EF4, 0x00000AC3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x06F1C, 0x00000ACC, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x07131, 0x00000C78, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x07145, 0x00000B63, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x07159, 0x00000DD9, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x07181, 0x00000D25, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x07195, 0x00000D7F, 0x00000006 },   // m0004_ride_dragon_lower effect
-        { 1, 0x07326, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x0733A, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07376, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x0738A, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x073C6, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x073DA, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07402, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x07416, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x076E8, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x076FC, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07738, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x0774C, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07788, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x0779C, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x077C4, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x077D8, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07A96, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x07AAA, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07AFA, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x07B0E, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07B36, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x07B4A, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07B86, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x07B9A, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07E58, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x07E6C, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07E80, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x07E94, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07EA8, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x07EBC, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x07ED0, 0x00000EB9, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x07EE4, 0x00000D1C, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08438, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x085DD, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x08782, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x08913, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x08C1D, 0x00000F97, 0x00000006 },   // m0004_ride_dragon_lower camera shake switch
-        { 1, 0x08C31, 0x00000FAA, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08C45, 0x00000FB3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08C6D, 0x00000FAA, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08C81, 0x00000FB3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08C95, 0x00000FAA, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08CA9, 0x00000FB3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08CBD, 0x00000FAA, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08CD1, 0x00000FB3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08CE5, 0x00000FAA, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08CF9, 0x00000FB3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08D0D, 0x00000FAA, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08D21, 0x00000FB3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08D35, 0x00000FAA, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08D49, 0x00000FB3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08D5D, 0x00000FAA, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08D71, 0x00000FB3, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x08F82, 0x00000FC0, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x08F96, 0x00000FD2, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x08FD2, 0x00000354, 0x00000006 },   // m0004_ride_dragon_lower effect switch
-        { 1, 0x09485, 0x00001036, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x09499, 0x00001045, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x094AD, 0x00000FD2, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 1, 0x0994C, 0x00001036, 0x00000006 },   // m0004_ride_dragon_lower camera shake
-        { 1, 0x09960, 0x00001045, 0x00000006 },   // m0004_ride_dragon_lower rumble
-        { 1, 0x09974, 0x00000FD2, 0x00000006 },   // m0004_ride_dragon_lower blur
-        { 2, 0x003D2, 0x00000162, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x003E6, 0x000001BE, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x0040E, 0x0000021A, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x00422, 0x00000276, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x00436, 0x00000162, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x0044A, 0x000001BE, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x00472, 0x0000021A, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x00486, 0x00000276, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x00A17, 0x0000040F, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x0149E, 0x000004FD, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x01593, 0x0000059E, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x015A7, 0x00000645, 0x00000038 },   // m0004_ride_dragon_upper voice
-        { 2, 0x01862, 0x000006BA, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01993, 0x0000078C, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01BFD, 0x0000082D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01C11, 0x00000889, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01C25, 0x000008E5, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01C39, 0x00000941, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01C4D, 0x0000099D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01C61, 0x0000099D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01C75, 0x000009F9, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01C89, 0x00000A55, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01CB1, 0x00000AB1, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01CC5, 0x00000AB1, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01CD9, 0x00000B0D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01CED, 0x00000B69, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01F7B, 0x0000082D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01F8F, 0x00000889, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01FA3, 0x000008E5, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01FB7, 0x00000941, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01FCB, 0x0000099D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01FDF, 0x0000099D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x01FF3, 0x000009F9, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02007, 0x00000A55, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x0202F, 0x00000AB1, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02043, 0x00000AB1, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02057, 0x00000B0D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x0206B, 0x00000B69, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x022F9, 0x0000082D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x0230D, 0x00000889, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02321, 0x000008E5, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02335, 0x00000941, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02349, 0x0000099D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x0235D, 0x0000099D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02371, 0x000009F9, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02385, 0x00000A55, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x023D5, 0x00000AB1, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x023E9, 0x00000AB1, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x023FD, 0x00000B0D, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02411, 0x00000B69, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x02EAB, 0x00000D0A, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x02FB4, 0x0000059E, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x02FC8, 0x00000645, 0x00000038 },   // m0004_ride_dragon_upper voice
-        { 2, 0x030E5, 0x00000D0A, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x031EE, 0x0000059E, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03202, 0x00000645, 0x00000038 },   // m0004_ride_dragon_upper voice
-        { 2, 0x0331F, 0x00000DB1, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x0343C, 0x00000E0B, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03559, 0x00000E65, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x0366E, 0x00000EBF, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x03682, 0x00000ED1, 0x00000038 },   // m0004_ride_dragon_upper camera shake switch
-        { 2, 0x03696, 0x00000F44, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x036AA, 0x00000EBF, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x036BE, 0x00000F44, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x036D2, 0x00000EC8, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x036FA, 0x00000EE4, 0x00000038 },   // m0004_ride_dragon_upper camera shake switch
-        { 2, 0x03722, 0x00000DB1, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03837, 0x00000EBF, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x0384B, 0x00000ED1, 0x00000038 },   // m0004_ride_dragon_upper camera shake switch
-        { 2, 0x0385F, 0x00000F44, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03873, 0x00000EBF, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x03887, 0x00000F44, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x0389B, 0x00000EC8, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x038C3, 0x00000EE4, 0x00000038 },   // m0004_ride_dragon_upper camera shake switch
-        { 2, 0x038EB, 0x00000DB1, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x039EC, 0x00000EBF, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x03A00, 0x00000ED1, 0x00000038 },   // m0004_ride_dragon_upper camera shake switch
-        { 2, 0x03A14, 0x00000F44, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03A28, 0x00000EBF, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x03A3C, 0x00000F44, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03A50, 0x00000EC8, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x03A78, 0x00000EE4, 0x00000038 },   // m0004_ride_dragon_upper camera shake switch
-        { 2, 0x03AA0, 0x00000E0B, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03BA1, 0x00000EBF, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x03BB5, 0x00000ED1, 0x00000038 },   // m0004_ride_dragon_upper camera shake switch
-        { 2, 0x03BC9, 0x00000F44, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03BDD, 0x00000EBF, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x03BF1, 0x00000F44, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03C05, 0x00000EC8, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x03C2D, 0x00000EE4, 0x00000038 },   // m0004_ride_dragon_upper camera shake switch
-        { 2, 0x03C55, 0x00000E65, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x03D4A, 0x000006BA, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x03E8F, 0x0000078C, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x04105, 0x00000FD9, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x045E1, 0x00001133, 0x00000038 },   // m0004_ride_dragon_upper camera shake
-        { 2, 0x045F5, 0x00001142, 0x00000038 },   // m0004_ride_dragon_upper blur
-        { 2, 0x04609, 0x00001154, 0x00000038 },   // m0004_ride_dragon_upper blur
-        { 2, 0x04631, 0x00001175, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x04645, 0x0000119C, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x0473A, 0x00001133, 0x00000038 },   // m0004_ride_dragon_upper camera shake
-        { 2, 0x0474E, 0x00001142, 0x00000038 },   // m0004_ride_dragon_upper blur
-        { 2, 0x04762, 0x00001154, 0x00000038 },   // m0004_ride_dragon_upper blur
-        { 2, 0x0478A, 0x0000119C, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x0479E, 0x000012E4, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x047EE, 0x00001175, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x04802, 0x00001175, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x04816, 0x00001175, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x0482A, 0x00001175, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x0483E, 0x00001175, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x04923, 0x000013FE, 0x00000038 },   // m0004_ride_dragon_upper effect switch
-        { 2, 0x0495F, 0x00001344, 0x00000038 },   // m0004_ride_dragon_upper camera shake
-        { 2, 0x04973, 0x00001353, 0x00000038 },   // m0004_ride_dragon_upper blur
-        { 2, 0x04987, 0x00001365, 0x00000038 },   // m0004_ride_dragon_upper blur
-        { 2, 0x0499B, 0x00001377, 0x00000038 },   // m0004_ride_dragon_upper rumble
-        { 2, 0x04A13, 0x0000145A, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x04A27, 0x0000145A, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x04A3B, 0x000014B4, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x04A4F, 0x0000150E, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x04A63, 0x00001568, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x04A77, 0x000015C2, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x04A8B, 0x0000161C, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x04A9F, 0x00001676, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x04AC7, 0x000016D0, 0x00000038 },   // m0004_ride_dragon_upper effect
-        { 2, 0x04ADB, 0x0000172A, 0x00000038 },   // m0004_ride_dragon_upper effect
+        { 0, 0x1C61D, 0x0000201E, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1C631, 0x000020D2, 0x0000005E },   // m0004_dragon_upper effect switch
+        { 0, 0x1C659, 0x00002078, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1CADA, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1CBBB, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1CCB0, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1D62B, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1D70C, 0x000002B6, 0x0000005E },   // m0004_dragon_upper voice
+        { 0, 0x1E242, 0x00000F57, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1E26A, 0x00000A9D, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1E27E, 0x000009A9, 0x0000005E },   // m0004_dragon_upper effect
+        { 0, 0x1E727, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x1E73B, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x1E74F, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x1E763, 0x0000082D, 0x0000005E },   // m0004_dragon_upper rumble
+        { 0, 0x1E777, 0x0000083F, 0x0000005E },   // m0004_dragon_upper blur
+        { 0, 0x1E79F, 0x0000081E, 0x0000005E },   // m0004_dragon_upper camera shake
+        { 0, 0x1E7B3, 0x00000836, 0x0000005E },   // m0004_dragon_upper rumble
+        { 1, 0x00756, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0076A, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00792, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x007A6, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x007BA, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x007CE, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x007F6, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0080A, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00B6C, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00B80, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00BA8, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00BBC, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00BD0, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00BE4, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00C0C, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00C20, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00F82, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00F96, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00FBE, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00FD2, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00FE6, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x00FFA, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01022, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01036, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x011DB, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x011EF, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01217, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0122B, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01394, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x013A8, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x013D0, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x013E4, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x013F8, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0140C, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01434, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01448, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01605, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01619, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01641, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01655, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x017D6, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x017EA, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01812, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01826, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0183A, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0184E, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01876, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0188A, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01A47, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01A5B, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01A83, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01A97, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01C18, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01C2C, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01C54, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01C68, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01C7C, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01C90, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01CB8, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01CCC, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01E89, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01E9D, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01EC5, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x01ED9, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0205A, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0206E, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02096, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x020AA, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x020BE, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x020D2, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x020FA, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0210E, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x022CB, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02474, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02488, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02645, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02659, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02681, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02695, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02816, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0282A, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02852, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02866, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0287A, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0288E, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x028B6, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x028CA, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02A6F, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02A83, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02AAB, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02ABF, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02C28, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02C3C, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02C64, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02C78, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02C8C, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02CA0, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02CC8, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02CDC, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02E99, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02EAD, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02ED5, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x02EE9, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0306A, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0307E, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x030A6, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x030BA, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x030CE, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x030E2, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0310A, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0311E, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x032C3, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x032D7, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x032FF, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03313, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0347C, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03490, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x034B8, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x034CC, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x034E0, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x034F4, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0351C, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03530, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x036ED, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03701, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03729, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0373D, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x038BE, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x038D2, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x038FA, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0390E, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03922, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03936, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0395E, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03972, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03B03, 0x00000409, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03B2B, 0x000003AF, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03B3F, 0x00000409, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03B53, 0x000003AF, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03B67, 0x00000409, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03B7B, 0x000003AF, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03B8F, 0x00000409, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03BA3, 0x000003AF, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03BB7, 0x00000409, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03BDF, 0x000003AF, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03BF3, 0x00000409, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03C07, 0x000003AF, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03C1B, 0x00000409, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x03F55, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03F69, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03F91, 0x00000273, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x03FA5, 0x000002CF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x04126, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0413A, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x04162, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x04176, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0418A, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0419E, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x041C6, 0x00000167, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x041DA, 0x000001C3, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0437F, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x04510, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x04524, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x046E1, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0488A, 0x000000AF, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x0489E, 0x0000010B, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x04A0B, 0x000005C0, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04A1F, 0x00000674, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04A5B, 0x00000479, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x04A6F, 0x00000482, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x04A83, 0x00000491, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x04A97, 0x0000061A, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04AAB, 0x000006CE, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04AE7, 0x000005C0, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04AFB, 0x00000674, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04B23, 0x000004A3, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04B37, 0x000004FD, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04B4B, 0x00000557, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04CF4, 0x000005C0, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04D08, 0x00000674, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04D44, 0x00000479, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x04D58, 0x00000482, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x04D6C, 0x00000491, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x04D80, 0x0000061A, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04D94, 0x000006CE, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04DD0, 0x000005C0, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04DE4, 0x00000674, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04E0C, 0x000004A3, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04E20, 0x000004FD, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x04E34, 0x00000557, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x0540F, 0x0000080E, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x05487, 0x00000820, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x0549B, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x054AF, 0x00000820, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x054C3, 0x0000087A, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x05764, 0x0000080E, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x057DC, 0x00000820, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x057F0, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x05804, 0x00000820, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x05818, 0x0000087A, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x05AB9, 0x0000080E, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x05B31, 0x00000920, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x05B45, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x05B59, 0x00000920, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x05B6D, 0x0000087A, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x05E0E, 0x0000080E, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x05E86, 0x00000920, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x05E9A, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x05EAE, 0x00000920, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x05EC2, 0x0000087A, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x06A9E, 0x00000AB0, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x06AB2, 0x00000ABF, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x06AC6, 0x00000AC8, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x06C03, 0x00000B50, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x06C17, 0x00000ABF, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x06C2B, 0x00000AC8, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x06C53, 0x00000B5F, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x06C67, 0x00000BB9, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x06C7B, 0x00000C13, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x06CA3, 0x00000C74, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x06EA4, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x06ECC, 0x00000D09, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x06EF4, 0x00000ABF, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x06F1C, 0x00000AC8, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x07131, 0x00000C74, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x07145, 0x00000B5F, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x07159, 0x00000DD5, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x07181, 0x00000D21, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x07195, 0x00000D7B, 0x00000006 },   // m0004_ride_dragon_lower effect
+        { 1, 0x07326, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x0733A, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07376, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x0738A, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x073C6, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x073DA, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07402, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x07416, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x076E8, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x076FC, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07738, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x0774C, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07788, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x0779C, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x077C4, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x077D8, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07A96, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x07AAA, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07AFA, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x07B0E, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07B36, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x07B4A, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07B86, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x07B9A, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07E58, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x07E6C, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07E80, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x07E94, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07EA8, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x07EBC, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x07ED0, 0x00000EB4, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x07EE4, 0x00000D18, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08438, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x085DD, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x08782, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x08913, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x08C1D, 0x00000F92, 0x00000006 },   // m0004_ride_dragon_lower camera shake switch
+        { 1, 0x08C31, 0x00000FA5, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08C45, 0x00000FAE, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08C6D, 0x00000FA5, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08C81, 0x00000FAE, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08C95, 0x00000FA5, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08CA9, 0x00000FAE, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08CBD, 0x00000FA5, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08CD1, 0x00000FAE, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08CE5, 0x00000FA5, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08CF9, 0x00000FAE, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08D0D, 0x00000FA5, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08D21, 0x00000FAE, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08D35, 0x00000FA5, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08D49, 0x00000FAE, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08D5D, 0x00000FA5, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08D71, 0x00000FAE, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x08F82, 0x00000FBB, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x08F96, 0x00000FCD, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x08FD2, 0x00000353, 0x00000006 },   // m0004_ride_dragon_lower effect switch
+        { 1, 0x09485, 0x00001030, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x09499, 0x0000103F, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x094AD, 0x00000FCD, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 1, 0x0994C, 0x00001030, 0x00000006 },   // m0004_ride_dragon_lower camera shake
+        { 1, 0x09960, 0x0000103F, 0x00000006 },   // m0004_ride_dragon_lower rumble
+        { 1, 0x09974, 0x00000FCD, 0x00000006 },   // m0004_ride_dragon_lower blur
+        { 2, 0x003D2, 0x00000160, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x003E6, 0x000001BC, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x0040E, 0x00000218, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x00422, 0x00000274, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x00436, 0x00000160, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x0044A, 0x000001BC, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x00472, 0x00000218, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x00486, 0x00000274, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x00A17, 0x0000040C, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x0149E, 0x000004FA, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x01593, 0x0000059B, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x015A7, 0x00000642, 0x00000037 },   // m0004_ride_dragon_upper voice
+        { 2, 0x01862, 0x000006B7, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01993, 0x00000789, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01BFD, 0x0000082A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01C11, 0x00000886, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01C25, 0x000008E2, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01C39, 0x0000093E, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01C4D, 0x0000099A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01C61, 0x0000099A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01C75, 0x000009F6, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01C89, 0x00000A52, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01CB1, 0x00000AAE, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01CC5, 0x00000AAE, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01CD9, 0x00000B0A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01CED, 0x00000B66, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01F7B, 0x0000082A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01F8F, 0x00000886, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01FA3, 0x000008E2, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01FB7, 0x0000093E, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01FCB, 0x0000099A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01FDF, 0x0000099A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x01FF3, 0x000009F6, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02007, 0x00000A52, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x0202F, 0x00000AAE, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02043, 0x00000AAE, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02057, 0x00000B0A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x0206B, 0x00000B66, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x022F9, 0x0000082A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x0230D, 0x00000886, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02321, 0x000008E2, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02335, 0x0000093E, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02349, 0x0000099A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x0235D, 0x0000099A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02371, 0x000009F6, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02385, 0x00000A52, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x023D5, 0x00000AAE, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x023E9, 0x00000AAE, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x023FD, 0x00000B0A, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02411, 0x00000B66, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x02EAB, 0x00000D07, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x02FB4, 0x0000059B, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x02FC8, 0x00000642, 0x00000037 },   // m0004_ride_dragon_upper voice
+        { 2, 0x030E5, 0x00000D07, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x031EE, 0x0000059B, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03202, 0x00000642, 0x00000037 },   // m0004_ride_dragon_upper voice
+        { 2, 0x0331F, 0x00000DAE, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x0343C, 0x00000E08, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03559, 0x00000E62, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x0366E, 0x00000EBC, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x03682, 0x00000ECE, 0x00000037 },   // m0004_ride_dragon_upper camera shake switch
+        { 2, 0x03696, 0x00000F41, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x036AA, 0x00000EBC, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x036BE, 0x00000F41, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x036D2, 0x00000EC5, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x036FA, 0x00000EE1, 0x00000037 },   // m0004_ride_dragon_upper camera shake switch
+        { 2, 0x03722, 0x00000DAE, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03837, 0x00000EBC, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x0384B, 0x00000ECE, 0x00000037 },   // m0004_ride_dragon_upper camera shake switch
+        { 2, 0x0385F, 0x00000F41, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03873, 0x00000EBC, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x03887, 0x00000F41, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x0389B, 0x00000EC5, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x038C3, 0x00000EE1, 0x00000037 },   // m0004_ride_dragon_upper camera shake switch
+        { 2, 0x038EB, 0x00000DAE, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x039EC, 0x00000EBC, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x03A00, 0x00000ECE, 0x00000037 },   // m0004_ride_dragon_upper camera shake switch
+        { 2, 0x03A14, 0x00000F41, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03A28, 0x00000EBC, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x03A3C, 0x00000F41, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03A50, 0x00000EC5, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x03A78, 0x00000EE1, 0x00000037 },   // m0004_ride_dragon_upper camera shake switch
+        { 2, 0x03AA0, 0x00000E08, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03BA1, 0x00000EBC, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x03BB5, 0x00000ECE, 0x00000037 },   // m0004_ride_dragon_upper camera shake switch
+        { 2, 0x03BC9, 0x00000F41, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03BDD, 0x00000EBC, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x03BF1, 0x00000F41, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03C05, 0x00000EC5, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x03C2D, 0x00000EE1, 0x00000037 },   // m0004_ride_dragon_upper camera shake switch
+        { 2, 0x03C55, 0x00000E62, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x03D4A, 0x000006B7, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x03E8F, 0x00000789, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x04105, 0x00000FD6, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x045E1, 0x0000112F, 0x00000037 },   // m0004_ride_dragon_upper camera shake
+        { 2, 0x045F5, 0x0000113E, 0x00000037 },   // m0004_ride_dragon_upper blur
+        { 2, 0x04609, 0x00001150, 0x00000037 },   // m0004_ride_dragon_upper blur
+        { 2, 0x04631, 0x00001171, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x04645, 0x00001198, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x0473A, 0x0000112F, 0x00000037 },   // m0004_ride_dragon_upper camera shake
+        { 2, 0x0474E, 0x0000113E, 0x00000037 },   // m0004_ride_dragon_upper blur
+        { 2, 0x04762, 0x00001150, 0x00000037 },   // m0004_ride_dragon_upper blur
+        { 2, 0x0478A, 0x00001198, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x0479E, 0x000012E0, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x047EE, 0x00001171, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x04802, 0x00001171, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x04816, 0x00001171, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x0482A, 0x00001171, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x0483E, 0x00001171, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x04923, 0x000013FA, 0x00000037 },   // m0004_ride_dragon_upper effect switch
+        { 2, 0x0495F, 0x00001340, 0x00000037 },   // m0004_ride_dragon_upper camera shake
+        { 2, 0x04973, 0x0000134F, 0x00000037 },   // m0004_ride_dragon_upper blur
+        { 2, 0x04987, 0x00001361, 0x00000037 },   // m0004_ride_dragon_upper blur
+        { 2, 0x0499B, 0x00001373, 0x00000037 },   // m0004_ride_dragon_upper rumble
+        { 2, 0x04A13, 0x00001456, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x04A27, 0x00001456, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x04A3B, 0x000014B0, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x04A4F, 0x0000150A, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x04A63, 0x00001564, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x04A77, 0x000015BE, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x04A8B, 0x00001618, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x04A9F, 0x00001672, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x04AC7, 0x000016CC, 0x00000037 },   // m0004_ride_dragon_upper effect
+        { 2, 0x04ADB, 0x00001726, 0x00000037 },   // m0004_ride_dragon_upper effect
     };
 }

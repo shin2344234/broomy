@@ -8,28 +8,28 @@ namespace bm::broomchart
 {
     struct HoverPatch { int chart; uint32_t at; uint32_t wyvern; uint32_t broomy; };
     inline constexpr HoverPatch kHoverPatches[] = {
-        { 1, 0x0EBCE, 0x0B5A6D35, 0xE066175D },   // m0004_ride_dragon_lower b7 target_hash
-        { 1, 0x10646, 0x0B5A6D35, 0xE066175D },   // m0004_ride_dragon_lower b128 target_hash
-        { 2, 0x0BF4D, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b0 target_hash
-        { 2, 0x0BF51, 0x117F8F51, 0xE066175D },   // m0004_ride_dragon_upper b0 target_hash2
-        { 2, 0x0C295, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b15 target_hash
-        { 2, 0x0C299, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b15 target_hash2
-        { 2, 0x0C3E5, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b21 target_hash
-        { 2, 0x0C3E9, 0x082F0420, 0xE066175D },   // m0004_ride_dragon_upper b21 target_hash2
-        { 2, 0x0C41D, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b22 target_hash
-        { 2, 0x0C421, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b22 target_hash2
-        { 2, 0x0C539, 0x117F8F51, 0xE066175D },   // m0004_ride_dragon_upper b27 target_hash2
-        { 2, 0x0C5DD, 0xE3F3D49B, 0xE066175D },   // m0004_ride_dragon_upper b30 target_hash
-        { 2, 0x0C5E1, 0xE3F3D49B, 0xE066175D },   // m0004_ride_dragon_upper b30 target_hash2
-        { 2, 0x0C64D, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b32 target_hash
-        { 2, 0x0C651, 0x082F0420, 0xE066175D },   // m0004_ride_dragon_upper b32 target_hash2
-        { 2, 0x0C6BD, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b34 target_hash
-        { 2, 0x0C80D, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b40 target_hash
-        { 2, 0x0D21D, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b86 target_hash
-        { 2, 0x0D221, 0x117F8F51, 0xE066175D },   // m0004_ride_dragon_upper b86 target_hash2
-        { 2, 0x0D255, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b87 target_hash
-        { 2, 0x0D259, 0x082F0420, 0xE066175D },   // m0004_ride_dragon_upper b87 target_hash2
-        { 2, 0x0D28D, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b88 target_hash
-        { 2, 0x0D291, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b88 target_hash2
+        { 1, 0x0EBB8, 0x0B5A6D35, 0xE066175D },   // m0004_ride_dragon_lower b7 target_hash
+        { 1, 0x10630, 0x0B5A6D35, 0xE066175D },   // m0004_ride_dragon_lower b128 target_hash
+        { 2, 0x0BF37, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b0 target_hash
+        { 2, 0x0BF3B, 0x117F8F51, 0xE066175D },   // m0004_ride_dragon_upper b0 target_hash2
+        { 2, 0x0C27F, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b15 target_hash
+        { 2, 0x0C283, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b15 target_hash2
+        { 2, 0x0C3CF, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b21 target_hash
+        { 2, 0x0C3D3, 0x082F0420, 0xE066175D },   // m0004_ride_dragon_upper b21 target_hash2
+        { 2, 0x0C407, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b22 target_hash
+        { 2, 0x0C40B, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b22 target_hash2
+        { 2, 0x0C523, 0x117F8F51, 0xE066175D },   // m0004_ride_dragon_upper b27 target_hash2
+        { 2, 0x0C5C7, 0xE3F3D49B, 0xE066175D },   // m0004_ride_dragon_upper b30 target_hash
+        { 2, 0x0C5CB, 0xE3F3D49B, 0xE066175D },   // m0004_ride_dragon_upper b30 target_hash2
+        { 2, 0x0C637, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b32 target_hash
+        { 2, 0x0C63B, 0x082F0420, 0xE066175D },   // m0004_ride_dragon_upper b32 target_hash2
+        { 2, 0x0C6A7, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b34 target_hash
+        { 2, 0x0C7F7, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b40 target_hash
+        { 2, 0x0D207, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b86 target_hash
+        { 2, 0x0D20B, 0x117F8F51, 0xE066175D },   // m0004_ride_dragon_upper b86 target_hash2
+        { 2, 0x0D23F, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b87 target_hash
+        { 2, 0x0D243, 0x082F0420, 0xE066175D },   // m0004_ride_dragon_upper b87 target_hash2
+        { 2, 0x0D277, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b88 target_hash
+        { 2, 0x0D27B, 0xF5150415, 0xE066175D },   // m0004_ride_dragon_upper b88 target_hash2
     };
 }

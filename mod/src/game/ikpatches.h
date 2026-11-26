@@ -19,6 +19,6 @@ namespace bm::broomchart
         { 2, 0x06EAE, 0x4B495F42, 0x6F425F42 },   // m0004_ride_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 0-3
         { 2, 0x06EB2, 0x6165485F, 0x305F7964 },   // m0004_ride_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 4-7
         { 2, 0x06EB6, 0x30305F64, 0x00000030 },   // m0004_ride_dragon_upper: B_IK_Head_00 -> B_Body_00, bytes 8-11
-        { 2, 0x10CC8, 0x40C00000, 0x3F800000 },   // m0004_ride_dragon_upper: E066175D aim rate 6 -> 1
+        { 2, 0x10CA6, 0x40C00000, 0x3F800000 },   // m0004_ride_dragon_upper: E066175D aim rate 6 -> 1
     };
 }

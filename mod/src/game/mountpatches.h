@@ -9,7 +9,7 @@
 namespace bm::broomchart
 {
     inline constexpr HoverPatch kMountPatches[] = {
-        { 2, 0x0C3F9, 0x01000000, 0x00000000 },   // m0004_ride_dragon_upper b21: no key to finish mounting
+        { 2, 0x0C3E3, 0x01000000, 0x00000000 },   // m0004_ride_dragon_upper b21: no key to finish mounting
         { 2, 0x00E73, 0x408AAAAB, 0x3F800000 },   // m0004_ride_dragon_upper 51015354 window opens at 1.00 s, was 4.33
         { 2, 0x00CA9, 0x40155556, 0x3F800000 },   // m0004_ride_dragon_upper B9B79B01 window opens at 1.00 s, was 2.33
     };

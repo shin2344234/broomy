@@ -9,6 +9,6 @@
 namespace bm::broomchart
 {
     inline constexpr HoverPatch kTakeoffPatches[] = {
-        { 1, 0x0B20C, 0x00000120, 0x00000020 },   // m0004_ride_dragon_lower takeoff 117F8F51: airborne bit 40 off
+        { 1, 0x0B1F6, 0x00000120, 0x00000020 },   // m0004_ride_dragon_lower takeoff 117F8F51: airborne bit 40 off
     };
 }

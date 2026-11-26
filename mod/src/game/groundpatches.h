@@ -16,8 +16,8 @@
 namespace bm::broomchart
 {
     inline constexpr HoverPatch kGroundPatches[] = {
-        { 0, 0x3087B, 0xA9D16F76, 0x622E5BEC },   // m0004_dragon_upper entry 866C7489 branch 2 target_hash
-        { 0, 0x28EE9, 0x00000001, 0x00000101 },   // m0004_dragon_upper 866C7489 attributes, Idle added
-        { 0, 0x2C189, 0x00000001, 0x00000101 },   // m0004_dragon_upper CB1CB87C attributes, Idle added
+        { 0, 0x30865, 0xA9D16F76, 0x622E5BEC },   // m0004_dragon_upper entry 866C7489 branch 2 target_hash
+        { 0, 0x28ED3, 0x00000001, 0x00000101 },   // m0004_dragon_upper 866C7489 attributes, Idle added
+        { 0, 0x2C173, 0x00000001, 0x00000101 },   // m0004_dragon_upper CB1CB87C attributes, Idle added
     };
 }

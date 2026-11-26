@@ -11,31 +11,31 @@
 namespace bm::broomchart
 {
     inline constexpr HoverPatch kEscortMountPatches[] = {
-        { 2, 0x07935, 0x00000809, 0x00008101 },   // m0004_ride_dragon_upper A9 word +0x08 -> A63's
-        { 2, 0x07939, 0x60000100, 0x00000000 },   // m0004_ride_dragon_upper A9 word +0x0C -> A63's
-        { 2, 0x07981, 0x00000030, 0x00000007 },   // m0004_ride_dragon_upper A9 word +0x54 -> A63's
-        { 2, 0x079B5, 0x43480000, 0xBF800000 },   // m0004_ride_dragon_upper A9 word +0x88 -> A63's
-        { 2, 0x079D5, 0x00002F1C, 0x00002EE1 },   // m0004_ride_dragon_upper A9 word +0xA8 -> A63's
-        { 2, 0x079E9, 0x00000003, 0x00000004 },   // m0004_ride_dragon_upper A9 word +0xBC -> A63's
-        { 2, 0x07A11, 0xFFFF0096, 0xFFFF002B },   // m0004_ride_dragon_upper A9 word +0xE4 -> A63's
-        { 2, 0x07A1D, 0x0B050000, 0x0B020002 },   // m0004_ride_dragon_upper A9 word +0xF0 -> A63's
-        { 2, 0x07A21, 0x0700070C, 0x0300070C },   // m0004_ride_dragon_upper A9 word +0xF4 -> A63's
-        { 2, 0x07A29, 0xFF0000FF, 0xFF0003FF },   // m0004_ride_dragon_upper A9 word +0xFC -> A63's
-        { 2, 0x07A2D, 0x01040500, 0x01040503 },   // m0004_ride_dragon_upper A9 word +0x100 -> A63's
-        { 2, 0x07A41, 0x90000000, 0x50440000 },   // m0004_ride_dragon_upper A9 word +0x114 -> A63's
-        { 2, 0x07A45, 0x0040210B, 0x0000010B },   // m0004_ride_dragon_upper A9 word +0x118 -> A63's
-        { 2, 0x08115, 0x00000809, 0x00008101 },   // m0004_ride_dragon_upper A16 word +0x08 -> A63's
-        { 2, 0x08119, 0x60000100, 0x00000000 },   // m0004_ride_dragon_upper A16 word +0x0C -> A63's
-        { 2, 0x08161, 0x0000002F, 0x00000007 },   // m0004_ride_dragon_upper A16 word +0x54 -> A63's
-        { 2, 0x08195, 0x43480000, 0xBF800000 },   // m0004_ride_dragon_upper A16 word +0x88 -> A63's
-        { 2, 0x081B5, 0x00002F1C, 0x00002EE1 },   // m0004_ride_dragon_upper A16 word +0xA8 -> A63's
-        { 2, 0x081C9, 0x00000003, 0x00000004 },   // m0004_ride_dragon_upper A16 word +0xBC -> A63's
-        { 2, 0x081F1, 0xFFFF0094, 0xFFFF002B },   // m0004_ride_dragon_upper A16 word +0xE4 -> A63's
-        { 2, 0x081FD, 0x0B050000, 0x0B020002 },   // m0004_ride_dragon_upper A16 word +0xF0 -> A63's
-        { 2, 0x08201, 0x0700070C, 0x0300070C },   // m0004_ride_dragon_upper A16 word +0xF4 -> A63's
-        { 2, 0x08209, 0xFF0000FF, 0xFF0003FF },   // m0004_ride_dragon_upper A16 word +0xFC -> A63's
-        { 2, 0x0820D, 0x01040500, 0x01040503 },   // m0004_ride_dragon_upper A16 word +0x100 -> A63's
-        { 2, 0x08221, 0x90000000, 0x50440000 },   // m0004_ride_dragon_upper A16 word +0x114 -> A63's
-        { 2, 0x08225, 0x0040210B, 0x0000010B },   // m0004_ride_dragon_upper A16 word +0x118 -> A63's
+        { 2, 0x0791F, 0x00000809, 0x00008101 },   // m0004_ride_dragon_upper A9 word +0x08 -> A63's
+        { 2, 0x07923, 0x60000100, 0x00000000 },   // m0004_ride_dragon_upper A9 word +0x0C -> A63's
+        { 2, 0x0796B, 0x00000030, 0x00000007 },   // m0004_ride_dragon_upper A9 word +0x54 -> A63's
+        { 2, 0x0799F, 0x43480000, 0xBF800000 },   // m0004_ride_dragon_upper A9 word +0x88 -> A63's
+        { 2, 0x079BF, 0x00002F1C, 0x00002EE1 },   // m0004_ride_dragon_upper A9 word +0xA8 -> A63's
+        { 2, 0x079D3, 0x00000003, 0x00000004 },   // m0004_ride_dragon_upper A9 word +0xBC -> A63's
+        { 2, 0x079FB, 0xFFFF0096, 0xFFFF002B },   // m0004_ride_dragon_upper A9 word +0xE4 -> A63's
+        { 2, 0x07A07, 0x0B050000, 0x0B020002 },   // m0004_ride_dragon_upper A9 word +0xF0 -> A63's
+        { 2, 0x07A0B, 0x0700070C, 0x0300070C },   // m0004_ride_dragon_upper A9 word +0xF4 -> A63's
+        { 2, 0x07A13, 0xFF0000FF, 0xFF0003FF },   // m0004_ride_dragon_upper A9 word +0xFC -> A63's
+        { 2, 0x07A17, 0x01040500, 0x01040503 },   // m0004_ride_dragon_upper A9 word +0x100 -> A63's
+        { 2, 0x07A2B, 0x90000000, 0x50440000 },   // m0004_ride_dragon_upper A9 word +0x114 -> A63's
+        { 2, 0x07A2F, 0x0040210B, 0x0000010B },   // m0004_ride_dragon_upper A9 word +0x118 -> A63's
+        { 2, 0x080FF, 0x00000809, 0x00008101 },   // m0004_ride_dragon_upper A16 word +0x08 -> A63's
+        { 2, 0x08103, 0x60000100, 0x00000000 },   // m0004_ride_dragon_upper A16 word +0x0C -> A63's
+        { 2, 0x0814B, 0x0000002F, 0x00000007 },   // m0004_ride_dragon_upper A16 word +0x54 -> A63's
+        { 2, 0x0817F, 0x43480000, 0xBF800000 },   // m0004_ride_dragon_upper A16 word +0x88 -> A63's
+        { 2, 0x0819F, 0x00002F1C, 0x00002EE1 },   // m0004_ride_dragon_upper A16 word +0xA8 -> A63's
+        { 2, 0x081B3, 0x00000003, 0x00000004 },   // m0004_ride_dragon_upper A16 word +0xBC -> A63's
+        { 2, 0x081DB, 0xFFFF0094, 0xFFFF002B },   // m0004_ride_dragon_upper A16 word +0xE4 -> A63's
+        { 2, 0x081E7, 0x0B050000, 0x0B020002 },   // m0004_ride_dragon_upper A16 word +0xF0 -> A63's
+        { 2, 0x081EB, 0x0700070C, 0x0300070C },   // m0004_ride_dragon_upper A16 word +0xF4 -> A63's
+        { 2, 0x081F3, 0xFF0000FF, 0xFF0003FF },   // m0004_ride_dragon_upper A16 word +0xFC -> A63's
+        { 2, 0x081F7, 0x01040500, 0x01040503 },   // m0004_ride_dragon_upper A16 word +0x100 -> A63's
+        { 2, 0x0820B, 0x90000000, 0x50440000 },   // m0004_ride_dragon_upper A16 word +0x114 -> A63's
+        { 2, 0x0820F, 0x0040210B, 0x0000010B },   // m0004_ride_dragon_upper A16 word +0x118 -> A63's
     };
 }

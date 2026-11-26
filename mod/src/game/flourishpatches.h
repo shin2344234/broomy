@@ -12,19 +12,19 @@
 namespace bm::broomchart
 {
     inline constexpr HoverPatch kFlourishPatches[] = {
-        { 0, 0x31C63, 0x8CCB6025, 0xE851DFDF },   // m0004_dragon_upper b93 target 8CCB6025 -> E851DFDF, the end of that glide
-        { 0, 0x31C9B, 0x08415CA5, 0xDD65089B },   // m0004_dragon_upper b94 target 08415CA5 -> DD65089B, the end of that glide
-        { 1, 0x0EA96, 0x04222200, 0x04222700 },   // m0004_ride_dragon_lower b1 -> 8D6C25B2
-        { 1, 0x0EB76, 0x04222200, 0x04222700 },   // m0004_ride_dragon_lower b5 -> 8D6C25B2
-        { 1, 0x0EBAE, 0x04222200, 0x04222700 },   // m0004_ride_dragon_lower b6 -> 8AE6B609
-        { 1, 0x0EDDE, 0x1E221000, 0x1E222700 },   // m0004_ride_dragon_lower b16 -> 8D6C25B2
-        { 1, 0x0EE16, 0x1E221000, 0x1E222700 },   // m0004_ride_dragon_lower b17 -> 8AE6B609
-        { 1, 0x0F54E, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_lower b50 -> D8208390
-        { 1, 0x0F69E, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_lower b56 -> 75E9710E
-        { 1, 0x0F7B6, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_lower b61 -> A86AAA5D
-        { 1, 0x10CB6, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_lower b157 -> 6DCA12C9
-        { 2, 0x0D465, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_upper b96 -> 3BCA48F0
-        { 2, 0x0D49D, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_upper b97 -> BE97C31F
-        { 2, 0x0D50D, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_upper b99 -> 093553DC
+        { 0, 0x31C4D, 0x8CCB6025, 0xE851DFDF },   // m0004_dragon_upper b93 target 8CCB6025 -> E851DFDF, the end of that glide
+        { 0, 0x31C85, 0x08415CA5, 0xDD65089B },   // m0004_dragon_upper b94 target 08415CA5 -> DD65089B, the end of that glide
+        { 1, 0x0EA80, 0x04222200, 0x04222700 },   // m0004_ride_dragon_lower b1 -> 8D6C25B2
+        { 1, 0x0EB60, 0x04222200, 0x04222700 },   // m0004_ride_dragon_lower b5 -> 8D6C25B2
+        { 1, 0x0EB98, 0x04222200, 0x04222700 },   // m0004_ride_dragon_lower b6 -> 8AE6B609
+        { 1, 0x0EDC8, 0x1E221000, 0x1E222700 },   // m0004_ride_dragon_lower b16 -> 8D6C25B2
+        { 1, 0x0EE00, 0x1E221000, 0x1E222700 },   // m0004_ride_dragon_lower b17 -> 8AE6B609
+        { 1, 0x0F538, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_lower b50 -> D8208390
+        { 1, 0x0F688, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_lower b56 -> 75E9710E
+        { 1, 0x0F7A0, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_lower b61 -> A86AAA5D
+        { 1, 0x10CA0, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_lower b157 -> 6DCA12C9
+        { 2, 0x0D44F, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_upper b96 -> 3BCA48F0
+        { 2, 0x0D487, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_upper b97 -> BE97C31F
+        { 2, 0x0D4F7, 0x1E222200, 0x1E222700 },   // m0004_ride_dragon_upper b99 -> 093553DC
     };
 }
