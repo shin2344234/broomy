@@ -178,6 +178,11 @@ namespace
     };
     std::vector<Carried> g_clips;
     bool g_sideSaddle = false;
+    // LoadRow, a test key the shipped ini leaves out: 0 takes Broom_Carry_Dead
+    // off Broomy's row and the cargo seat off its vehicle row, to tell whether
+    // the load row is what takes the d-pad radials on a save that loads with
+    // Broomy out.
+    bool g_loadRow = true;
 
     // Before SupplyLoads, so Supply never sees the list change.
     void CarryClips(bool side)
@@ -259,6 +264,9 @@ namespace
                 _countof(bm::sidesaddle::kClips));
         else if (g_serving)
             LOG("[saddle] SideSaddle=0, so riders sit astride.");
+        if (g_serving)
+            LOG("[tables] LoadRow=%d, so Broomy's row %s Broom_Carry_Dead and its vehicle row %s the cargo seat.",
+                g_loadRow ? 1 : 0, g_loadRow ? "lists" : "does not list", g_loadRow ? "has" : "does not have");
         int ticks = 0;
         while (!g_stop.load())
         {
@@ -292,6 +300,8 @@ namespace bm::Mod
         bm::broomchart::SetSpeeds(speeds);
         g_sideSaddle = ReadSetting(L"SideSaddle", 0) != 0;
         CarryClips(g_sideSaddle);
+        g_loadRow = ReadSetting(L"LoadRow", 1) != 0;
+        bm::broomrows::OfferLoad(g_loadRow);
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
         if (g_serving) bm::riderfix::Install(false);
