@@ -1098,8 +1098,16 @@ namespace bm::grant
         uintptr_t hire = mem::FindUnique(kSig_ServerHire);
         if (!hire) hire = mem::FindUnique(kSig_ServerHire3576);
         const uintptr_t move = mem::FindUnique(kSig_ServerMoveHandler);
-        const uintptr_t lookup = hire && mem::MatchAt(hire + kOff_Hire_LookupCallSig, kSig_HireLookupCall)
-                                     ? CallTarget(hire + kOff_Hire_LookupCall) : 0;
+        // The lookup call is at +0xB0 up to 3732 and +0xB3 on 3840, so the
+        // first `mov rcx,[rcx+50h]; call` in a short window whose target has
+        // the lookup's head is taken.
+        uintptr_t lookup = 0;
+        for (unsigned off = kOff_Hire_LookupCallSig; hire && !lookup && off <= kOff_Hire_LookupCallSig + 0x10; ++off)
+            if (mem::MatchAt(hire + off, kSig_HireLookupCall))
+            {
+                const uintptr_t target = CallTarget(hire + off + 4);
+                if (target && mem::MatchAt(target, kSig_ActorLookup)) lookup = target;
+            }
         if (!send || !hire || !lookup || !move || !mem::MatchAt(lookup, kSig_ActorLookup))
         {
             LOG_ERR("[grant] the request sender (%s), the server's hire (%s), its actor lookup (%s) or the server's "

@@ -70,11 +70,16 @@ namespace
 
     // The thread block's job pointer (+0x1E0): set on the loader's own
     // threads, where the async slot queues a task instead of calling Read.
+    // The offsets are read from the game at install: 0x1E0 and 0x1FE up to
+    // 3732, 0x1F0 and 0x20E from 3840, where the block's header grew by 0x10.
+    unsigned g_jobOffset = 0x1E0;
+    unsigned g_flagOffset = 0x1FE;
+
     uintptr_t* JobSlot()
     {
         const uintptr_t slots = __readgsqword(0x58);
         const uintptr_t block = slots ? *reinterpret_cast<uintptr_t*>(slots) : 0;
-        return block ? reinterpret_cast<uintptr_t*>(block + 0x1E0) : nullptr;
+        return block ? reinterpret_cast<uintptr_t*>(block + g_jobOffset) : nullptr;
     }
 
     // The loader of the read Serve is looking at, for ReadFile.
@@ -86,7 +91,7 @@ namespace
     {
         const uintptr_t slots = __readgsqword(0x58);
         const uintptr_t block = slots ? *reinterpret_cast<uintptr_t*>(slots) : 0;
-        return block && *reinterpret_cast<uint8_t*>(block + 0x1FE) != 0;
+        return block && *reinterpret_cast<uint8_t*>(block + g_flagOffset) != 0;
     }
 
     // The game's buffer, now holding `bytes`, in the game's own allocation.
@@ -338,6 +343,20 @@ namespace bm::gamefile
         }
         if (bufRelease)
         {
+            // The release picks its free by the same thread block byte:
+            // `mov rax,gs:[58h]` at +0x3C, then `mov ecx,<offset>` at +0x45.
+            static const uint8_t kFlagCode[10] = { 0x65, 0x48, 0x8B, 0x04, 0x25, 0x58, 0x00, 0x00, 0x00, 0xB9 };
+            uint8_t flagCode[14] = {};
+            uint32_t flagOff = 0;
+            if (bm::mem::ReadBytes(bufRelease + 0x3C, flagCode, sizeof flagCode) &&
+                memcmp(flagCode, kFlagCode, sizeof kFlagCode) == 0)
+            {
+                memcpy(&flagOff, flagCode + 10, 4);
+                if (flagOff >= 0x100 && flagOff < 0x800) g_flagOffset = flagOff;
+                else flagOff = 0;
+            }
+            LOG("[files] the allocator byte is at thread block +0x%X (%s).", g_flagOffset,
+                flagOff ? "read from the buffer release" : "the default, the release's code was not as expected");
             g_freeSet = reinterpret_cast<FnFree>(CallTarget(bufRelease + kOff_BufferRelease_FreeSet));
             g_freeClear = reinterpret_cast<FnFree>(CallTarget(bufRelease + kOff_BufferRelease_FreeClear));
             g_tagBytes = reinterpret_cast<volatile LONG*>(mem::RipAt(bufRelease + kOff_BufferRelease_TagBytes, 7));
@@ -372,11 +391,41 @@ namespace bm::gamefile
         uintptr_t vt[2] = {};
         uintptr_t async = 0;
         char why3[96] = "the loader's vtable was not found";
+        // The async load follows Read in the vtable. Its slot was 9 up to 3732
+        // and is 10 from 3840, where a slot went in at 3, so Read is looked
+        // up in the table and the slot after it taken.
+        unsigned asyncSlot = kSlot_LoaderAsync;
+        if (mem::FindVtablesByName(kRtti_ResourceLoader, vt, 2) == 1)
+            for (unsigned i = 0; i < 24; ++i)
+            {
+                uintptr_t fn = 0;
+                if (mem::ReadPtr(vt[0] + i * 8, &fn) && fn == read)
+                {
+                    asyncSlot = i + 1;
+                    break;
+                }
+            }
         if (mem::FindVtablesByName(kRtti_ResourceLoader, vt, 2) == 1 &&
-            mem::ReadPtr(vt[0] + kSlot_LoaderAsync * 8, &async) && mem::InImage(async) &&
+            mem::ReadPtr(vt[0] + asyncSlot * 8, &async) && mem::InImage(async) &&
             farhook::Install("async load", async, reinterpret_cast<void*>(&AsyncDetour),
                              reinterpret_cast<void**>(&g_asyncOriginal), why3, sizeof why3))
-            LOG("[files] loads redirected at the async load, +0x%llX.", static_cast<unsigned long long>(mem::Rva(async)));
+        {
+            // The job pointer's offset is in the async load's own code:
+            // `mov eax,<offset>; cmp qword [rax+rbx],0`, about 0x50 bytes in.
+            uint8_t code[0x120] = {};
+            if (bm::mem::ReadBytes(async, code, sizeof code))
+                for (unsigned i = 0; i + 10 <= sizeof code; ++i)
+                    if (code[i] == 0xB8 && code[i + 5] == 0x48 && code[i + 6] == 0x83 && code[i + 7] == 0x3C &&
+                        code[i + 8] == 0x18 && code[i + 9] == 0x00)
+                    {
+                        uint32_t off = 0;
+                        memcpy(&off, code + i + 1, 4);
+                        if (off >= 0x100 && off < 0x800) g_jobOffset = off;
+                        break;
+                    }
+            LOG("[files] loads redirected at the async load (vtable slot %u), +0x%llX; the job pointer is at thread "
+                "block +0x%X.", asyncSlot, static_cast<unsigned long long>(mem::Rva(async)), g_jobOffset);
+        }
         else
         {
             g_asyncOriginal = nullptr;

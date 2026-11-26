@@ -87,7 +87,18 @@ namespace
                     "Broomy chosen brings Blackstar.");
             return false;
         }
-        const uintptr_t at = vt[0] + kSlot_ChartDataLeaf * 8;
+        unsigned slot = kSlot_ChartDataLeaf;
+        if (const uintptr_t head = bm::mem::FindUnique(kSig_ChartLeaf))
+            for (unsigned i = 60; i < 100; ++i)
+            {
+                uintptr_t p = 0;
+                if (bm::mem::ReadPtr(vt[0] + i * 8, &p) && p == head)
+                {
+                    slot = i;
+                    break;
+                }
+            }
+        const uintptr_t at = vt[0] + slot * 8;
         uintptr_t fn = 0;
         DWORD old = 0;
         if (!bm::mem::ReadPtr(at, &fn) || !bm::mem::InImage(fn) ||

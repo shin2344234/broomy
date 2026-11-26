@@ -17,7 +17,7 @@ namespace
     // The pattern starts at +0xBC4B60 (the lea's register differs from
     // 2976's); the call is 14 bytes in.
     constexpr const char* kSig_MoveUpdateCall =
-        "4D 8D ?? 04 01 00 00 4C 8D 45 B0 48 8B CF E8 ?? ?? ?? ?? C5 7A 10 55 C4";
+        "4D 8D ?? ?? ?? 00 00 4C 8D 45 B0 48 8B CF E8 ?? ?? ?? ?? C5 7A 10 55 C4";
     constexpr unsigned kCallOffset = 14;
 
     // The speed record's word 6 (+0x18) is the state's speed in m/s. The

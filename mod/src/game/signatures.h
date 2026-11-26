@@ -21,10 +21,10 @@ namespace bm::sig
         "48 89 5C 24 18 48 89 54 24 10 55 56 57 41 56 41 57 48 81 EC 90 00 00 00 41 8B E9 4D";
     inline constexpr const char* kSig_LoaderExists =
         "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 20 33 DB 48 8B F2 48 8B F9 39 59 18 76 20 0F 1F 40 00 "
-        "48 8B 47 10 48 8B D6 48 8B 0C D8 48 8B 01 FF 50 50 84 C0 75 0C";
+        "48 8B 47 10 48 8B D6 48 8B 0C D8 48 8B 01 FF 50 ?? 84 C0 75 0C";
     inline constexpr const char* kSig_LoaderIndexOf =
         "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 20 33 DB 48 8B F2 48 8B F9 39 59 18 76 20 0F 1F 40 00 "
-        "48 8B 47 10 48 8B D6 48 8B 0C D8 48 8B 01 FF 50 50 84 C0 75 1C";
+        "48 8B 47 10 48 8B D6 48 8B 0C D8 48 8B 01 FF 50 ?? 84 C0 75 1C";
 
     // Read, slot 8 (+0x14A9690): (loader, path, buffer, name, u32, u32, u32
     // flags). It finds the source and has it fill the buffer. The path is an
@@ -94,7 +94,7 @@ namespace bm::sig
     // renumbered every message id (2976's in brackets).
     inline constexpr const char* kSig_SendRequest =
         "48 89 5C 24 10 4C 89 4C 24 20 55 56 57 41 54 41 55 41 56 41 57 48 83 EC 20 45 8B E0 4C 8B F2 4C 8B E9 "
-        "E8 ?? ?? ?? ?? BD FE 01 00 00";
+        "E8 ?? ?? ?? ?? BD ?? ?? 00 00";
     // The request messages, each a static descriptor named by its class
     // (.?AVTrocTrLoadingCompleteReq@pa@@ and so on). A registration stub
     // runs `lea rax,[vtable]; mov [descriptor],rax`, and the descriptor holds
@@ -220,6 +220,11 @@ namespace bm::sig
     // 0x276, NOT 0x277).
     inline constexpr const char* kRtti_ClientChartComponent = ".?AVClientCharacterControlActorComponent@pa@@";
     inline constexpr unsigned    kSlot_ChartDataLeaf = 78;
+    // The slot is 78 up to 3732 and 79 from 3840 (a slot went in near the
+    // start), so callgate finds it by the leaf check's own head.
+    inline constexpr const char* kSig_ChartLeaf =
+        "48 89 5C 24 10 48 89 6C 24 18 56 57 41 54 41 56 41 57 48 83 EC 60 4D 8B F1 4D 8B F8 48 8B F2 48 8B E9 "
+        "48 8B 79 08 48 8B 02 8B 18";
     // Leaf 0xEE (skill key, 1; 0xED on 2976): Kliff has learned the skill.
     // basic_upper_fall.paac holds (0xEE, 0x5E2) on 3392 where 2976's held
     // (0xED, 0x5E2). Skill 0x5E2 is
