@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
+#include <utility>
 
 namespace bm::tablefile
 {
@@ -43,7 +44,198 @@ namespace bm::tablefile
         return c ^ 0xFFFFFFFFu;
     }
 
-    bool Table::Parse(const std::string& header, const std::string& body, std::string& why)
+    namespace
+    {
+        // interactioninfo, 3840: _dialogSetInfo moved from after _onPreemptionSuccessAiEventKey to the u32 before
+        // the record's last 8 bytes. In the 3732 form `rec` is the name block, the key and the fields; the field
+        // sits 50 bytes after the name block.
+        constexpr size_t kDialogAfterName = 50;
+        bool DialogToOld(std::string& rec)
+        {
+            uint32_t nameLen = 0;
+            if (rec.size() < 4) return false;
+            memcpy(&nameLen, rec.data(), 4);
+            const size_t at = 4 + static_cast<size_t>(nameLen) + kDialogAfterName, n = rec.size();
+            if (n < at + 4 + 12) return false;
+            rec = rec.substr(0, at) + rec.substr(n - 12, 4) + rec.substr(at, n - 12 - at) + rec.substr(n - 8);
+            return true;
+        }
+        bool DialogToNew(std::string& rec)
+        {
+            uint32_t nameLen = 0;
+            if (rec.size() < 4) return false;
+            memcpy(&nameLen, rec.data(), 4);
+            const size_t at = 4 + static_cast<size_t>(nameLen) + kDialogAfterName, n = rec.size();
+            if (n < at + 4 + 8) return false;
+            rec = rec.substr(0, at) + rec.substr(at + 4, n - 8 - (at + 4)) + rec.substr(at, 4) + rec.substr(n - 8);
+            return true;
+        }
+    }
+
+    // The 3840 container. `matched` is false when the header is not that layout at all, so the caller goes on to
+    // the older one; true with a false return means it is that layout and something in it is wrong.
+    bool Table::ParseNew(const std::string& header, const std::string& body, const char* name, bool& matched,
+                         std::string& why)
+    {
+        matched = false;
+        const uint8_t* h = reinterpret_cast<const uint8_t*>(header.data());
+        const size_t hn = header.size();
+        for (int countWide = 0; countWide < 2; ++countWide)
+        {
+            const size_t head = countWide ? 4 : 2;
+            if (hn < head) return true;
+            uint32_t count = 0;
+            if (countWide) memcpy(&count, h, 4);
+            else count = static_cast<uint32_t>(h[0] | h[1] << 8);
+            for (unsigned width : { 1u, 2u, 4u, 8u })
+            {
+                // The wide count goes with the 8-byte (key, tag) key, and only with it.
+                if ((countWide != 0) != (width == 8)) continue;
+                struct Row { uint64_t key; std::string name; uint32_t off, len; };
+                std::vector<Row> rows;
+                size_t p = head;
+                bool fits = true;
+                uint32_t expect = 0;
+                for (uint32_t i = 0; i < count && fits; ++i)
+                {
+                    if (hn - p < width + 4) { fits = false; break; }
+                    Row r{};
+                    memcpy(&r.key, h + p, width);
+                    p += width;
+                    uint32_t nl;
+                    memcpy(&nl, h + p, 4);
+                    p += 4;
+                    if (nl > 400 || hn - p < static_cast<size_t>(nl) + 8) { fits = false; break; }
+                    r.name.assign(reinterpret_cast<const char*>(h + p), nl);
+                    p += nl;
+                    memcpy(&r.off, h + p, 4);
+                    memcpy(&r.len, h + p + 4, 4);
+                    p += 8;
+                    if (r.off != expect || r.len > body.size() || r.off > body.size() - r.len) { fits = false; break; }
+                    expect = r.off + r.len;
+                    rows.push_back(std::move(r));
+                }
+                if (!fits || p != hn || expect != body.size() || rows.empty()) continue;
+                // A record opens with its key, then its position.
+                const unsigned kw = width;
+                bool ok = true;
+                for (size_t i = 0; i < rows.size() && ok; ++i)
+                {
+                    uint32_t index;
+                    if (rows[i].len < kw + 4) { ok = false; break; }
+                    memcpy(&index, body.data() + rows[i].off + kw, 4);
+                    ok = index == i;
+                }
+                if (!ok) continue;
+
+                matched = true;
+                newLayout_ = true;
+                wide_ = width == 8;
+                keySize_ = wide_ ? 4 : width;
+                moveDialog_ = name && !strcmp(name, "interactioninfo");
+                for (size_t i = 0; i < rows.size(); ++i)
+                {
+                    const Row& r = rows[i];
+                    std::string rec;
+                    uint32_t nl = static_cast<uint32_t>(r.name.size());
+                    rec.append(reinterpret_cast<const char*>(&nl), 4);
+                    rec += r.name;
+                    rec.append(body, r.off, kw);
+                    rec.append(body, r.off + kw + 4, r.len - kw - 4);
+                    if (moveDialog_ && !DialogToOld(rec))
+                    {
+                        why = "an interactioninfo record is too short to hold its fields";
+                        return false;
+                    }
+                    Key k;
+                    if (wide_)
+                    {
+                        const uint32_t tag32 = static_cast<uint32_t>(r.key >> 32);
+                        memcpy(&k.tag, &tag32, 4);
+                        k.key = static_cast<uint32_t>(r.key);
+                    }
+                    else
+                        k.key = r.key;
+                    keys_.push_back(k);
+                    records_.push_back(std::move(rec));
+                    bodyOrder_.push_back(i);
+                    index_.emplace(Slot(k.key, k.tag), i);
+                }
+                std::string h2, b2;
+                if (!BuildNew(h2, b2, why)) return false;
+                if (h2 != header || b2 != body)
+                {
+                    why = "it does not write back byte for byte (the 3840 layout, with a duplicate key or a field this reader does not know)";
+                    return false;
+                }
+                return true;
+            }
+        }
+        return true;
+    }
+
+    bool Table::BuildNew(std::string& header, std::string& body, std::string& why) const
+    {
+        header.clear();
+        body.clear();
+        const size_t rows = keys_.size();
+        const unsigned kw = wide_ ? 8 : keySize_;
+        if (wide_) Put<uint32_t>(header, static_cast<uint32_t>(rows));
+        else
+        {
+            if (rows > 0xFFFF)
+            {
+                why = "more rows than a u16 count holds";
+                return false;
+            }
+            Put<uint16_t>(header, static_cast<uint16_t>(rows));
+        }
+        for (size_t row = 0; row < rows; ++row)
+        {
+            std::string rec = records_[row];
+            uint32_t nl = 0;
+            if (rec.size() < 4)
+            {
+                why = "a record has no name block";
+                return false;
+            }
+            memcpy(&nl, rec.data(), 4);
+            if (rec.size() < 4 + static_cast<size_t>(nl) + kw)
+            {
+                why = "a record is shorter than its name and key";
+                return false;
+            }
+            if (moveDialog_ && !DialogToNew(rec))
+            {
+                why = "an interactioninfo record is too short to hold its fields";
+                return false;
+            }
+            const std::string name = rec.substr(4, nl);
+            std::string out = rec.substr(4 + nl, kw);
+            Put<uint32_t>(out, static_cast<uint32_t>(row));
+            out.append(rec, 4 + nl + kw, std::string::npos);
+            if (wide_)
+            {
+                Put<uint32_t>(header, static_cast<uint32_t>(keys_[row].key));
+                Put<int32_t>(header, keys_[row].tag);
+            }
+            else
+                header.append(reinterpret_cast<const char*>(&keys_[row].key), keySize_);
+            Put<uint32_t>(header, nl);
+            header += name;
+            Put<uint32_t>(header, static_cast<uint32_t>(body.size()));
+            Put<uint32_t>(header, static_cast<uint32_t>(out.size()));
+            body += out;
+            if (body.size() > 0xFFFFFFFFull)
+            {
+                why = "the body outgrew a u32 offset";
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool Table::Parse(const std::string& header, const std::string& body, std::string& why, const char* name)
     {
         *this = Table();
         const uint8_t* h = reinterpret_cast<const uint8_t*>(header.data());
@@ -52,6 +244,12 @@ namespace bm::tablefile
         {
             why = "the header is under two bytes";
             return false;
+        }
+        {
+            bool matched = false;
+            if (!ParseNew(header, body, name, matched, why)) return false;
+            if (matched) return true;
+            *this = Table();
         }
         std::vector<std::pair<Key, uint32_t>> entries;
         const uint16_t count16 = static_cast<uint16_t>(h[0] | h[1] << 8);
@@ -145,6 +343,7 @@ namespace bm::tablefile
 
     bool Table::Build(std::string& header, std::string& body, std::string& why) const
     {
+        if (newLayout_) return BuildNew(header, body, why);
         header.clear();
         body.clear();
         std::vector<uint32_t> offs(keys_.size());

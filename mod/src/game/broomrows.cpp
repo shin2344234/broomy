@@ -194,6 +194,48 @@ namespace bm::broomrows
             { "canDeactivateStickyIcon", U8 },
         };
 
+        // Exe 1.0.0.3840 (game 2.06.00) changed three records' fields (the container changed for all of them,
+        // which tablefile hides).
+        // - characterinfo: a u16 after _statChangeInfoWrapper, before _detectReactionInfo. It reads 0 in the
+        //   ibex's row; its name is not known.
+        // - uimaptextureinfo: _filterType is gone, so _uiTemplateName follows _isFlexibleIcon, and a u32 sits
+        //   between _uiSmallTextureName and _mapIconType (the same few values over 2,017 rows; not known).
+        // Each set is built once from the 3732 one, and the walk of 3840's rows is checked in full by
+        // check_tables3840.py (every row of both tables walks to the record's end or, for characterinfo, past
+        // _bulletItem).
+        const std::vector<Def>& CharacterDefsFor(bool newLayout)
+        {
+            static const std::vector<Def> old(std::begin(kCharacterDefs), std::end(kCharacterDefs));
+            static const std::vector<Def> fresh = []
+            {
+                std::vector<Def> v;
+                for (const Def& d : kCharacterDefs)
+                {
+                    v.push_back(d);
+                    if (!strcmp(d.name, "statChangeInfoWrapper")) v.push_back(Def{ "u16AfterStatChange", U16 });
+                }
+                return v;
+            }();
+            return newLayout ? fresh : old;
+        }
+
+        const std::vector<Def>& MapDefsFor(bool newLayout)
+        {
+            static const std::vector<Def> old(std::begin(kMapDefs), std::end(kMapDefs));
+            static const std::vector<Def> fresh = []
+            {
+                std::vector<Def> v;
+                for (const Def& d : kMapDefs)
+                {
+                    if (!strcmp(d.name, "filterType")) continue;
+                    v.push_back(d);
+                    if (!strcmp(d.name, "uiSmallTextureName")) v.push_back(Def{ "u32BeforeMapIconType", U32 });
+                }
+                return v;
+            }();
+            return newLayout ? fresh : old;
+        }
+
         // UIFilterGroupInfo +0x1725570
         constexpr Def kFilterDefs[] = {
             { "name", Str }, { "key", U32 }, { "isBlocked", U8 }, { "filterType", U8 }, { "uiIconPath", U32 },
@@ -496,6 +538,12 @@ namespace bm::broomrows
         constexpr uint32_t kIbexMapTexture = 5347;
         constexpr const char* kIbexMapName = "Actor_Vehicle_AlpineIbex_Hired";
         constexpr const char* kIbexMapComponent = "MapIcon_ActorVehicleAlpineIbex_Hired";
+        // 3840 drew the hired mounts' icons from one component, MapIcon_ActorMount, which the markup says is
+        // used as "MapIcon_ActorMount(VehicleHorse Hired)", a property per kind of mount and Hired for a hired
+        // one. The ibex row's _uiTemplateName on 3840 is the hash of "MapIcon_ActorMount(VehicleAlpineIbex Hired)"
+        // (D5673015), as the Horse, Bear and Wyvern rows' are of theirs.
+        constexpr const char* kIbexMapMount = "MapIcon_ActorMount(VehicleAlpineIbex Hired)";
+        constexpr const char* kMapMount = "MapIcon_ActorMount(VehicleBroomy Hired)";
         constexpr const char* kMapName = "Actor_Vehicle_Broomy_Hired";
         constexpr const char* kMapComponent = "MapIcon_ActorVehicleBroomy_Hired";
         constexpr const char* kIbexMapImage = "textureid(cd_Icon_map_AlpineIbex)";
@@ -610,10 +658,11 @@ namespace bm::broomrows
             out.assign(t.Rows(), -1);
             Walked w;
             std::string why;
+            const std::vector<Def>& defs = CharacterDefsFor(t.NewLayout());
             for (size_t row = 0; row < t.Rows(); ++row)
             {
                 const std::string& rec = t.RecordAt(row);
-                if (!Walk(rec, kCharacterDefs, std::size(kCharacterDefs), w, why, false, "mercenaryInfo")) continue;
+                if (!Walk(rec, defs.data(), defs.size(), w, why, false, "mercenaryInfo")) continue;
                 const uint8_t key = static_cast<uint8_t>(rec[w.At("mercenaryInfo").at]);
                 if (key != 255) out[row] = key;
             }
@@ -629,7 +678,8 @@ namespace bm::broomrows
                 return false;
             }
             Walked w;
-            if (!Walk(*src, kCharacterDefs, std::size(kCharacterDefs), w, why, false))
+            const std::vector<Def>& charDefs = CharacterDefsFor(t.NewLayout());
+            if (!Walk(*src, charDefs.data(), charDefs.size(), w, why, false))
             {
                 why = "characterinfo 29448: " + why;
                 return false;
@@ -1239,15 +1289,16 @@ namespace bm::broomrows
         {
             const std::string* src = t.Record(kIbexMapTexture);
             Walked w;
-            bool walked = src && Walk(*src, kMapDefs, std::size(kMapDefs), w, why, true);
-            if (src && !walked)
+            const std::vector<Def>& mapDefs = MapDefsFor(t.NewLayout());
+            bool walked = src && Walk(*src, mapDefs.data(), mapDefs.size(), w, why, true);
+            if (src && !walked && !t.NewLayout())
             {
                 w = Walked();
                 walked = Walk(*src, kMapDefs3576, std::size(kMapDefs3576), w, why, true);
             }
             if (!walked ||
                 Text(*src, w.At("name")) != kIbexMapName || Get<uint32_t>(*src, w, "key") != kIbexMapTexture ||
-                Get<uint32_t>(*src, w, "uiTemplateName") != Key(kIbexMapComponent))
+                Get<uint32_t>(*src, w, "uiTemplateName") != Key(t.NewLayout() ? kIbexMapMount : kIbexMapComponent))
             {
                 why = "uimaptextureinfo 5347 is not Actor_Vehicle_AlpineIbex_Hired";
                 return false;
@@ -1264,7 +1315,7 @@ namespace bm::broomrows
             std::string rec;
             if (!Rewrite(*src, w, { { "name", NameBlock(kMapName) },
                                     { "key", Bytes<uint32_t>(kBroomyKey) },
-                                    { "uiTemplateName", Bytes<uint32_t>(Key(kMapComponent)) },
+                                    { "uiTemplateName", Bytes<uint32_t>(Key(t.NewLayout() ? kMapMount : kMapComponent)) },
                                     { "filterGroupName", Localized(type[0], kBroomyKey, sub[0]) },
                                     { "tooltipText", Localized(type[1], kBroomyKey, sub[1]) } }, rec, why))
                 return false;
@@ -1292,6 +1343,16 @@ namespace bm::broomrows
         {
             constexpr uint32_t kGroup = 1000015;
             const std::string* src = t.Record(kGroup);
+            // 3840 has no Group_Invisible and lists no map rows in its groups (21 groups, entries only in the
+            // store, trader, livestock fence and minigame ones). A map row names its group itself, in the u32
+            // before _mapIconType, which Broomy's row copies from the ibex's (38603493 on every hired mount
+            // row), so the table is left as it is.
+            if (!src && t.NewLayout())
+            {
+                report = "uifiltergroupinfo: 3840 keeps no map rows in its groups (Broomy's row names the ibex's "
+                         "group itself), left as it is";
+                return true;
+            }
             Walked w;
             if (!src || !Walk(*src, kFilterDefs, std::size(kFilterDefs), w, why, true) ||
                 Text(*src, w.At("name")) != "Group_Invisible" || Get<uint32_t>(*src, w, "key") != kGroup)
@@ -1360,7 +1421,7 @@ namespace bm::broomrows
     {
         tablefile::Table t;
         std::string parse;
-        if (!t.Parse(header, body, parse))
+        if (!t.Parse(header, body, parse, name))
         {
             why = std::string("the shipped table does not parse: ") + parse;
             return false;
@@ -1493,6 +1554,29 @@ namespace bm::broomrows
         }
         if (markup)
         {
+            // 3840: the hired mounts share one component, which picks the icon by a property per mount
+            // (<OverrideByProperty PropertyCondition="VehicleAlpineIbex" ... css="icon-image-AlpineIbex ...">). The
+            // ibex's line, copied after itself for "VehicleBroomy", is all Broomy needs, with the class lines of
+            // the style sheets.
+            if (game.find(std::string("<component name=\"") + kIbexMapComponent + "\"") == std::string::npos)
+            {
+                const std::string prop = "PropertyCondition=\"VehicleAlpineIbex\"";
+                const size_t at = game.find(prop);
+                if (at == std::string::npos || game.find(prop, at + 1) != std::string::npos)
+                {
+                    why = "it has neither a component for the hired ibex nor one property line for it";
+                    return false;
+                }
+                const size_t from = game.rfind('\n', at) + 1;   // npos + 1 is 0
+                size_t to = game.find('\n', at);
+                to = to == std::string::npos ? game.size() : to + 1;
+                std::string line = game.substr(from, to - from);
+                if (line.empty() || line.back() != '\n') line += '\n';
+                out.assign(game, 0, to);
+                out += Replaced(line, "AlpineIbex", "Broomy");
+                out.append(game, to, std::string::npos);
+                return true;
+            }
             // The ibex's component, copied after itself as Broomy's.
             const size_t start = game.find(std::string("<component name=\"") + kIbexMapComponent + "\"");
             const size_t close = start == std::string::npos ? start : game.find("</component>", start);
