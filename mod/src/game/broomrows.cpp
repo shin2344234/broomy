@@ -543,9 +543,7 @@ namespace bm::broomrows
         // one. The ibex row's _uiTemplateName on 3840 is the hash of "MapIcon_ActorMount(VehicleAlpineIbex Hired)"
         // (D5673015), as the Horse, Bear and Wyvern rows' are of theirs.
         constexpr const char* kIbexMapMount = "MapIcon_ActorMount(VehicleAlpineIbex Hired)";
-        // The shared component has a property record per kind of mount in the compiled UI files, which this reader
-        // cannot add to (see BuildMapBinary), so the row keeps the ibex template and Broomy draws the ibex icon.
-        constexpr const char* kMapMount = "MapIcon_ActorMount(VehicleAlpineIbex Hired)";
+        constexpr const char* kMapMount = "MapIcon_ActorMount(VehicleBroomy Hired)";
         constexpr const char* kMapName = "Actor_Vehicle_Broomy_Hired";
         constexpr const char* kMapComponent = "MapIcon_ActorVehicleBroomy_Hired";
         constexpr const char* kIbexMapImage = "textureid(cd_Icon_map_AlpineIbex)";
@@ -1661,6 +1659,126 @@ namespace bm::broomrows
         }
     }
 
+    namespace
+    {
+        // 3840: the hired mounts share one component, MapIcon_ActorMount, whose OverrideByProperty list holds one
+        // child record per kind of mount: 01, a u8 of 1 to 3 for the class strings, 00 00 00, the classes (u32
+        // length and text each), a fixed 34 byte block, 01 00 00 00, the property string, 00 09 00 06. The list
+        // is introduced by 01 and a u32 count of its records. No offset, size or hash elsewhere in the file
+        // counts them, and the header's component count stays as it is.
+        const std::string& MountBlock()
+        {
+            static const std::string b = std::string("\0\0\0\0\0\1\0\0\0\0\0\1", 12) + std::string(22, '\0');
+            return b;
+        }
+
+        bool MountRecordEnd(const std::string& d, size_t p, size_t& end)
+        {
+            if (p + 5 > d.size() || d[p] != 1 || d[p + 2] != 0 || d[p + 3] != 0 || d[p + 4] != 0) return false;
+            const int classes = static_cast<uint8_t>(d[p + 1]);
+            if (classes < 1 || classes > 3) return false;
+            size_t q = p + 5;
+            std::string s;
+            for (int i = 0; i < classes; ++i)
+                if (!StringAt(d, q, s, q)) return false;
+            const std::string& b = MountBlock();
+            if (q + b.size() > d.size() || d.compare(q, b.size(), b) != 0) return false;
+            q += b.size();
+            if (q + 4 > d.size() || d.compare(q, 4, std::string("\1\0\0\0", 4)) != 0) return false;
+            if (!StringAt(d, q + 4, s, q)) return false;
+            if (q + 4 > d.size() || d.compare(q, 4, std::string("\0\x09\0\6", 4)) != 0) return false;
+            end = q + 4;
+            return true;
+        }
+
+        // `kind` is "Broomy" or "Speeder", and the property VehicleBroomy or VehicleSpeeder.
+        bool BuildMountRecord(const std::string& game, const char* kind, std::string& out, std::string& why)
+        {
+            const std::string needle = std::string("\1\0\0\0", 4) + Bytes<uint32_t>(17) + "VehicleAlpineIbex" +
+                                       std::string("\0\x09\0\6", 4);
+            size_t at;
+            if (!Once(game, needle, "the hired ibex's property record", at, why)) return false;
+            const size_t end = at + needle.size();
+            size_t start = std::string::npos;
+            for (size_t q = at; q-- > 0 && at - q < 512;)
+            {
+                size_t e;
+                if (MountRecordEnd(game, q, e) && e == end)
+                {
+                    start = q;
+                    break;
+                }
+            }
+            if (start == std::string::npos)
+            {
+                why = "the hired ibex's property record does not read";
+                return false;
+            }
+            // The list's records before it, back to the list's count, and after it.
+            size_t first = start, n = 1;
+            for (bool more = true; more;)
+            {
+                more = false;
+                for (size_t q = first; q-- > 0 && first - q < 512;)
+                {
+                    size_t e;
+                    if (MountRecordEnd(game, q, e) && e == first)
+                    {
+                        first = q;
+                        ++n;
+                        more = true;
+                        break;
+                    }
+                }
+            }
+            for (size_t e, p = end; MountRecordEnd(game, p, e); p = e) ++n;
+            if (first < 5 || game[first - 5] != 1 || Peek<uint32_t>(game, first - 4) != n)
+            {
+                why = "the property list's count is not where it was";
+                return false;
+            }
+            const std::string rec = game.substr(start, end - start);
+            std::string ours, s;
+            size_t from = 0;
+            int renamed = 0;
+            for (size_t hit = rec.find("AlpineIbex"); hit != std::string::npos; hit = rec.find("AlpineIbex", from))
+            {
+                size_t q = hit >= 4 ? hit - 4 : 0, strEnd = 0;
+                bool inString = false;
+                for (; q >= from && q + 4 <= hit; --q)
+                {
+                    if (StringAt(rec, q, s, strEnd) && strEnd >= hit + 10)
+                    {
+                        inString = true;
+                        break;
+                    }
+                    if (q == 0) break;
+                }
+                if (!inString)
+                {
+                    why = "the hired ibex's property record names AlpineIbex outside a string";
+                    return false;
+                }
+                const std::string text = Replaced(s, "AlpineIbex", kind);
+                ours.append(rec, from, q - from);
+                ours += Bytes<uint32_t>(static_cast<uint32_t>(text.size())) + text;
+                from = strEnd;
+                ++renamed;
+            }
+            ours.append(rec, from, std::string::npos);
+            if (renamed < 2)
+            {
+                why = "the hired ibex's property record names AlpineIbex in fewer than two strings";
+                return false;
+            }
+            out.assign(game, 0, end);
+            out += ours;
+            out.append(game, end, std::string::npos);
+            Poke<uint32_t>(out, first - 4, static_cast<uint32_t>(n + 1));
+            return true;
+        }
+    }
+
     bool BuildMapBinary(const std::string& game, std::string& out, std::string& why)
     {
         if (game.find("Broomy") != std::string::npos)
@@ -1668,6 +1786,8 @@ namespace bm::broomrows
             why = "it already names Broomy";
             return false;
         }
+        if (game.find(kIbexMapComponent) == std::string::npos)
+            return BuildMountRecord(game, "Broomy", out, why);
         // u8 0, the style sheets' paths, u32 0, the component count
         size_t p = 1;
         std::string s;
