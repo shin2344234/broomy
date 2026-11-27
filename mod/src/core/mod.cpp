@@ -178,10 +178,11 @@ namespace
     };
     std::vector<Carried> g_clips;
     bool g_sideSaddle = false;
-    // LoadRow, a test key the shipped ini leaves out: 0 takes Broom_Carry_Dead
-    // off Broomy's row and the cargo seat off its vehicle row, to tell whether
-    // the load row is what takes the d-pad radials on a save that loads with
-    // Broomy out.
+    // The load row stays on in a release. A test build that sets this false
+    // takes Broom_Carry_Dead off Broomy's row and the cargo seat off its
+    // vehicle row, which is how the 26 November tests told whether the load
+    // row took the d-pad radials. No ini key reads it, so the shipped ini
+    // describes every key the plugin reads.
     bool g_loadRow = true;
 
     // Before SupplyLoads, so Supply never sees the list change.
@@ -300,7 +301,6 @@ namespace bm::Mod
         bm::broomchart::SetSpeeds(speeds);
         g_sideSaddle = ReadSetting(L"SideSaddle", 0) != 0;
         CarryClips(g_sideSaddle);
-        g_loadRow = ReadSetting(L"LoadRow", 1) != 0;
         bm::broomrows::OfferLoad(g_loadRow);
         g_serving = bm::broomy::Install(bm::broomy::kChartsPadded);
         if (g_serving) bm::gamefile::SupplyLoads(&Supply);
